@@ -20,11 +20,6 @@ import { UserService } from './user.service';
 export class UserController {
   @Inject(UserService)
   private readonly service: UserService;
-  @Get('google/callback')
-  public async googleCallback() {}
-
-  @Get('google')
-  public async googleSignIn() {}
 
   @Get('session')
   private async getMainPage() {

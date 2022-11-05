@@ -5,13 +5,9 @@ import { Request } from 'express';
 import { UpdateNameDto } from './user.dto';
 import { UserFromApi } from './user.entity';
 import { Session } from 'inspector';
-import { SessionService } from './session_product/session.service';
 
 @Injectable()
 export class UserService {
-  @InjectRepository(UserFromApi)
-  private readonly SessionRepository: SessionService;
-
   public getMainPage() {
     return;
   }
