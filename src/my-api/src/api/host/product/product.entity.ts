@@ -14,50 +14,71 @@ import {
   PrimaryGeneratedColumn,
   UpdateEvent,
 } from 'typeorm';
-import { Category } from '../category/category.entity';
 @Entity()
 export class SizeTable extends BaseEntity {
   @PrimaryGeneratedColumn()
   public id_product: number;
   @Column({ type: 'int', nullable: true })
-  public size_XXS: number;
+  public UK6: number;
   @Column({ type: 'int', nullable: true })
-  public size_XS: number;
+  public UK6_5: number;
   @Column({ type: 'int', nullable: true })
-  public size_S: number;
+  public UK7: number;
   @Column({ type: 'int', nullable: true })
-  public size_M: number;
+  public UK7_5: number;
   @Column({ type: 'int', nullable: true })
-  public size_L: number;
+  public UK8: number;
   @Column({ type: 'int', nullable: true })
-  public size_XL: number;
+  public UK8_5: number;
   @Column({ type: 'int', nullable: true })
-  public size_2XL: number;
+  public UK9: number;
   @Column({ type: 'int', nullable: true })
-  public size_3XL: number;
+  public UK9_5: number;
+  @Column({ type: 'int', nullable: true })
+  public UK10: number;
+  @Column({ type: 'int', nullable: true })
+  public UK10_5: number;
+  @Column({ type: 'int', nullable: true })
+  public UK11: number;
+  @Column({ type: 'int', nullable: true })
+  public UK11_5: number;
+  @Column({ type: 'int', nullable: true })
+  public UK12: number;
 }
+//originals
+//run
+//basketball
+//sport
+//tenis
+//football
+
+//men
+//women
+//kid
 
 @Entity()
 export class Product extends BaseEntity {
   @PrimaryGeneratedColumn()
   public id_product!: number;
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', nullable: false })
   public code: string;
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', nullable: false })
   public id_cate: string;
-  @Column({ type: 'varchar' })
+  @Column({ type: 'varchar', nullable: false })
   public gender: string;
-  @Column({ type: 'varchar', nullable: true })
+  @Column({ type: 'varchar', nullable: false })
   public name: string | null;
-  @Column({ type: 'int' })
+  @Column({ type: 'int', nullable: false })
   public price: number;
+  @Column({ type: 'int', nullable: false })
+  public rate: number;
   @Column({ type: 'bool', nullable: true })
   public isSaleOff: boolean;
   @Column({ type: 'int', nullable: true })
   public priceOnSale: number;
-  @Column({ type: 'int' })
+  @Column({ type: 'int', nullable: false })
   public uploadBy: number;
-  @Column({ type: 'bytea' })
+  @Column({ type: 'bytea', nullable: false })
   public avar: Uint8Array;
   @Column({ type: 'timestamp', nullable: true, default: null })
   public uploadAt: Date | null;
@@ -65,7 +86,17 @@ export class Product extends BaseEntity {
   @JoinColumn()
   public size: SizeTable;
   @ManyToOne(() => Category, (cate) => cate.product)
+  @JoinColumn({ name: 'id_cate' })
   public cate: Category;
+}
+
+export class Category {
+  @PrimaryGeneratedColumn()
+  public id_cate!: number;
+  @Column({ type: 'varchar', nullable: false })
+  public name: string;
+  @OneToMany(() => Product, (product) => product.cate, { cascade: true })
+  public product: Product[];
 }
 @EventSubscriber()
 export class PostSubscriber implements EntitySubscriberInterface {
