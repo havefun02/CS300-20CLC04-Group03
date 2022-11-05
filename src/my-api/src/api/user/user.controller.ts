@@ -11,7 +11,7 @@ import {
   Param,
 } from '@nestjs/common';
 import { Request } from 'express';
-import { JwtAuthGuard } from '@/api/own/auth/auth.guard';
+import { JwtAuthGuard } from '@/api/host/auth/auth.guard';
 import { UpdateNameDto } from './user.dto';
 import { UserFromApi } from './user.entity';
 import { UserService } from './user.service';
