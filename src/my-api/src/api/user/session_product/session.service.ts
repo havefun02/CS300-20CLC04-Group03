@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Request } from 'express';
-import { Product } from '@/api/own/product/product.entity';
+import { Product } from '@/api/host/product/product.entity';
 
 @Injectable()
 export class SessionService {

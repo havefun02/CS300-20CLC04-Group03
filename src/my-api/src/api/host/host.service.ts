@@ -2,11 +2,11 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Any, Repository } from 'typeorm';
 import { Request } from 'express';
-import { User } from './own.entity';
+import { User } from './host.entity';
 import { Product } from './product/product.entity';
 import { ProductService } from './product/product.service';
 @Injectable()
-export class OwnService {
+export class HostService {
   constructor(
     @InjectRepository(User)
     private readonly repository: Repository<User>,
@@ -14,7 +14,11 @@ export class OwnService {
   ) {}
 
   public async uploadDb(body: any, own: User, data: Buffer) {
-    let ProductEntity = await this.productRepository.createProduct(body, own, data);
+    let ProductEntity = await this.productRepository.createProduct(
+      body,
+      own,
+      data,
+    );
     return ProductEntity;
   }
 

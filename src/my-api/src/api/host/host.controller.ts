@@ -13,20 +13,23 @@ import {
   Get,
 } from '@nestjs/common';
 import { Request } from 'express';
-import { JwtAuthGuard } from '@/api/own/auth/auth.guard';
-import { OwnService } from './own.service';
+import { JwtAuthGuard } from '@/api/host/auth/auth.guard';
+import { HostService } from './host.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { memoryStorage } from 'multer';
 import { extname } from 'path';
-import { User } from './own.entity';
-@Controller('own')
-export class OwnController {
-  @Inject(OwnService)
-  private readonly service: OwnService;
+import { User } from './host.entity';
+@Controller('host')
+export class HostController {
+  @Inject(HostService)
+  private readonly service: HostService;
   @Post('upload-new-product')
   // @UseGuards(JwtAuthGuard)
   @UseInterceptors(FileInterceptor('file', { storage: memoryStorage() }))
-  private async uploadProduct(@Req() req: Request, @UploadedFile() file: Express.Multer.File): Promise<any> {
+  private async uploadProduct(
+    @Req() req: Request,
+    @UploadedFile() file: Express.Multer.File,
+  ): Promise<any> {
     return this.service.uploadDb(req.body, <User>req.user, file.buffer);
   }
   @Get('get-file-product')

@@ -3,10 +3,10 @@ import { MulterModule } from '@nestjs/platform-express';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { CategoryModule } from './category/category.module';
-import { OwnController } from './own.controller';
-import { OwnService } from './own.service';
+import { HostController } from './host.controller';
+import { HostService } from './host.service';
 import { ProductModule } from './product/product.module';
-import { User } from './own.entity';
+import { User } from './host.entity';
 @Module({
   imports: [
     TypeOrmModule.forFeature([User]),
@@ -15,10 +15,9 @@ import { User } from './own.entity';
     }),
     AuthModule,
     CategoryModule,
-
     ProductModule,
   ],
-  controllers: [OwnController],
-  providers: [OwnService],
+  controllers: [HostController],
+  providers: [HostService],
 })
-export class OwnModule {}
+export class HostModule {}

@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Any, Repository } from 'typeorm';
 import { Request } from 'express';
 import { Product, SizeTable } from './product.entity';
-import { User } from '../own.entity';
+import { User } from '../host.entity';
 @Injectable()
 export class ProductService {
   @InjectRepository(Product)
@@ -71,6 +71,11 @@ export class ProductService {
   }
 
   public async deteleProduct(key: string): Promise<any> {
-    return await this.repository.createQueryBuilder().delete().from('product').where('code=:code', { code: key }).execute();
+    return await this.repository
+      .createQueryBuilder()
+      .delete()
+      .from('product')
+      .where('code=:code', { code: key })
+      .execute();
   }
 }
