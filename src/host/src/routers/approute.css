@@ -3,8 +3,7 @@
   display: block;
 }
 .route-grid {
-  /* max-width: 1200px;
-  margin: 0 auto; */
+  height: 100%;
 }
 .route-row {
   height: 100%;
