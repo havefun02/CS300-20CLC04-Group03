@@ -1,4 +1,4 @@
 import './dashboard.css';
-export default function Dashboard() {
+export default function DashBoard() {
   return <div className="dashboard-main"></div>;
 }
