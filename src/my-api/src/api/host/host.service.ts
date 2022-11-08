@@ -14,19 +14,19 @@ export class HostService {
   ) {}
 
   public async uploadDb(body: any, own: User, data: Buffer) {
-    let ProductEntity = await this.productRepository.createProduct(
-      body,
-      own,
-      data,
-    );
-    return ProductEntity;
+    // let ProductEntity = await this.productRepository.createProduct(
+    //   body,
+    //   own,
+    //   data,
+    // );
+    // return ProductEntity;
   }
 
   public async getProduct() {
-    return await this.productRepository.getProduct();
+    // return await this.productRepository.getProduct();
   }
 
   public async deleteProduct(key: string) {
-    return await this.productRepository.deteleProduct(key);
+    // return await this.productRepository.deteleProduct(key);
   }
 }

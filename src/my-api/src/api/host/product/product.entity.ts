@@ -14,37 +14,6 @@ import {
   PrimaryGeneratedColumn,
   UpdateEvent,
 } from 'typeorm';
-@Entity()
-export class SizeTable extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  public id_product: number;
-  @Column({ type: 'int', nullable: true })
-  public UK6: number;
-  @Column({ type: 'int', nullable: true })
-  public UK6_5: number;
-  @Column({ type: 'int', nullable: true })
-  public UK7: number;
-  @Column({ type: 'int', nullable: true })
-  public UK7_5: number;
-  @Column({ type: 'int', nullable: true })
-  public UK8: number;
-  @Column({ type: 'int', nullable: true })
-  public UK8_5: number;
-  @Column({ type: 'int', nullable: true })
-  public UK9: number;
-  @Column({ type: 'int', nullable: true })
-  public UK9_5: number;
-  @Column({ type: 'int', nullable: true })
-  public UK10: number;
-  @Column({ type: 'int', nullable: true })
-  public UK10_5: number;
-  @Column({ type: 'int', nullable: true })
-  public UK11: number;
-  @Column({ type: 'int', nullable: true })
-  public UK11_5: number;
-  @Column({ type: 'int', nullable: true })
-  public UK12: number;
-}
 //originals
 //run
 //basketball
@@ -57,47 +26,97 @@ export class SizeTable extends BaseEntity {
 //kid
 
 @Entity()
+export class SizeTable extends BaseEntity {
+  @PrimaryGeneratedColumn()
+  public id_size: number;
+  @Column({ type: 'varchar' })
+  public title: string;
+
+  // @OneToMany(
+  //   () => ProductSizeProperty,
+  //   (productProperty) => productProperty.size,
+  //   { cascade: true },
+  // )
+  // public productProperty: ProductSizeProperty[];
+}
+
+export class Color extends BaseEntity {
+  @PrimaryGeneratedColumn()
+  public id_color: number;
+  @Column({ type: 'varchar' })
+  public title: string;
+  // @OneToMany(
+  //   () => ProductSizeProperty,
+  //   (productProperty) => productProperty.color,
+  //   { cascade: true },
+  // )
+  // public productProperty: ProductSizeProperty[];
+}
+export class Category {
+  @PrimaryGeneratedColumn()
+  public id_cate!: number;
+  @Column({ type: 'varchar', nullable: false })
+  public name: string;
+  // @OneToMany(() => Product, (product) => product.cate, { cascade: true })
+  // public product: Product[];
+}
 export class Product extends BaseEntity {
   @PrimaryGeneratedColumn()
   public id_product!: number;
   @Column({ type: 'varchar', nullable: false })
   public code: string;
-  @Column({ type: 'varchar', nullable: false })
-  public id_cate: string;
-  @Column({ type: 'varchar', nullable: false })
-  public gender: string;
+  @Column({ type: 'int', nullable: false })
+  public id_cate: number;
   @Column({ type: 'varchar', nullable: false })
   public name: string | null;
   @Column({ type: 'int', nullable: false })
   public price: number;
   @Column({ type: 'int', nullable: false })
   public rate: number;
-  @Column({ type: 'bool', nullable: true })
-  public isSaleOff: boolean;
+
   @Column({ type: 'int', nullable: true })
   public priceOnSale: number;
-  @Column({ type: 'int', nullable: false })
-  public uploadBy: number;
   @Column({ type: 'bytea', nullable: false })
   public avar: Uint8Array;
-  @Column({ type: 'timestamp', nullable: true, default: null })
-  public uploadAt: Date | null;
-  @OneToOne(() => SizeTable, { cascade: true, onDelete: 'CASCADE' })
-  @JoinColumn()
-  public size: SizeTable;
-  @ManyToOne(() => Category, (cate) => cate.product)
-  @JoinColumn({ name: 'id_cate' })
-  public cate: Category;
+
+  // @OneToMany(() => ProductSizeProperty, (property) => property.product, {
+  //   cascade: true,
+  // })
+  // public property: ProductSizeProperty[];
+
+  // @ManyToOne(() => Category, (cate) => cate.product)
+  // @JoinColumn({ name: 'id_cate' })
+  // public cate: Category;
 }
 
-export class Category {
-  @PrimaryGeneratedColumn()
-  public id_cate!: number;
-  @Column({ type: 'varchar', nullable: false })
-  public name: string;
-  @OneToMany(() => Product, (product) => product.cate, { cascade: true })
-  public product: Product[];
+export class ProductSizeProperty extends BaseEntity {
+  @PrimaryColumn({ type: 'int' })
+  public id_product: number;
+  @PrimaryColumn({ type: 'int' })
+  public id_size: number;
+  @PrimaryColumn({ type: 'int' })
+  public id_color: number;
+  @Column({ type: 'int' })
+  public quantity: number;
+  // @ManyToOne(() => SizeTable, (size) => size.productProperty, {
+  //   cascade: true,
+  //   onDelete: 'CASCADE',
+  // })
+  // @JoinColumn()
+  // public size: SizeTable;
+
+  // @ManyToOne(() => Color, (color) => color.productProperty, {
+  //   cascade: true,
+  //   onDelete: 'CASCADE',
+  // })
+  // @JoinColumn()
+  // public color: Color;
+
+  // @ManyToOne(() => Product, (product) => product.property)
+  // @JoinColumn({ name: 'id_product' })
+  // public product: Product;
 }
+
 @EventSubscriber()
 export class PostSubscriber implements EntitySubscriberInterface {
   beforeUpdate(event: UpdateEvent<any>): void | Promise<any> {}

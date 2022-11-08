@@ -14,10 +14,3 @@ export class UserFromApi extends BaseEntity {
   @Column({ type: 'varchar', nullable: false })
   public address: string;
 }
-
-export class Bill extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  public id_bill: number;
-  @Column({ type: 'varchar', nullable: false })
-  public id_userFromApi: number;
-}

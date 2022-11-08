@@ -30,17 +30,17 @@ export class HostController {
     @Req() req: Request,
     @UploadedFile() file: Express.Multer.File,
   ): Promise<any> {
-    return this.service.uploadDb(req.body, <User>req.user, file.buffer);
+    // return this.service.uploadDb(req.body, <User>req.user, file.buffer);
   }
   @Get('get-file-product')
   // @UseGuards(JwtAuthGuard)
   private async getProduct(@Req() req: Request) {
-    return this.service.getProduct();
+    // return this.service.getProduct();
   }
   @Post('delete-file-product')
   // @UseGuards(JwtAuthGuard)
   private async deleteProduct(@Req() req: Request) {
-    return this.service.deleteProduct(req.body.key);
+    // return this.service.deleteProduct(req.body.key);
   }
   @Post('update-product/:id/by-name')
   @UseGuards(JwtAuthGuard)
