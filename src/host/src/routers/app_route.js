@@ -9,9 +9,11 @@ import Trategy from '../screens/trategy';
 import Login from '../screens/login';
 import Register from '../screens/register';
 import ChangePass from '../screens/changepass';
+import Statistic from '../screens/statistic';
 import React from 'react';
 export default function AppRoute({ props }) {
   const [isLog, setIsLog] = props;
+  console.log(isLog);
   return (
     <BrowserRouter>
       <div className="route-main">
@@ -23,6 +25,7 @@ export default function AppRoute({ props }) {
                 <Routes>
                   <Route path="/" element={<DashBoard />}></Route>
                   <Route path="/order" element={<Order />}></Route>
+                  <Route path="/statistic" element={<Statistic />}></Route>
                   <Route path="/transaction" element={<Transaction />}></Route>
                   <Route path="/manage" element={<Manage />}></Route>
                   <Route path="/trategy" element={<Trategy />}></Route>
