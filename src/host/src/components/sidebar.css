@@ -44,6 +44,6 @@
   background-color: #fff;
   color: rgb(1, 1, 248);
   cursor: pointer;
-  border-top-left-radius: 15%;
-  border-bottom-left-radius: 15%;
+  /* border-top-left-radius: 15%;
+  border-bottom-left-radius: 15%; */
 }

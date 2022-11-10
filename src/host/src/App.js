@@ -1,10 +1,10 @@
 import AppRoute from './routers/app_route';
 import React from 'react';
 function App() {
-  const [isLog, setIsLog] = React.useState(false);
+  const [isLog, setIsLog] = React.useState(true);
   React.useEffect(() => {
     const getLocal = localStorage.getItem('isLog');
-    setIsLog(() => getLocal);
+    if (getLocal !== null) setIsLog(() => getLocal);
   }, []);
 
   return (
