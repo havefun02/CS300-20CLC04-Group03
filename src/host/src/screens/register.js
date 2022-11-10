@@ -9,6 +9,7 @@ export default function Register() {
           <Header props={property}></Header>
         </div>
         <div className="dashboard-content"></div>
+        <div className='random'></div>
         <div className="dashboard-footer"></div>
       </div>
     </div>
