@@ -2,6 +2,9 @@ import {
   BaseEntity,
   Column,
   Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
   PrimaryColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -13,17 +16,11 @@ export class TrackingProduct extends BaseEntity {
   @PrimaryColumn()
   public id_host: number;
   @Column({ type: 'int' })
-  public id_type: string;
+  public type: string;
   @Column({ type: 'int' })
   public id_product: number;
   @Column({ type: 'int' })
   public price: number;
   @Column({ type: 'text' })
   public product_property: string;
-}
-export class TypeUpload extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  public id_type: number;
-  @Column({ type: 'varchar' })
-  public title: string;
 }

@@ -15,7 +15,7 @@ import { User } from './host.entity';
     AuthModule,
     ProductModule,
   ],
-  controllers: [HostController],
-  providers: [HostService],
+  controllers: [],
+  providers: [],
 })
 export class HostModule {}
