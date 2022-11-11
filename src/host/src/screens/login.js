@@ -35,12 +35,12 @@ export default function Login() {
                   console.log(event.target.value);
                   setPassword(event.target.value);
                 }}
-                placeholder="password"
+                placeholder="Password"
                 type="password"
               ></input>
             </div>
             <div className="login-button">
-              <button type="submit">submit</button>
+              <button type="submit">Submit</button>
             </div>
           </form>
         </div>
