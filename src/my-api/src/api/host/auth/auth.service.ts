@@ -21,9 +21,7 @@ export class AuthService {
     if (user) {
       throw new HttpException('Conflict', HttpStatus.CONFLICT);
     }
-
     user = new User();
-
     // user.name = name;
     user.username = username;
     user.password = this.helper.encodePassword(password);

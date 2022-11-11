@@ -4,21 +4,23 @@ import {
   Category,
   Color,
   Product,
-  ProductSizeProperty,
+  ProductProperty,
   SizeTable,
 } from './product.entity';
 import { ProductService } from './product.service';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Category]),
-    TypeOrmModule.forFeature([Color]),
-    TypeOrmModule.forFeature([SizeTable]),
-    TypeOrmModule.forFeature([Product]),
-    TypeOrmModule.forFeature([ProductSizeProperty]),
+    TypeOrmModule.forFeature([
+      Product,
+      ProductProperty,
+      Category,
+      SizeTable,
+      Color,
+    ]),
   ],
   controllers: [],
-  providers: [ProductService],
-  exports: [ProductService],
+  providers: [],
+  exports: [],
 })
 export class ProductModule {}

@@ -26,40 +26,41 @@ import {
 //kid
 
 @Entity()
-export class SizeTable extends BaseEntity {
+export class SizeTable {
   @PrimaryGeneratedColumn()
   public id_size: number;
   @Column({ type: 'varchar' })
   public title: string;
 
-  // @OneToMany(
-  //   () => ProductSizeProperty,
-  //   (productProperty) => productProperty.size,
-  //   { cascade: true },
-  // )
-  // public productProperty: ProductSizeProperty[];
+  @OneToMany(
+    () => ProductProperty,
+    (ProductProperty) => ProductProperty.isProduct,
+  )
+  public groupSizeProduct: ProductProperty[];
 }
-
-export class Color extends BaseEntity {
+@Entity()
+export class Color {
   @PrimaryGeneratedColumn()
   public id_color: number;
   @Column({ type: 'varchar' })
   public title: string;
-  // @OneToMany(
-  //   () => ProductSizeProperty,
-  //   (productProperty) => productProperty.color,
-  //   { cascade: true },
-  // )
-  // public productProperty: ProductSizeProperty[];
+  @OneToMany(
+    () => ProductProperty,
+    (groupColorProduct) => groupColorProduct.isColor,
+  )
+  public groupColorProduct: ProductProperty[];
 }
+@Entity()
 export class Category {
   @PrimaryGeneratedColumn()
   public id_cate!: number;
   @Column({ type: 'varchar', nullable: false })
   public name: string;
-  // @OneToMany(() => Product, (product) => product.cate, { cascade: true })
-  // public product: Product[];
+  @OneToMany(() => Product, (product) => product.GroupCate, { cascade: true })
+  public product: Product[];
 }
+
+@Entity()
 export class Product extends BaseEntity {
   @PrimaryGeneratedColumn()
   public id_product!: number;
@@ -79,17 +80,17 @@ export class Product extends BaseEntity {
   @Column({ type: 'bytea', nullable: false })
   public avar: Uint8Array;
 
-  // @OneToMany(() => ProductSizeProperty, (property) => property.product, {
-  //   cascade: true,
-  // })
-  // public property: ProductSizeProperty[];
+  @OneToMany(() => ProductProperty, (subProduct) => subProduct.isProduct, {
+    cascade: true,
+  })
+  public subProduct: ProductProperty[]; //a group of sub product which belong to id_product
 
-  // @ManyToOne(() => Category, (cate) => cate.product)
-  // @JoinColumn({ name: 'id_cate' })
-  // public cate: Category;
+  @ManyToOne(() => Category, (cate) => cate.product)
+  @JoinColumn({ name: 'id_cate' })
+  public GroupCate: Category;
 }
-
-export class ProductSizeProperty extends BaseEntity {
+@Entity()
+export class ProductProperty extends BaseEntity {
   @PrimaryColumn({ type: 'int' })
   public id_product: number;
   @PrimaryColumn({ type: 'int' })
@@ -98,23 +99,23 @@ export class ProductSizeProperty extends BaseEntity {
   public id_color: number;
   @Column({ type: 'int' })
   public quantity: number;
-  // @ManyToOne(() => SizeTable, (size) => size.productProperty, {
-  //   cascade: true,
-  //   onDelete: 'CASCADE',
-  // })
-  // @JoinColumn()
-  // public size: SizeTable;
+  @ManyToOne(() => SizeTable, (size) => size.groupSizeProduct, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'id_size' })
+  public isSize: SizeTable;
 
-  // @ManyToOne(() => Color, (color) => color.productProperty, {
-  //   cascade: true,
-  //   onDelete: 'CASCADE',
-  // })
-  // @JoinColumn()
-  // public color: Color;
+  @ManyToOne(() => Color, (color) => color.groupColorProduct, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
+  @JoinColumn({ name: 'id_color' })
+  public isColor: Color;
 
-  // @ManyToOne(() => Product, (product) => product.property)
-  // @JoinColumn({ name: 'id_product' })
-  // public product: Product;
+  @ManyToOne(() => Product, (product) => product.subProduct)
+  @JoinColumn({ name: 'id_product' })
+  public isProduct: Product; //is belong to product
 }
 
 @EventSubscriber()

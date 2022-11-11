@@ -4,16 +4,27 @@ import {
   Column,
   Entity,
   JoinColumn,
+  ManyToOne,
+  OneToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Cart } from '../cart/cart.entity';
-
+import { UserFromApi } from '../user.entity';
+@Entity()
+export class PaymentMethod extends BaseEntity {
+  @PrimaryGeneratedColumn()
+  public id_method: number;
+  @Column({ type: 'varchar' })
+  public title: string;
+  @OneToMany(() => Trans, (trans) => trans.method)
+  public trans: Trans[];
+}
 @Entity()
 export class Trans extends BaseEntity {
   @PrimaryGeneratedColumn()
   public id_trans: number;
-  @Column({ type: 'varchar', nullable: false })
+  @Column({ type: 'int' })
   public id_userFromApi: number;
   // @Column({ type: 'int', nullable: false })
   // public total: number;
@@ -21,16 +32,12 @@ export class Trans extends BaseEntity {
   public set_at: Date | null;
   @Column({ type: 'varchar' })
   public id_method: number;
-  // @OneToOne(() => Cart, { cascade: true, onDelete: 'CASCADE' })
-  // @JoinColumn({
-  //   name: 'id_userFromApi',
-  //   referencedColumnName: 'id_userFromApi',
-  // })
-  // cart: Cart;
-}
-export class PaymentMethod extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  public id_method: number;
-  @Column({ type: 'varchar' })
-  public title: string;
+
+  @ManyToOne(() => UserFromApi, (user) => user.trans)
+  @JoinColumn({ name: 'id_userFromApi' })
+  public user: UserFromApi;
+
+  @ManyToOne(() => PaymentMethod, (method) => method.trans)
+  @JoinColumn({ name: 'id_method' })
+  public method: PaymentMethod;
 }

@@ -1,6 +1,5 @@
 import { Trim } from 'class-sanitizer';
 import { IsEmail, IsOptional, IsString, MinLength } from 'class-validator';
-import { SizeTable } from './product/product.entity';
 
 export class RegisterHostDto {
   @Trim()
