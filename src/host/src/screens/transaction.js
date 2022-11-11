@@ -3,13 +3,13 @@ import Header from '../components/header';
 export default function Transaction() {
   const [property, setProperty] = useState();
   return (
-    <div className="dashboard-main">
-      <div className="dashboard-flex-box">
-        <div className="dashboard-header">
+    <div className="transaction-main">
+      <div className="transaction-flex-box">
+        <div className="transaction-header">
           <Header props={property}></Header>
         </div>
-        <div className="dashboard-content"></div>
-        <div className="dashboard-footer"></div>
+        <div className="transaction-content"></div>
+        <div className="transaction-footer"></div>
       </div>
     </div>
   );

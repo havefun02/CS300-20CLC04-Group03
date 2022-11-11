@@ -4,10 +4,10 @@ export default function Sidebar() {
   return (
     <div className="sidebar-main">
       <div className="sidebar-title">
-        <NavLink to="/dashboard">My shop</NavLink>
+        <NavLink to="/">My shop</NavLink>
       </div>
       <div className="sidebar-func">
-        <NavLink className="sidebar-func-a">
+        <NavLink to="/" className="sidebar-func-a">
           <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAABD0lEQVRoge2YMQ6CQBBFH/bGC2hpuDshnMArUYgHwAJpgFU28GfDOi+ZguYPP5A/OwuO4yxxA2qgA/qV1QENUCbQnTVpIxpMqwWuhroz6g1NxqoMdWfEfN5QPa10i4VG/RqXK5hqS3RPO4kmww2kxg2kxtLAaweNWYxaGnhYaWwdNmNNKdl+lLinNADDWaZi+BVipm8dennLSSzBUyg1WRqQ5PUHk42siRAPVR14eZONTJXXZhsZCPIaw41MhWS+ZJlChyJbAyZ5rUKV11sTaKyfqPJaYmApRjvgvMbpFzrgsmBgD4rgg7KRSjfbFDoMbiA1WRpQbWRmN3OqGzSzmznVRmZ2MweajUyp6zh/yxuZGNTcc7TV1QAAAABJRU5ErkJggg=="></img>
           <h2>DashBoard</h2>
         </NavLink>

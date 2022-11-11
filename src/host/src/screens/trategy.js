@@ -3,13 +3,13 @@ import Header from '../components/header';
 export default function Trategy() {
   const [property, setProperty] = useState();
   return (
-    <div className="dashboard-main">
-      <div className="dashboard-flex-box">
-        <div className="dashboard-header">
+    <div className="trategy-main">
+      <div className="trategy-flex-box">
+        <div className="trategy-header">
           <Header props={property}></Header>
         </div>
-        <div className="dashboard-content"></div>
-        <div className="dashboard-footer"></div>
+        <div className="trategy-content"></div>
+        <div className="trategy-footer"></div>
       </div>
     </div>
   );

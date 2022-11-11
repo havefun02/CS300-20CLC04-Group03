@@ -18,36 +18,34 @@ export default function AppRoute({ props }) {
     <BrowserRouter>
       <div className="route-main">
         <div className="route-grid">
-          <div className="route-row">
-            {isLog ? (
-              <>
-                <Sidebar></Sidebar>
-                <Routes>
-                  <Route path="/" element={<DashBoard />}></Route>
-                  <Route path="/order" element={<Order />}></Route>
-                  <Route path="/statistic" element={<Statistic />}></Route>
-                  <Route path="/transaction" element={<Transaction />}></Route>
-                  <Route path="/manage" element={<Manage />}></Route>
-                  <Route path="/trategy" element={<Trategy />}></Route>
-                </Routes>
-              </>
-            ) : (
+          {isLog ? (
+            <div className="route-row">
+              <Sidebar></Sidebar>
               <Routes>
-                <Route
-                  path="/"
-                  element={<Login props={{ isLog, setIsLog }} />}
-                ></Route>
-                <Route
-                  path="/register"
-                  element={<Register props={{ isLog, setIsLog }} />}
-                ></Route>
-                <Route
-                  path="/changepass"
-                  element={<ChangePass props={{ isLog, setIsLog }} />}
-                ></Route>
+                <Route path="/" element={<DashBoard />}></Route>
+                <Route path="/order" element={<Order />}></Route>
+                <Route path="/statistic" element={<Statistic />}></Route>
+                <Route path="/transaction" element={<Transaction />}></Route>
+                <Route path="/manage" element={<Manage />}></Route>
+                <Route path="/trategy" element={<Trategy />}></Route>
               </Routes>
-            )}
-          </div>
+            </div>
+          ) : (
+            <Routes>
+              <Route
+                path="/"
+                element={<Login props={{ isLog, setIsLog }} />}
+              ></Route>
+              <Route
+                path="/register"
+                element={<Register props={{ isLog, setIsLog }} />}
+              ></Route>
+              <Route
+                path="/changepass"
+                element={<ChangePass props={{ isLog, setIsLog }} />}
+              ></Route>
+            </Routes>
+          )}
         </div>
       </div>
     </BrowserRouter>
