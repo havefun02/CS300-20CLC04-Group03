@@ -1,7 +1,6 @@
 .login {
     display: block;
     height: 100%;
-    width: 100%;
     background-color: #fff;
   }
   .login-flex-box {
@@ -10,9 +9,9 @@
     height: 100%;
   }
   .login-child {
-    flex: 0 0 60%;
-    max-width: 60%;
-    margin-left: 20%;
+    flex: 0 0 30%;
+    max-width: 30%;
+    margin-left: 35%;
     background-color: #fff;
     display: flex;
     margin-top: 10%;
