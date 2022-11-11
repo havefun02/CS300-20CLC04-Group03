@@ -32,8 +32,8 @@
     justify-content: center;
   }
   .login-icon img {
-    width: 30px;
-    height: 30px;
+    width: 50px;
+    height: 50px;
   }
   .login-title {
     margin: 5px 0;
@@ -53,8 +53,12 @@
     display: flex;
     justify-content: center;
     text-align: center;
+    margin-top: 15px;
   }
   .login-button button {
-    height: 25px;
+    height: 30px;
     background-color: cornflowerblue;
+    border: none;
+    width: 65px;
+    
   }
