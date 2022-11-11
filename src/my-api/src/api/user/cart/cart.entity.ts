@@ -6,21 +6,22 @@ import {
   JoinColumn,
   ManyToOne,
   OneToMany,
+  OneToOne,
   PrimaryColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
 @Entity()
 export class Cart extends BaseEntity {
-  @PrimaryColumn({ type: 'int' })
-  public id_userFromApi: number;
   @PrimaryGeneratedColumn({ type: 'int' })
   public id_cart: number;
-
-  // @OneToMany(() => InCart, (items) => items.cart)
-  // public items: InCart[];
+  @Column({ type: 'int' })
+  public id_userFromApi: number;
+  @OneToMany(() => Item, (items) => items.cart)
+  public items: Item[];
 }
-export class InCart extends BaseEntity {
+@Entity()
+export class Item extends BaseEntity {
   @PrimaryColumn({ type: 'int' })
   public id_product: number;
   @PrimaryColumn({ type: 'int' })
@@ -31,7 +32,7 @@ export class InCart extends BaseEntity {
   public quantity: number;
   @PrimaryColumn({ type: 'int' })
   public id_cart: number;
-  // @ManyToOne(() => Cart, (cart) => cart.items)
-  // @JoinColumn()
-  // public cart: Cart;
+  @ManyToOne(() => Cart, (cart) => cart.items)
+  @JoinColumn({ name: 'id_cart' })
+  public cart: Cart;
 }
