@@ -11,8 +11,9 @@ export default function DashBoard() {
   });
   return (
     <div className="dashboard-main">
+            <p>hello</p>
       <div className="dashboard-flex-box">
-        <div className="dashboard-header">
+        <div className="dashboard-header">       
           <Header props={property}></Header>
         </div>
         <div className="dashboard-content"></div>
