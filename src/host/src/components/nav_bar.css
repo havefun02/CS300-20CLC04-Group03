@@ -1,0 +1,57 @@
+.nav_bar {
+  display: block;
+  height: 100%;
+}
+.nav_bar-flex-box {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: flex-start;
+}
+.nav_bar-title {
+  display: flex;
+  flex: 0 0 10%;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+}
+.nav_bar-title-item {
+  margin-right: 5px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+.nav_bar-title-item button {
+  height: 25px;
+  border: none;
+  background-color: #fff;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: 700;
+}
+.nav_bar-content {
+  height: 430px;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+div::-webkit-scrollbar {
+  width: 7px;
+}
+
+div::-webkit-scrollbar-track {
+  background: #fff;
+}
+div::-webkit-scrollbar-track-piece {
+  background: #fff;
+  height: 500px;
+}
+div::-webkit-scrollbar-thumb {
+  background: #ddd;
+}
+.nav_bar-footer {
+  flex: 0 0 10%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0.6;
+}

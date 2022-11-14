@@ -11,10 +11,12 @@
 .dashboard-header {
   display: block;
   height: 100px;
+  padding: 20px 15px;
 }
 .dashboard-content {
   display: block;
   height: 100%;
+  padding: 0px 15px;
 }
 .dashboard-footer {
   display: block;
