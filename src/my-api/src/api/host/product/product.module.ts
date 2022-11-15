@@ -1,22 +1,18 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import {
-  Category,
-  Color,
-  Product,
-  ProductProperty,
-  SizeTable,
-} from './product.entity';
-import { ProductService } from './product.service';
+import { Category } from './category.entity';
+import { Color } from './color.entity';
+import { Product, ProductDetail } from './product.entity';
+import { SizeTable } from './size.entity';
 
 @Module({
   imports: [
     TypeOrmModule.forFeature([
-      Product,
-      ProductProperty,
       Category,
       SizeTable,
       Color,
+      Product,
+      ProductDetail,
     ]),
   ],
   controllers: [],

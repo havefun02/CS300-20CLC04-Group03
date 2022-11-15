@@ -5,14 +5,16 @@ import {
   JoinColumn,
   ManyToOne,
   OneToMany,
+  OneToOne,
   PrimaryColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Product } from '../product/product.entity';
 
 @Entity()
 export class TrackingProduct extends BaseEntity {
-  @PrimaryColumn({ type: 'timestamp', nullable: false })
-  public upload_At: Date | null;
+  @PrimaryGeneratedColumn()
+  public id_track: number;
   @PrimaryColumn()
   public id_host: number;
   @Column({ type: 'int' })
@@ -21,6 +23,6 @@ export class TrackingProduct extends BaseEntity {
   public id_product: number;
   @Column({ type: 'int' })
   public price: number;
-  @Column({ type: 'text' })
-  public product_property: string;
+  @Column({ type: 'timestamp', nullable: false })
+  public upload_At: Date | null;
 }

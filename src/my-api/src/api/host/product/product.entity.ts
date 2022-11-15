@@ -1,4 +1,3 @@
-import { Exclude } from 'class-transformer';
 import {
   BaseEntity,
   Column,
@@ -14,6 +13,9 @@ import {
   PrimaryGeneratedColumn,
   UpdateEvent,
 } from 'typeorm';
+import { Category } from './category.entity';
+import { Color } from './color.entity';
+import { SizeTable } from './size.entity';
 //originals
 //run
 //basketball
@@ -24,41 +26,6 @@ import {
 //men
 //women
 //kid
-
-@Entity()
-export class SizeTable {
-  @PrimaryGeneratedColumn()
-  public id_size: number;
-  @Column({ type: 'varchar' })
-  public title: string;
-
-  @OneToMany(
-    () => ProductProperty,
-    (ProductProperty) => ProductProperty.isProduct,
-  )
-  public groupSizeProduct: ProductProperty[];
-}
-@Entity()
-export class Color {
-  @PrimaryGeneratedColumn()
-  public id_color: number;
-  @Column({ type: 'varchar' })
-  public title: string;
-  @OneToMany(
-    () => ProductProperty,
-    (groupColorProduct) => groupColorProduct.isColor,
-  )
-  public groupColorProduct: ProductProperty[];
-}
-@Entity()
-export class Category {
-  @PrimaryGeneratedColumn()
-  public id_cate!: number;
-  @Column({ type: 'varchar', nullable: false })
-  public name: string;
-  @OneToMany(() => Product, (product) => product.GroupCate, { cascade: true })
-  public product: Product[];
-}
 
 @Entity()
 export class Product extends BaseEntity {
@@ -74,23 +41,29 @@ export class Product extends BaseEntity {
   public price: number;
   @Column({ type: 'int', nullable: false })
   public rate: number;
-
   @Column({ type: 'int', nullable: true })
   public priceOnSale: number;
   @Column({ type: 'bytea', nullable: false })
   public avar: Uint8Array;
+  @Column({ type: 'timestamp', nullable: false })
+  public upload_At: Date | null;
+  @Column({})
+  public upload_By: number;
+  @OneToMany(
+    () => ProductDetail,
+    (productdetail) => productdetail.productdetail,
+    {
+      cascade: true,
+    },
+  )
+  public product: ProductDetail[]; //a group of sub product which belong to id_product
 
-  @OneToMany(() => ProductProperty, (subProduct) => subProduct.isProduct, {
-    cascade: true,
-  })
-  public subProduct: ProductProperty[]; //a group of sub product which belong to id_product
-
-  @ManyToOne(() => Category, (cate) => cate.product)
+  @ManyToOne(() => Category, (cate) => cate.products)
   @JoinColumn({ name: 'id_cate' })
-  public GroupCate: Category;
+  public cate: Category;
 }
 @Entity()
-export class ProductProperty extends BaseEntity {
+export class ProductDetail extends BaseEntity {
   @PrimaryColumn({ type: 'int' })
   public id_product: number;
   @PrimaryColumn({ type: 'int' })
@@ -99,23 +72,23 @@ export class ProductProperty extends BaseEntity {
   public id_color: number;
   @Column({ type: 'int' })
   public quantity: number;
-  @ManyToOne(() => SizeTable, (size) => size.groupSizeProduct, {
+  @ManyToOne(() => SizeTable, (size) => size.productsize, {
     cascade: true,
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'id_size' })
-  public isSize: SizeTable;
+  public size: SizeTable;
 
-  @ManyToOne(() => Color, (color) => color.groupColorProduct, {
+  @ManyToOne(() => Color, (color) => color.productcolor, {
     cascade: true,
     onDelete: 'CASCADE',
   })
   @JoinColumn({ name: 'id_color' })
-  public isColor: Color;
+  public color: Color;
 
-  @ManyToOne(() => Product, (product) => product.subProduct)
+  @ManyToOne(() => Product, (product) => product.product)
   @JoinColumn({ name: 'id_product' })
-  public isProduct: Product; //is belong to product
+  public productdetail: Product; //is belong to product
 }
 
 @EventSubscriber()

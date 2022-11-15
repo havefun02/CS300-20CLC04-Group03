@@ -2,8 +2,9 @@ import { HttpException, HttpStatus, Injectable, Post } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Any, Repository } from 'typeorm';
 import { Request } from 'express';
-import { Product, SizeTable } from './product.entity';
 import { User } from '../host.entity';
+import { Product } from './product.entity';
+import { SizeTable } from './size.entity';
 @Injectable()
 export class ProductService {
   @InjectRepository(Product)

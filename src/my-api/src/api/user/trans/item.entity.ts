@@ -1,4 +1,4 @@
-import { Product } from '@/api/host/product/product.entity';
+import internal from 'stream';
 import {
   BaseEntity,
   Column,
@@ -12,9 +12,11 @@ import {
 } from 'typeorm';
 
 @Entity()
-export class Cart extends BaseEntity {
+export class Items extends BaseEntity {
   @PrimaryColumn({ type: 'int' })
-  public id_userFromApi: number;
+  public noItems: number;
+  @Column({})
+  public id_trans: number;
   @Column({ type: 'int' })
   public id_product: number;
   @Column({ type: 'int' })
