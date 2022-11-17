@@ -11,14 +11,7 @@
   padding: 42px;
   text-align: center;
 }
-.sidebar-title a {
-  color: #fff;
-  font-size: 20px;
-}
 
-.sidebar-title:hover {
-  cursor: pointer;
-}
 .sidebar-func {
   margin-left: 20px;
   flex: 0 0 7%;
@@ -31,6 +24,15 @@
   color: #fff;
   padding: 10px 5px;
 }
+
+.sidebar-func-a1 {
+  display: flex;
+  text-decoration: none;
+  padding: 10px 5px;
+  background-color: #fff;
+  color: rgb(1, 1, 248);
+  cursor: pointer;
+}
 .sidebar-func-a img {
   width: 30px;
   height: 30px;
@@ -40,6 +42,16 @@
   font-size: 17px;
   line-height: 30px;
 }
+.sidebar-func-a1 img {
+  width: 30px;
+  height: 30px;
+}
+.sidebar-func-a1 h2 {
+  padding-left: 10px;
+  font-size: 17px;
+  line-height: 30px;
+}
+
 .sidebar-func-a:hover {
   background-color: #fff;
   color: rgb(1, 1, 248);

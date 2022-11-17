@@ -7,7 +7,6 @@ export default function Login() {
     event.preventDefault();
     const form = { id: id, password: password };
     //api
-    console.log(form);
   };
   return (
     <div className="login">
@@ -32,7 +31,6 @@ export default function Login() {
             <div className="login-input">
               <input
                 onChange={(event) => {
-                  console.log(event.target.value);
                   setPassword(event.target.value);
                 }}
                 placeholder="Password"

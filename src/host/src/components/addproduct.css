@@ -1,0 +1,96 @@
+.addform {
+  display: block;
+  height: 100%;
+}
+
+.addform-flex-box {
+  padding: 10px 10px;
+  height: 100%;
+  border: 3px solid #ccc;
+  background-color: #ddd;
+}
+.addform-flex-box form {
+  height: 100%;
+  display: flex;
+  overflow: auto;
+  justify-content: space-between;
+  flex-direction: column;
+}
+.form-container {
+  display: flex;
+  height: 100%;
+  flex-direction: row;
+}
+.addform-picture {
+  display: flex;
+  flex: 0 0 40%;
+  height: 100%;
+}
+.addform-picture label {
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
+  border: 1px solid rgb(109, 99, 99);
+}
+.addform-picture label img {
+  width: 100%;
+  height: 100%;
+}
+
+.addform-detail-product {
+  flex: 0 0 60%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  height: 100%;
+}
+.addform-button-group {
+  padding: 10px;
+  display: flex;
+  margin-right: 20px;
+  gap: 10px;
+  justify-content: flex-end;
+}
+.addform-button-group button {
+  height: 30px;
+  border: 0;
+  width: 50px;
+  background-color: #fff;
+}
+.addform-same-format {
+  outline: none;
+  border: none;
+  width: 100%;
+  padding: 0 8px;
+  flex: 0 0 8%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.addform-same-format > input {
+  padding: 5px;
+  outline: none;
+  border: none;
+  width: 100px;
+  margin-right: 10px;
+}
+
+.addform-same-format:nth-child(3) {
+  padding: 0;
+}
+.addform-another-format {
+  height: 100%;
+}
+.Dropdown-control {
+  position: relative;
+  overflow: hidden;
+  background-color: white;
+  border: none;
+  color: #333;
+  cursor: default;
+  outline: none;
+  width: 100px;
+  flex: 0 0 8%;
+  padding: 5px 10px !important;
+  transition: all 200ms ease;
+}
