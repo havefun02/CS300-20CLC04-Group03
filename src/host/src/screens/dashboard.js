@@ -4,23 +4,41 @@ import NavBar from '../components/nav_bar';
 import Table from '../components/table';
 import './dashboard.css';
 import Login from './login';
+const optionDropdownCate = [];
+const optionDropdownOrder = ['Inc', 'Dec'];
+const optionDropdownBest = ['day', 'week', 'month'];
 export default function DashBoard() {
   const [property, setProperty] = useState({
     title: 'Dashboard',
-    optional: 'Total product',
     notify: '3',
-    number: 3,
     avar: ''
   });
   const [subRoute, setSubRoute] = useState([
-    { title: 'All products', state: true, component: Table },
-    { title: 'All products1', state: false, component: Login }
+    {
+      title: 'All products',
+      optional: 'button',
+      valueOpt: []
+    },
+    {
+      title: 'Category',
+      optional: 'dropdown',
+      valueOpt: optionDropdownCate
+    },
+    {
+      title: 'OrderByPrice',
+      optional: 'dropdown',
+      valueOpt: optionDropdownOrder
+    },
+    {
+      title: 'BestSeller',
+      optional: 'dropdown',
+      valueOpt: optionDropdownBest
+    }
   ]);
   return (
     <div className="dashboard-main">
-            <p>hello</p>
       <div className="dashboard-flex-box">
-        <div className="dashboard-header">       
+        <div className="dashboard-header">
           <Header props={property}></Header>
         </div>
         <div className="dashboard-content">

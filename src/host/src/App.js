@@ -1,16 +1,13 @@
 import AppRoute from './routers/app_route';
-import React from 'react';
+import React, { createContext } from 'react';
+import { ContextProvider } from './context/context';
 function App() {
-  const [isLog, setIsLog] = React.useState(true);
-  React.useEffect(() => {
-    const getLocal = localStorage.getItem('isLog');
-    if (getLocal !== null) setIsLog(() => getLocal);
-  }, []);
-
   return (
-    <div style={style}>
-      <AppRoute props={[isLog, setIsLog]}></AppRoute>
-    </div>
+    <ContextProvider>
+      <div style={style}>
+        <AppRoute></AppRoute>
+      </div>
+    </ContextProvider>
   );
 }
 const style = {

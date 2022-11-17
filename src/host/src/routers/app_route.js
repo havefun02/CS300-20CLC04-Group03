@@ -10,9 +10,12 @@ import Login from '../screens/login';
 import Register from '../screens/register';
 import ChangePass from '../screens/changepass';
 import Statistic from '../screens/statistic';
-import React from 'react';
-export default function AppRoute({ props }) {
-  const [isLog, setIsLog] = props;
+import React, { useContext } from 'react';
+import { Context } from '../context/context';
+export default function AppRoute() {
+  const context = useContext(Context);
+
+  const [isLog, setIsLog] = [context.isLog, context.setIsLog];
   console.log(isLog);
   return (
     <BrowserRouter>
@@ -26,24 +29,16 @@ export default function AppRoute({ props }) {
                 <Route path="/order" element={<Order />}></Route>
                 <Route path="/statistic" element={<Statistic />}></Route>
                 <Route path="/transaction" element={<Transaction />}></Route>
-                <Route path="/manage" element={<Manage />}></Route>
+                <Route path="/management" element={<Manage />}></Route>
                 <Route path="/trategy" element={<Trategy />}></Route>
+                <Route path="/changepass" element={<ChangePass />}></Route>
               </Routes>
             </div>
           ) : (
             <Routes>
-              <Route
-                path="/"
-                element={<Login props={{ isLog, setIsLog }} />}
-              ></Route>
-              <Route
-                path="/register"
-                element={<Register props={{ isLog, setIsLog }} />}
-              ></Route>
-              <Route
-                path="/changepass"
-                element={<ChangePass props={{ isLog, setIsLog }} />}
-              ></Route>
+              <Route path="/" element={<Login />}></Route>
+              <Route path="/register" element={<Register />}></Route>
+              <Route path="/changepass" element={<ChangePass />}></Route>
             </Routes>
           )}
         </div>

@@ -1,11 +1,24 @@
 .transaction-main {
+  display: block;
+  width: 100%;
   height: 100%;
 }
 .transaction-flex-box {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 .transaction-header {
+  display: block;
+  height: 100px;
+  padding: 20px 15px;
 }
 .transaction-content {
+  display: block;
+  height: 100%;
+  padding: 0px 15px;
 }
 .transaction-footer {
+  display: block;
+  height: 50px;
 }

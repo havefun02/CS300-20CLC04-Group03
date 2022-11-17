@@ -1,6 +1,18 @@
+import { useState } from 'react';
 import './header.css';
+import { useContext } from 'react';
+import { Context } from '../context/context';
+import { useNavigate } from 'react-router-dom';
 export default function Header({ props }) {
+  const navigate = useNavigate();
+  const context = useContext(Context);
+  const [isLog, setIsLog] = [context.isLog, context.setIsLog];
+  const [expandHeader, setExpandHeader] = useState(false);
   const handleClick = () => {};
+  const handleClickExpand = () => {
+    setExpandHeader((expandHeader) => !expandHeader);
+  };
+
   const toBase64 = (buffer) => {
     let binary = '';
     let bytes = new Uint8Array(buffer);
@@ -16,9 +28,6 @@ export default function Header({ props }) {
         <div className="header-left-group">
           <div className="header-title">
             <h2>{props.title}</h2>
-            <h4>
-              {props.optional} {props.number}
-            </h4>
           </div>
         </div>
         <div className="header-right-group">
@@ -29,8 +38,57 @@ export default function Header({ props }) {
             </button>
           </div>
           <div className="header-profile">
-            <img src={`data:image/png;base64,${toBase64(props.avar)}`}></img>
-            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABmJLR0QA/wD/AP+gvaeTAAAAzklEQVRoge3ROw7CMBCE4REFMrdNyb0okpwOGkYJFlYSx49dmF/azsV8MqCUUkoppVp26T1gR5sbrwAeAO71t2Q3AJgA3FIPiHi+zyJmwLJvRgITQ6xh1ghCQuqxVcwhBLOGyUIwK5hTCNYbUwTBemGKIlhrTBUEa4WpimC1MU0QrBamKYKVxnRBsFKYrgh2FmMCwXIxphDsKMYkgu3FmEawLYwLBEthXCFYADDic/j6RjhAsG8/4+Yn4mKMSwQjxjWCBfwAQimllFLqn3sB3HSxLkcapNkAAAAASUVORK5CYII="></img>
+            <div
+              style={{
+                flex: '0 0 30px',
+                height: '30px',
+                cursor: 'pointer'
+              }}
+            >
+              <img
+                style={{ borderRadius: '50%', border: '1px solid #ddd' }}
+                width={'30px'}
+                height="30px"
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABmJLR0QA/wD/AP+gvaeTAAAAzklEQVRoge3ROw7CMBCE4REFMrdNyb0okpwOGkYJFlYSx49dmF/azsV8MqCUUkoppVp26T1gR5sbrwAeAO71t2Q3AJgA3FIPiHi+zyJmwLJvRgITQ6xh1ghCQuqxVcwhBLOGyUIwK5hTCNYbUwTBemGKIlhrTBUEa4WpimC1MU0QrBamKYKVxnRBsFKYrgh2FmMCwXIxphDsKMYkgu3FmEawLYwLBEthXCFYADDic/j6RjhAsG8/4+Yn4mKMSwQjxjWCBfwAQimllFLqn3sB3HSxLkcapNkAAAAASUVORK5CYII="
+              ></img>
+            </div>
+            <div
+              onClick={handleClickExpand}
+              style={{
+                flex: '0 0 15px',
+                maxWidth: '15px',
+                borderRadius: '50%',
+                cursor: 'pointer',
+                position: 'relative',
+                width: '15px'
+              }}
+            >
+              <img
+                width="15px"
+                height="15px"
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABmJLR0QA/wD/AP+gvaeTAAAAzklEQVRoge3ROw7CMBCE4REFMrdNyb0okpwOGkYJFlYSx49dmF/azsV8MqCUUkoppVp26T1gR5sbrwAeAO71t2Q3AJgA3FIPiHi+zyJmwLJvRgITQ6xh1ghCQuqxVcwhBLOGyUIwK5hTCNYbUwTBemGKIlhrTBUEa4WpimC1MU0QrBamKYKVxnRBsFKYrgh2FmMCwXIxphDsKMYkgu3FmEawLYwLBEthXCFYADDic/j6RjhAsG8/4+Yn4mKMSwQjxjWCBfwAQimllFLqn3sB3HSxLkcapNkAAAAASUVORK5CYII="
+              ></img>
+              {expandHeader && (
+                <div className="header-expand">
+                  <button
+                    onClick={() => {
+                      navigate('/');
+                      localStorage.setItem('isLog', false);
+                      setIsLog((isLog) => !isLog);
+                    }}
+                  >
+                    Log out
+                  </button>
+                  <button
+                    onClick={() => {
+                      navigate('/changepass');
+                    }}
+                  >
+                    Change PassWord
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

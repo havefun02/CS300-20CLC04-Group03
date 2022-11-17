@@ -1,49 +1,41 @@
-.nav_bar {
+.manage_bar {
   display: block;
   height: 100%;
 }
-.nav_bar-flex-box {
+.manage_bar-flex-box {
   display: flex;
   flex-direction: column;
   height: 100%;
   justify-content: flex-start;
   position: relative;
 }
-.nav_bar-title {
+.manage_bar-title {
   display: flex;
   flex: 0 0 10%;
   justify-content: flex-start;
   align-items: center;
   flex-direction: row;
 }
-.nav_bar-title-item {
-  flex: 0 0 20%;
+.manage_bar-title-item {
+  flex: 0 0 15%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: flex-start;
 }
-.nav_bar-title-item .option {
+.manage_bar-title-item button {
+  border: none;
   height: 25px;
-  border: none !important;
   background-color: #fff;
   cursor: pointer;
   font-size: 20px;
   font-weight: 700;
   z-index: 100;
   padding: 0;
-  padding-right: 10px;
   border-radius: 0;
 }
-.nav_bar-title-item .arrow {
-  right: 0 !important;
-  top: 10px !important;
-}
-.nav_bar-title-item .menu {
-  width: max-content;
-}
 
-.nav_bar-content {
+.manage_bar-content {
   height: 430px;
   overflow-y: scroll;
   scrollbar-width: none;
@@ -63,22 +55,10 @@ div::-webkit-scrollbar-track-piece {
 div::-webkit-scrollbar-thumb {
   background: #ddd;
 }
-.nav_bar-footer {
+.manage_bar-footer {
   flex: 0 0 10%;
   display: flex;
   justify-content: center;
   align-items: center;
   opacity: 0.6;
-}
-
-.nav_bar-title-item .Dropdown-root {
-  height: 100%;
-}
-.nav_bar-title-item .Dropdown-control {
-  display: flex;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
-  font-size: 20px;
-  font-weight: 700;
 }
