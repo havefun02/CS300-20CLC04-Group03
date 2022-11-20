@@ -1,0 +1,95 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+.overlay-flex-box {
+  position: relative;
+  width: 300px;
+  height: 400px;
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  margin-top: -100px;
+  margin-left: -150px;
+  background-color: #f2f2f2;
+  text-align: center;
+  z-index: 11;
+  display: flex;
+  flex-direction: column;
+}
+.overlay-title {
+  padding: 50px 20px;
+  flex: 0 0 20%;
+  justify-content: center;
+  align-items: center;
+}
+.overlay-avar {
+  flex: 0 0 20%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.overlay-avar img {
+  width: 30px;
+  height: 30px;
+  margin-bottom: 10px;
+}
+.overlay-gr-button {
+  flex: 0 0 60%;
+  flex-direction: row;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  max-width: 200px;
+  padding-top: 40px;
+  margin: 0 auto;
+}
+.overlay-gg {
+  height: 40px;
+  width: 80px;
+  background-color: #ddd;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  border: 1px solid #000;
+
+  align-items: center;
+}
+.overlay-gg img {
+  width: 30px;
+  height: 30px;
+}
+.overlay-fb {
+  border: 1px solid #000;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  height: 40px;
+  width: 80px;
+  background-color: #ddd;
+}
+.overlay-fb img {
+  width: 30px;
+  height: 30px;
+}
+
+.overlay-exit {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 30px;
+  height: 30px;
+  background-color: #ccc;
+}
+.overlay-exit img {
+  width: 30px;
+  height: 30px;
+}

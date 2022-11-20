@@ -1,0 +1,41 @@
+.footer {
+  display: block;
+  flex: 0 0 300px;
+  background-color: rgb(39, 36, 36);
+}
+.footer-flex-box {
+  width: 100%;
+  margin: 0 auto;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  padding: 30px 50px;
+}
+.footer-container {
+  flex: 0 0 250px;
+  color: #f1f1f1;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.footer-container div {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.footer-button-bar {
+  flex: 0 0 50px;
+  color: #f1f1f1;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.footer-button-bar div {
+  display: flex;
+  align-items: center;
+}
+.footer-button-bar h4 {
+  font-weight: 100;
+  font-size: 10;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}

@@ -1,0 +1,15 @@
+.route-main {
+  height: 100%;
+  display: block;
+}
+.route-grid {
+  height: 100%;
+  overflow-y: auto;
+}
+.route-flex-box {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow-y: auto;
+}

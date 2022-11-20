@@ -1,0 +1,42 @@
+.imgoverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 1030;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+.imgoverlay-flex-box {
+  width: 80%;
+  height: 80%;
+  position: fixed;
+  top: 10%;
+  left: 10%;
+  background-color: #f2f2f2;
+  text-align: center;
+  z-index: 1031;
+  display: flex;
+  flex-direction: column;
+}
+.imgoverlay-background {
+  width: 100%;
+  height: 100%;
+}
+.imgoverlay-background img {
+  width: 100%;
+  height: 100%;
+}
+.imgoverlay-exit {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 30px;
+  height: 30px;
+  background-color: #ccc;
+}
+.imgoverlay-exit img {
+  width: 30px;
+  height: 30px;
+}
