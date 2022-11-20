@@ -1,0 +1,108 @@
+.page {
+  display: block;
+  flex: 0 0 auto;
+}
+.page-flex-box {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.page-title {
+  padding: 20px;
+  display: flex;
+  flex: 0 0 50px;
+  align-items: center;
+  justify-content: center;
+}
+.page-function {
+  border-bottom: 1px solid #ddd;
+  border-top: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: row;
+  flex: 0 0 50px;
+  padding: 10px 30px;
+}
+.page-function .page-view,
+.page-product,
+.page-filter {
+  height: 100%;
+  display: flex;
+  flex: 0 0 100px;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.page-function .page-view h3,
+.page-product h3,
+.page-filter h3 {
+  font-size: 15px;
+  font-weight: 100;
+}
+.page-view img {
+  height: 20px;
+  width: 20px;
+  opacity: 0.4;
+}
+
+.page-display {
+  display: flex;
+  flex: 0 0 auto;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+  flex-direction: row;
+  margin-top: 10px;
+}
+.product {
+  flex: 0 0 25%;
+  height: 400px;
+  display: block;
+  margin-bottom: 3px;
+  position: relative;
+}
+.product-flex-box {
+  margin: 0 5px;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-flex-box img {
+  flex: 0 0 300px;
+  width: 100%;
+  margin-bottom: 10px;
+}
+.product-flex-box h4 {
+  font-weight: 100;
+  padding: 3px 0;
+}
+.product-flex-box h3 {
+  padding: 5px 0;
+}
+
+.product-add-like {
+  position: absolute;
+  right: 5px;
+  bottom: 40px;
+}
+
+.product-add-cart {
+  position: absolute;
+  right: 5px;
+  bottom: 10px;
+}
+.product-add-cart span,
+.product-add-like span {
+  position: absolute;
+  border: 1px solid #000;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  right: 0;
+  top: 0;
+  background-color: #ccc;
+  font-size: 13px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}

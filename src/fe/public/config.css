@@ -1,0 +1,11 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html,
+body,
+#root {
+  font-family: Helvetica, 'Helvetica Neue', Arial, 'Lucida Grande', sans-serif;
+  height: 100vh;
+}
