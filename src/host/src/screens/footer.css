@@ -1,0 +1,151 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Roboto;
+}
+
+footer{
+    position: relative;
+    width: 100%;
+    height: auto;
+    padding: 50px 100px;
+    background: #E8AF02;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: nowrap;
+}
+
+.container{
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    flex-direction: row;
+}
+
+.footer_contact{
+  margin-right: 150px;
+  margin-left: 50px;
+}
+
+.footer_contact h2{
+    position: relative;
+    color: #fff;
+    font-weight: 600;
+    margin-bottom: 15px;
+    font-size: 30px;
+}
+.footer_contact h2:before{
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 50px;
+    height: 2px;
+    background: #f00;
+}
+.footer_contact ul li{
+     list-style: none;
+ }
+.footer_contact ul li a{
+  color: #fff;
+  text-decoration: none;
+  margin-bottom: 7px;
+  display: inline-block;
+}
+
+
+.footer_navigate h2{
+     position: relative;
+     color: #fff;
+     font-weight: 600;
+     margin-bottom: 15px;
+  font-size: 30px;
+ }
+.footer_navigate h2::before{
+     content: '';
+     position: absolute;
+     bottom: -5px;
+     left: 0;
+     width: 50px;
+     height: 2px;
+     background: #f00;
+ }
+.footer_navigate{
+    position: relative;  
+ }
+ .footer_navigate ul li{
+     list-style: none;
+ }
+ .footer_navigate ul li a{
+     color: #fff;
+     text-decoration: none;
+     margin-bottom: 7px;
+     display: inline-block;
+   
+ }
+
+
+.footer_brand h2{
+     position: relative;
+     color: #fff;
+     font-weight: 600;
+     margin-bottom: 15px;
+     font-size: 30px;
+ }
+.footer_brand h2::before{
+     content: '';
+     position: absolute;
+     bottom: -5px;
+     left: 0;
+     width: 50px;
+     height: 2px;
+     background: #f00;
+ }
+.footer_brand{
+    position: relative;  
+    margin-right: 150px;
+ }
+ .footer_brand ul li{
+     list-style: none;
+ }
+ .footer_brand ul li a{
+     color: #fff;
+     text-decoration: none;
+     margin-bottom: 7px;
+     display: inline-block;
+   
+ }
+
+.footer_logo{
+  position:absolute;
+  height: auto;
+  width: 400px;
+  right: 0;
+  top: 0;
+  object-fit: fill;
+}
+
+.social-icon{
+    margin-top: 20px;
+    display: flex;
+}
+.social-icon img{
+  height: 40px;
+  width: 40px;
+  border-radius: 4px;
+}
+.social-icon li {
+    list-style: none;
+}
+.social-icon li a{
+    display: inline-block;
+    width: 40px;
+    height: 40px; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 15px;
+    text-decoration: none;
+    border-radius: 4px;
+}
