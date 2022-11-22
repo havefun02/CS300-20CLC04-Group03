@@ -13,6 +13,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateEvent,
 } from 'typeorm';
+import { Brand } from './brand.entity';
 import { Category } from './category.entity';
 import { Color } from './color.entity';
 import { SizeTable } from './size.entity';
@@ -37,6 +38,8 @@ export class Product extends BaseEntity {
   public id_cate: number;
   @Column({ type: 'varchar', nullable: false })
   public name: string | null;
+  @Column({ type: 'text', nullable: false })
+  public description: string | null;
   @Column({ type: 'int', nullable: false })
   public price: number;
   @Column({ type: 'int', nullable: false })
@@ -61,6 +64,9 @@ export class Product extends BaseEntity {
   @ManyToOne(() => Category, (cate) => cate.products)
   @JoinColumn({ name: 'id_cate' })
   public cate: Category;
+  @ManyToOne(() => Brand, (brand) => brand.product_brand)
+  @JoinColumn({ name: 'id_brand' })
+  public brand: Brand;
 }
 @Entity()
 export class ProductDetail extends BaseEntity {

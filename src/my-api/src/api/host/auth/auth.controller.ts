@@ -24,13 +24,11 @@ export class AuthController {
     @Req() req: Request,
     @Body() body: RegisterDto,
   ): Promise<User | never> {
-    console.log(req);
     return this.service.register(body);
   }
 
   @Post('login')
   private login(@Body() body: LoginDto): Promise<string | never> {
-    console.log(body);
     return this.service.login(body);
   }
 

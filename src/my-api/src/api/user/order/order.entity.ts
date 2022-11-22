@@ -29,6 +29,10 @@ export class Order extends BaseEntity {
   public set_at: Date | null;
   @Column({ type: 'varchar' })
   public id_method: number;
+
+  @Column({ type: 'varchar' })
+  public state: string;
+
   @ManyToOne(() => UserFromApi, (user) => user.trans)
   @JoinColumn({ name: 'id_userFromApi' })
   public user: UserFromApi;

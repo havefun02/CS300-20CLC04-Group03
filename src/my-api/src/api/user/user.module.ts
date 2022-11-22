@@ -10,12 +10,7 @@ import { Order } from './order/order.entity';
 import { OrderModule } from './order/order.module';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([UserFromApi]),
-    OrderModule,
-    TransModule,
-    CartModule,
-  ],
+  imports: [TypeOrmModule.forFeature([UserFromApi]), OrderModule, CartModule],
   controllers: [UserController],
   providers: [UserService, GoogleStrategy],
 })

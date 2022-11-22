@@ -27,7 +27,7 @@ export class Trans extends BaseEntity {
   @ManyToOne(() => UserFromApi, (user) => user.trans)
   @JoinColumn({ name: 'id_userFromApi' })
   public user: UserFromApi;
-  @ManyToOne(() => PaymentMethod, (method) => method.trans)
-  @JoinColumn({ name: 'id_method' })
-  public method: PaymentMethod;
+  // @ManyToOne(() => PaymentMethod, (method) => method.trans)
+  // @JoinColumn({ name: 'id_method' })
+  // public method: PaymentMethod;
 }
