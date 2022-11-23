@@ -47,40 +47,59 @@
   display: flex;
   width: 100%;
   justify-content: space-between;
-  max-width: 200px;
+  max-width: 240px;
   padding-top: 40px;
   margin: 0 auto;
 }
 .overlay-gg {
-  height: 40px;
-  width: 80px;
+  height: 45px;
+  flex: 0 0 100px;
+  margin: 0 5px;
   background-color: #ddd;
   display: flex;
   justify-content: center;
   flex-direction: column;
-  border: 1px solid #000;
-
   align-items: center;
 }
-.overlay-gg img {
-  width: 30px;
-  height: 30px;
+.overlay-gg button {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  box-shadow: none;
+}
+.overlay-gg button div {
+  border-radius: 0;
+}
+.overlay-fb button div {
+  border-radius: 0;
+}
+.overlay-fb span {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  box-shadow: none;
+}
+.overlay-fb button {
+  width: 100%;
+  padding: 5px;
+  font-size: 13px;
 }
 .overlay-fb {
-  border: 1px solid #000;
+  height: 45px;
+  flex: 0 0 100px;
+  margin: 0 5px;
+  background-color: #ddd;
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  height: 40px;
-  width: 80px;
-  background-color: #ddd;
-}
-.overlay-fb img {
-  width: 30px;
-  height: 30px;
+  box-shadow: rgb(0 0 0 / 24%) 0px 2px 2px 0px, rgb(0 0 0 / 24%) 0px 0px 1px 0px;
 }
 
+.kep-login-facebook {
+  padding: 0;
+  margin: 0;
+}
 .overlay-exit {
   position: absolute;
   top: 0;
