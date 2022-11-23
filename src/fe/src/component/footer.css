@@ -43,24 +43,19 @@
 footer {
   flex: 0 0 400px;
   position: relative;
-  width: 100%;
   padding: 50px 100px;
   background: #171716;
   display: flex;
-  justify-content: space-around;
-  flex-wrap: nowrap;
 }
 
 .container {
+  flex: 0 0 100%;
   display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
+  justify-content: space-evenly;
   flex-direction: row;
 }
 
 .footer_contact {
-  margin-right: 150px;
-  margin-left: 50px;
 }
 
 .footer_contact h2 {
@@ -136,7 +131,6 @@ footer {
 }
 .footer_brand {
   position: relative;
-  margin-right: 150px;
 }
 .footer_brand ul li {
   list-style: none;

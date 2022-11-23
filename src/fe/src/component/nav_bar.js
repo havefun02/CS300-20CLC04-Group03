@@ -1,13 +1,16 @@
 import { useState } from 'react';
 import LoginOverlay from './loginOverlay';
 import './nav_bar.css';
+import { useContext } from 'react';
+import { Context } from '../context/context';
 import { useNavigate } from 'react-router-dom';
 export default function Navbar({ props }) {
+  const context = useContext(Context);
   const navigate = useNavigate();
   const [search, setSearch] = useState(false);
   const [searchContent, setSearchContent] = useState('');
-
   const [overlay, setOverlay] = useState(false);
+  const [isLog, setIsLog] = [context.isLog, context.setIsLog];
   return (
     <div className="nav">
       <div className="nav-flex-box">
@@ -100,7 +103,14 @@ export default function Navbar({ props }) {
           </div>
           <div className="nav-shopping-cart">
             <span>5</span>
-            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAAhElEQVRIie2V3QqAIAxGT9HDVa8dvYj2HNVFeZH5NzGI7IMhDtzZnDioQSOggc0yDQwlAK7gxlQJgAmW6r+oLZFBSI21j2Ykjft4BV0sA6FuN/B4BSmAGZgEfjFgxd18nz+opLctOf+KHvyAjwGWc/X9/zGDY354NXAMkVyAAvqMQmvWDjXkPzRJsutpAAAAAElFTkSuQmCC"></img>
+            <img
+              onClick={() => {
+                setOverlay((overlay) => !overlay);
+                console.log(isLog);
+                if (isLog === false) navigate('/cart');
+              }}
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAAhElEQVRIie2V3QqAIAxGT9HDVa8dvYj2HNVFeZH5NzGI7IMhDtzZnDioQSOggc0yDQwlAK7gxlQJgAmW6r+oLZFBSI21j2Ykjft4BV0sA6FuN/B4BSmAGZgEfjFgxd18nz+opLctOf+KHvyAjwGWc/X9/zGDY354NXAMkVyAAvqMQmvWDjXkPzRJsutpAAAAAElFTkSuQmCC"
+            ></img>
           </div>
         </div>
         {props.isLog === true && (
