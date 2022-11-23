@@ -7,6 +7,7 @@ import { useState } from 'react';
 import ImgOverlay from '../component/imgoverlay';
 import Page from '../screen/shoppage';
 import Footer from '../component/footer';
+import Cart from '../screen/cart';
 export default function AppRoute() {
   const context = useContext(Context);
   const [isLog, setIsLog] = [context.isLog, context.setIsLog];
@@ -55,7 +56,7 @@ export default function AppRoute() {
               <Routes>
                 <Route
                   path="/cart"
-                  element={<Page props={{ title: 'Liked' }} />}
+                  element={<Cart props={{ title: 'Cart' }} />}
                 ></Route>
                 <Route
                   path="/buy"

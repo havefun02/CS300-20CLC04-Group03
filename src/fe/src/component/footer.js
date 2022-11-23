@@ -121,7 +121,7 @@ export default function Footer() {
         </div>
 
         <div className="footer_navigate">
-          <h2>Navigate</h2>
+          <h2>Categories</h2>
           <ul>
             <li>
               <a href="#">DashBoard</a>
@@ -179,10 +179,15 @@ export default function Footer() {
       </div>
       <h4
         style={{
+          width: '120px',
           position: 'absolute',
           bottom: '20px',
           fontWeight: 100,
-          color: '#ddd'
+          color: '#ddd',
+          left: '50%',
+          marginLeft: '-60px',
+          display: 'flex',
+          justifyContent: 'center'
         }}
       >
         power by @gr3
