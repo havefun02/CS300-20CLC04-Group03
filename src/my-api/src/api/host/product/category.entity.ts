@@ -1,4 +1,5 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { TrackingProduct } from '../tracking/tracking.entity';
 import { Product } from './product.entity';
 
 @Entity()
@@ -9,4 +10,8 @@ export class Category {
   public name: string;
   @OneToMany(() => Product, (product) => product.cate, { cascade: true })
   public products: Product[];
+  @OneToMany(() => TrackingProduct, (productTracking) => productTracking.cate, {
+    cascade: true,
+  })
+  public productTracking: TrackingProduct[];
 }
