@@ -5,28 +5,32 @@
 .nav_bar-flex-box {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  flex: 0 0 90%;
   justify-content: flex-start;
   position: relative;
+  border: 1px solid #ccc;
 }
 .nav_bar-title {
+  padding: 5px 20px;
   display: flex;
-  flex: 0 0 10%;
+  flex: 0 0 40px;
   justify-content: flex-start;
   align-items: center;
   flex-direction: row;
+  background-color: #ccc;
 }
 .nav_bar-title-item {
   flex: 0 0 20%;
   height: 100%;
+  font-size: 15px;
   display: flex;
   align-items: center;
   justify-content: flex-start;
 }
 .nav_bar-title-item .option {
   height: 25px;
+  background-color: #ccc;
   border: none !important;
-  background-color: #fff;
   cursor: pointer;
   font-size: 20px;
   font-weight: 700;
@@ -35,17 +39,25 @@
   padding-right: 10px;
   border-radius: 0;
 }
-.nav_bar-title-item .arrow {
-  right: 0 !important;
-  top: 10px !important;
+.nav_bar-title-item .Dropdown-arrow {
+  top: 50%;
+  right: 0;
 }
 .nav_bar-title-item .menu {
   width: max-content;
 }
-
+.nav_bar-title-item .Dropdown-control {
+  display: flex;
+  align-items: center;
+  background-color: #ccc;
+  cursor: pointer;
+}
+.nav_bar-title-item .Dropdown-control div {
+  font-size: 16px;
+}
 .nav_bar-content {
-  height: 430px;
-  overflow-y: scroll;
+  flex: 0 0 430px;
+  overflow-y: hidden;
   scrollbar-width: none;
   z-index: 1;
 }

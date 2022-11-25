@@ -1,30 +1,60 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import shortid from 'shortid';
 import './table.css';
 export default function Table({ props }) {
   const [header, setHeader] = useState(props.header);
   const [list, setList] = useState(props.list);
-
-  return (
-    <table className="table">
-      <thead>
-        <tr>
-          {header.map((item) => {
-            return <th key={shortid.generate()}>{item}</th>;
-          })}
-        </tr>
-      </thead>
-      <tbody>
-        {list.map((items) => {
+  const HeaderTable = ({ props }) => {
+    return (
+      <div className="header">
+        {props.map((ele) => {
           return (
-            <tr key={shortid.generate()}>
-              {items.map((item) => {
-                return <td key={shortid.generate()}>{item}</td>;
-              })}
-            </tr>
+            <div
+              key={shortid.generate()}
+              style={{
+                flex: 'auto',
+                textAlign: 'center'
+              }}
+            >
+              <h3>{ele}</h3>
+            </div>
           );
         })}
-      </tbody>
-    </table>
+      </div>
+    );
+  };
+
+  const RowData = ({ props }) => {
+    return (
+      <>
+        <div className="row-data">
+          {props.map((ele) => {
+            return (
+              <div
+                key={shortid.generate()}
+                style={{ flex: 'auto', textAlign: 'center' }}
+              >
+                <h3>{ele}</h3>
+              </div>
+            );
+          })}
+        </div>
+      </>
+    );
+  };
+  return (
+    <div className="table-table">
+      <div className="table-table-flex-box">
+        <HeaderTable props={header}></HeaderTable>
+        <div className="table-table-row">
+          {list.map((ele) => {
+            return <RowData key={shortid.generate()} props={ele}></RowData>;
+          })}
+        </div>
+      </div>
+      <div className="table-footer">
+        <span>total</span>
+      </div>
+    </div>
   );
 }
