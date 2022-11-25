@@ -38,8 +38,8 @@ export default function NavBar({ props }) {
                 key={shortid.generate()}
               >
                 {items.optional === 'button' && (
-                  <button className="option" style={{ borderBottom: border }}>
-                    {items.title}
+                  <button className="option">
+                    <span style={{ fontSize: '15px' }}>{items.title}</span>
                   </button>
                 )}
                 {items.optional === 'dropdown' && (
@@ -55,10 +55,6 @@ export default function NavBar({ props }) {
 
         <div className="nav_bar-content">
           <Table props={{ header: header, list: list }} />
-        </div>
-
-        <div className="nav_bar-footer">
-          <h5>dev by</h5>
         </div>
       </div>
     </div>

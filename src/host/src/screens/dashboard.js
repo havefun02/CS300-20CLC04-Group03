@@ -44,7 +44,6 @@ export default function DashBoard() {
         <div className="dashboard-content">
           <NavBar props={subRoute} />
         </div>
-        <div className="dashboard-footer"></div>
       </div>
     </div>
   );

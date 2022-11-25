@@ -5,12 +5,12 @@ import './managebar.css';
 export default function ManageBar({ props }) {
   const [routers, setRoutes] = useState(props); //replace this object by props
   const [list, setList] = useState([
-    ['id', 'id1', 'id2'],
-    ['id', 'id1', 'id2'],
-    ['id', 'id1', 'id2'],
-    ['id', 'id1', 'id2'],
-    ['id', 'id1', 'id2'],
-    ['id', 'id1', 'id2'],
+    ['id1', 'id1', 'id2'],
+    ['id2', 'id1', 'id2'],
+    ['id3', 'id1', 'id2'],
+    ['id4', 'id1', 'id2'],
+    ['id5', 'id1', 'id2'],
+    ['id6', 'id1', 'id2'],
     ['id', 'id1', 'id2'],
     ['id', 'id1', 'id2'],
     ['id', 'id1', 'id2'],
@@ -52,9 +52,8 @@ export default function ManageBar({ props }) {
                   onClick={() => {
                     handleClick(items.title);
                   }}
-                  style={{ borderBottom: border }}
                 >
-                  {items.title}
+                  <span style={{ fontSize: '15px' }}>{items.title}</span>
                 </button>
               </div>
             );
@@ -69,9 +68,9 @@ export default function ManageBar({ props }) {
               </div>
             );
         })}
-        <div className="manage_bar-footer">
+        {/* <div className="manage_bar-footer">
           <h5>dev by</h5>
-        </div>
+        </div> */}
       </div>
     </div>
   );

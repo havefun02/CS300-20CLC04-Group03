@@ -1,4 +1,4 @@
-.table-table {
+.manageTask-table {
   font-family: Arial, Helvetica, sans-serif;
   width: 100%;
   height: 100%;
@@ -6,33 +6,32 @@
   flex-direction: column;
   overflow: hidden;
 }
-.table-table-flex-box {
+.manageTask-table-flex-box {
   display: flex;
   position: relative;
   flex: 0 0 95%;
   flex-direction: column;
 }
 
-.table-table .header {
+.manageTask-table .header {
   flex: 0 0 10%;
   display: flex;
   background-color: #ccc;
-  align-items: center;
   color: #000;
 }
-.table-table .header .select {
+.manageTask-table .header .select {
   flex: 0 0 50px;
   display: flex;
   margin-right: 3px;
   justify-content: center;
 }
-.table-table .select {
+.manageTask-table .select {
   flex: 0 0 44px;
   display: flex;
   justify-content: center;
 }
 
-.table-table-row {
+.manageTask-table-row {
   display: flex;
   flex: 0 0 90%;
   overflow: auto;
@@ -40,21 +39,37 @@
   position: relative;
 }
 
-.table-table .row-data {
+.manageTask-table .row-data {
   flex: 0 0 10%;
   display: flex;
   background-color: #f2f2f2;
   color: #000;
   flex-direction: row;
 }
-.table-table .row-data:hover {
+.manageTask-table .row-data:hover {
   cursor: pointer;
   background-color: rgb(74, 68, 68);
 }
 
-.table-footer {
+.manageTask-table-bt-group {
+  flex: 0 0 10%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  border-top: 1px solid#ccc;
+}
+.manageTask-table-bt-group button {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  width: 200px;
+  height: 30px;
+  background-color: #ddd;
+  border-radius: 30px;
+}
+.manageTask-footer {
   flex: 0 0 5%;
-  border-top: 2px solid #ddd;
   display: flex;
   align-items: center;
   justify-content: center;

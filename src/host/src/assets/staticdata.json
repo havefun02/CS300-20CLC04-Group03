@@ -1,6 +1,7 @@
 {
   "description": "A list of fruits.",
   "cate": ["originals", "run", "basketball", "sport", "tenis", "football"],
+  "brand": ["originals", "run", "basketball", "sport", "tenis", "football"],
   "size": [
     "6 UK",
     "6.5 UK",

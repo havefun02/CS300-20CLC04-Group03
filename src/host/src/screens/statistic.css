@@ -1,11 +1,40 @@
 .statistic-main {
   height: 100%;
+  width: 100%;
+}
+
+.statistic-main {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 .statistic-flex-box {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 .statistic-header {
+  display: block;
+  flex: 0 0 70px;
+  padding: 20px 15px;
 }
 .statistic-content {
+  display: block;
+  flex: 0 0 450px;
+  padding: 0px 15px;
+  position: relative;
 }
+.statistic-revenue {
+  display: block;
+  width: 410px;
+  height: 360px;
+  border: 2px solid #ddd;
+  position: absolute;
+}
+.statistic-footer {
+  display: block;
+  height: 50px;
+}
+
 .statistic-footer {
 }

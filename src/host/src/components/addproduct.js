@@ -39,10 +39,8 @@ export default function AddForm({ props }) {
                     setPrice(() => e.target.value);
                   }}
                 ></input>
-                <Dropdown
-                  options={data.cate}
-                  placeholder={'category'}
-                ></Dropdown>
+                <Dropdown options={data.cate} placeholder="Category"></Dropdown>
+                <Dropdown options={data.brand} placeholder="Brand"></Dropdown>
               </div>
               <div className="addform-another-format">
                 <CheckList props={[data.size, data.color]}></CheckList>
@@ -59,7 +57,10 @@ export default function AddForm({ props }) {
                 hidden
                 accept="image/png, image/jpeg"
               />
-              <label htmlFor="avar">{avar && <img src={avar}></img>}</label>
+              <label htmlFor="avar">
+                {!avar && <span>Upload picture here</span>}
+                {avar && <img src={avar}></img>}
+              </label>
             </div>
           </div>
           <div className="addform-button-group">
