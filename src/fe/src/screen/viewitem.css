@@ -1,0 +1,55 @@
+.container{
+    display: flex;
+    justify-content: flex-start;
+    gap: 80px;
+}
+  
+.image{
+position: relative;
+height: 600px;
+width: auto;
+}
+
+.img-container{
+display: flex;
+flex-direction: column;
+}
+.box-container{
+display: flex;
+gap: 10px;
+flex-wrap: wrap;
+}
+.size-box{
+width: 15px;
+padding: 10px;
+border: 3px solid black;
+margin: 0;
+
+
+background: linear-gradient(to left, white 50%,blue 50% ) right;
+background-size: 200%;    
+transition: .1s ease-out;
+}
+
+.size-box:hover{
+color: white;
+background-position: left;
+}
+
+.add-container{
+width: 380px;
+padding: 20px;
+background-color: blue;
+margin-left: 40px;
+text-align: center;
+color: white;
+font-size: 20px;
+
+background: linear-gradient(to left, blue 50%,black 50% ) right;
+background-size: 200%;
+transition: .5s ease-out;
+}
+
+.add-container:hover{
+background-position: left;
+}
