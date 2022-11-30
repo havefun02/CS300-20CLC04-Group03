@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "react-dropdown": "^1.11.0",
+    "shortid": "^2.2.16"
+  }
+}
