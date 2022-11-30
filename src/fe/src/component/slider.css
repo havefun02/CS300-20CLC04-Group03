@@ -1,0 +1,23 @@
+.slider{
+    width: 1200px;
+    height: 800px;
+    background: url(https://i.ytimg.com/vi/XsBWfwj-Si8/maxresdefault.jpg);
+    margin: 100px auto;
+    animation: slide 20s ease infinite;
+  } 
+  
+  @keyframes slide{
+  
+    25%{
+      background: url(https://cdnmedia.baotintuc.vn/Upload/cVJiASFv9S8nriO7eNwA/files/2022/11/21-11/Hinh%201-3.jpg);
+    }
+    50%{
+      background: url(https://brand.assets.adidas.com/image/upload/f_auto,q_auto,fl_lossy/if_w_gt_1920,w_1920/viVN/Images/football-fw22-worldcup-brandcampaign-launch-glp-kickoff-masthead-d_tcm337-961931.jpg);
+    }
+    75%{
+      background: url(https://www.sportbuzzbusiness.fr/wp-content/uploads/2022/11/lionel-messi-5-joueurs-coupes-du-monde-publicit%C3%A9-adidas-the-impossible-rondo-qatar-2022.jpg);
+    }
+    100%{
+      background: url(https://i.ytimg.com/vi/XsBWfwj-Si8/maxresdefault.jpg);
+    }
+  }
