@@ -1,6 +1,7 @@
 .statistic-main {
   height: 100%;
   width: 100%;
+  overflow: auto;
 }
 
 .statistic-main {
@@ -11,30 +12,65 @@
 .statistic-flex-box {
   display: flex;
   flex-direction: column;
+  overflow: hidden;
   height: 100%;
 }
 .statistic-header {
   display: block;
-  flex: 0 0 70px;
-  padding: 20px 15px;
+  flex: 0 0 10%;
 }
 .statistic-content {
+  display: flex;
+  flex: 0 0 90%;
+  flex: auto;
+  flex-direction: column;
+  gap: 20px;
+  padding-bottom: 15px;
+  position: relative;
+  overflow: auto;
+}
+.statistic-revenue-year {
   display: block;
-  flex: 0 0 450px;
-  padding: 0px 15px;
+  flex: 0 0 60%;
+  height: 100%;
+  border: 2px solid #ddd;
   position: relative;
 }
-.statistic-revenue {
-  display: block;
-  width: 410px;
-  height: 360px;
+.statistic-order {
+  flex: 0 0 35%;
+  height: 100%;
   border: 2px solid #ddd;
-  position: absolute;
+  position: relative;
 }
-.statistic-footer {
-  display: block;
-  height: 50px;
+.statistic-new-customer {
+  flex: 0 0 35%;
+  height: 100%;
+  border: 2px solid #ddd;
+  position: relative;
 }
-
-.statistic-footer {
+.statistic-transaction {
+  flex: 0 0 35%;
+  height: 100%;
+  border: 2px solid #ddd;
+  position: relative;
+}
+.statistic-transaction > div:first-child {
+  min-height: 300px !important;
+}
+.statistic-revenue-year > div:first-child {
+  min-height: 300px !important;
+}
+.statistic-revenue-year .Dropdown-control {
+  padding: 0 !important;
+  width: 70px;
+}
+.statistic-revenue-year .Dropdown-arrow {
+  top: 30%;
+}
+.statistic-transaction .Dropdown-control {
+  padding: 0 !important;
+  width: 70px;
+}
+.statistic-transaction .Dropdown-arrow {
+  top: 30%;
 }

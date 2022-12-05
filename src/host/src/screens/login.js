@@ -1,12 +1,28 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import './login.css';
+import axios from 'axios';
+import { Context } from '../context/context';
+import { useNavigate } from 'react-router-dom';
 export default function Login() {
+  const navigate = useNavigate();
+  const context = useContext(Context);
+  const [isLog, setIsLog] = [context.isLog, context.setIsLog];
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    const form = { id: id, password: password };
-    //api
+    const form = { username: id, password: password };
+    const res = await axios
+      .post('http://localhost:3001/auth/login', form)
+      .then((res) => {
+        console.log(res);
+        localStorage.setItem('token', res.data);
+        localStorage.setItem('isLog', true);
+        setIsLog(() => true);
+      })
+      .catch((err) => {
+        throw err;
+      });
   };
   return (
     <div className="login">
@@ -41,6 +57,35 @@ export default function Login() {
               <button type="submit">Submit</button>
             </div>
           </form>
+          <div className="to-signup">
+            <img
+              style={{
+                opacity: 0.8,
+                width: '100%',
+                height: '100%'
+              }}
+              src={require('../assets/th.jpg')}
+            ></img>
+            <button
+              style={{
+                cursor: 'pointer',
+                position: 'absolute',
+                left: '50%',
+                top: '50%',
+                marginLeft: '-40px',
+                width: '80px',
+                height: '40px',
+                backgroundColor: 'transparent',
+                color: '#fff',
+                border: '2px solid #fff'
+              }}
+              onClick={() => {
+                navigate('/register');
+              }}
+            >
+              Sign up
+            </button>
+          </div>
         </div>
       </div>
     </div>

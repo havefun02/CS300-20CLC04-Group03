@@ -10,8 +10,7 @@
 }
 .dashboard-header {
   display: block;
-  flex: 0 0 70px;
-  padding: 20px 15px;
+  flex: 0 0 10%;
 }
 .dashboard-content {
   display: block;

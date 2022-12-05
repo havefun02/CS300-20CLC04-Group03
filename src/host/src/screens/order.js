@@ -14,22 +14,22 @@ export default function Order() {
       title: 'All orders',
       optional: 'button',
       valueOpt: []
-    },
-    {
-      title: 'SortByDate',
-      optional: 'dropdown',
-      valueOpt: ['Inc', 'Dec']
-    },
-    {
-      title: 'GroupById',
-      optional: 'dropdown',
-      valueOpt: ['Inc', 'Dec']
-    },
-    {
-      title: 'State',
-      optional: 'dropdown',
-      valueOpt: ['Order', 'Cancel']
     }
+    // {
+    //   title: 'SortByDate',
+    //   optional: 'dropdown',
+    //   valueOpt: ['Inc', 'Dec']
+    // },
+    // {
+    //   title: 'GroupById',
+    //   optional: 'dropdown',
+    //   valueOpt: ['Inc', 'Dec']
+    // },
+    // {
+    //   title: 'State',
+    //   optional: 'dropdown',
+    //   valueOpt: ['Order', 'Cancel']
+    // }
   ]);
   return (
     <div className="order-main">

@@ -7,42 +7,24 @@ import Login from './login';
 const optionDropdownCate = [];
 const optionDropdownOrder = ['Inc', 'Dec'];
 const optionDropdownBest = ['day', 'week', 'month'];
+
+const tabs = [
+  {
+    title: 'In stock',
+    optional: 'button',
+    valueOpt: []
+  }
+];
+const title = 'Dashboard';
 export default function DashBoard() {
-  const [property, setProperty] = useState({
-    title: 'Dashboard',
-    notify: '3',
-    avar: ''
-  });
-  const [subRoute, setSubRoute] = useState([
-    {
-      title: 'All products',
-      optional: 'button',
-      valueOpt: []
-    },
-    {
-      title: 'Category',
-      optional: 'dropdown',
-      valueOpt: optionDropdownCate
-    },
-    {
-      title: 'OrderByPrice',
-      optional: 'dropdown',
-      valueOpt: optionDropdownOrder
-    },
-    {
-      title: 'BestSeller',
-      optional: 'dropdown',
-      valueOpt: optionDropdownBest
-    }
-  ]);
   return (
     <div className="dashboard-main">
       <div className="dashboard-flex-box">
         <div className="dashboard-header">
-          <Header props={property}></Header>
+          <Header props={title}></Header>
         </div>
         <div className="dashboard-content">
-          <NavBar props={subRoute} />
+          <NavBar props={tabs} />
         </div>
       </div>
     </div>

@@ -5,20 +5,22 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  position: relative;
 }
 .table-table-flex-box {
   display: flex;
   position: relative;
-  flex: 0 0 95%;
+  flex: 1;
   flex-direction: column;
 }
 
-.table-table .header {
-  flex: 0 0 10%;
+.table-table .table-header {
+  flex: 0 0 7%;
   display: flex;
   background-color: #ccc;
   align-items: center;
   color: #000;
+  padding-right: 25px;
 }
 .table-table .header .select {
   flex: 0 0 50px;
@@ -34,7 +36,7 @@
 
 .table-table-row {
   display: flex;
-  flex: 0 0 90%;
+  flex: 0 0 85%;
   overflow: auto;
   flex-direction: column;
   position: relative;
@@ -46,6 +48,8 @@
   background-color: #f2f2f2;
   color: #000;
   flex-direction: row;
+  align-items: center;
+  padding-right: 20px;
 }
 .table-table .row-data:hover {
   cursor: pointer;
@@ -53,9 +57,12 @@
 }
 
 .table-footer {
-  flex: 0 0 5%;
-  border-top: 2px solid #ddd;
+  flex: 0 0 8%;
+  border: 1px solid #ddd;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
+}
+.table-footer span {
+  font-size: 14px;
 }

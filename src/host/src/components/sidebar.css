@@ -30,7 +30,7 @@
   text-decoration: none;
   padding: 10px 5px;
   background-color: #fff;
-  color: rgb(1, 1, 248);
+  color: #000;
   cursor: pointer;
 }
 .sidebar-func-a img {
@@ -54,7 +54,7 @@
 
 .sidebar-func-a:hover {
   background-color: #fff;
-  color: rgb(1, 1, 248);
+  color: #000;
   cursor: pointer;
   /* border-top-left-radius: 15%;
   border-bottom-left-radius: 15%; */

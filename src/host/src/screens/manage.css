@@ -10,15 +10,10 @@
 }
 .manage-header {
   display: block;
-  height: 100px;
-  padding: 20px 15px;
+  flex: 0 0 10%;
 }
 .manage-content {
   display: block;
   height: 100%;
   padding: 0px 15px;
-}
-.manage-footer {
-  display: block;
-  height: 50px;
 }

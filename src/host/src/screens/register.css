@@ -1,0 +1,75 @@
+.register {
+  display: block;
+  height: 100%;
+  width: 100%;
+}
+.register-flex-box {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background-color: rgb(244, 247, 242);
+  padding: 80px 100px;
+}
+.to-signup {
+  flex: 0 0 33.33333%;
+  position: relative;
+}
+.register-child {
+  flex: 0 0 100%;
+  background-color: #fff;
+  display: flex;
+  border: 2px solid #f2f2f2;
+}
+.register-form {
+  display: flex;
+  flex: 0 0 66.66667%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.register-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.register-icon img {
+  width: 50px;
+  height: 50px;
+}
+.register-title {
+  margin: 5px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.register-input {
+  margin: 5px 0;
+}
+.register-input input {
+  height: 30px;
+  width: 200px;
+  padding: 3px;
+  border: none;
+  outline: none;
+  padding: 0 20px;
+  display: flex;
+  text-indent: 10px;
+  border-bottom: 1px solid #000;
+}
+.register-input input:focus {
+  border-bottom: 2px solid #000;
+}
+
+.register-button {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin-top: 15px;
+}
+.register-button button {
+  cursor: pointer;
+  height: 30px;
+  background-color: rgb(244, 247, 242);
+  border: none;
+  width: 65px;
+}

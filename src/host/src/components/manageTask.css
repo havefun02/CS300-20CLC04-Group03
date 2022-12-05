@@ -4,22 +4,22 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  overflow: hidden;
 }
 .manageTask-table-flex-box {
   display: flex;
   position: relative;
-  flex: 0 0 95%;
+  flex: 0 0 100%;
   flex-direction: column;
 }
 
-.manageTask-table .header {
-  flex: 0 0 10%;
+.manageTask-table .managetask-header {
+  flex: 0 0 7%;
   display: flex;
   background-color: #ccc;
   color: #000;
+  align-items: center;
 }
-.manageTask-table .header .select {
+.manageTask-table .managetask-header .select {
   flex: 0 0 50px;
   display: flex;
   margin-right: 3px;
@@ -33,7 +33,7 @@
 
 .manageTask-table-row {
   display: flex;
-  flex: 0 0 90%;
+  flex: 0 0 85%;
   overflow: auto;
   flex-direction: column;
   position: relative;
@@ -69,8 +69,9 @@
   border-radius: 30px;
 }
 .manageTask-footer {
-  flex: 0 0 5%;
+  flex: 0 0 8%;
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 1px solid #ccc;
 }

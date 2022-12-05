@@ -3,17 +3,19 @@ import shortid from 'shortid';
 import './manageTable.css';
 export default function ManageTable({ props }) {
   const [header, setHeader] = useState(props.header);
+  const [headerSize, setHeaderSize] = useState(props.size);
+
   const [list, setList] = useState(props.list);
   const HeaderTable = ({ props }) => {
     return (
-      <div className="header">
-        {props.map((ele) => {
+      <div className="header-table">
+        {props.header.map((ele) => {
           return (
             <div
               key={shortid.generate()}
-              style={{ flex: props.length, textAlign: 'center' }}
+              style={{ flex: props.headerSize[props.header.indexOf(ele)] }}
             >
-              <h3>{ele}</h3>
+              <span>{ele}</span>
             </div>
           );
         })}
@@ -22,49 +24,59 @@ export default function ManageTable({ props }) {
   };
 
   const RowData = ({ props }) => {
-    const [isDbClick, setDbClick] = useState(false);
-    const handleDbClick = () => {
-      setDbClick((isDbClick) => !isDbClick);
-    };
+    const [expand, setExpand] = useState(false);
 
     return (
       <>
-        <div className="row-data" onDoubleClick={handleDbClick}>
-          {props.map((ele) => {
+        <div className="row-data">
+          {props.ele.map((e) => {
             return (
               <div
                 key={shortid.generate()}
-                style={{ flex: props.length, textAlign: 'center' }}
+                style={{ flex: props.headerSize[props.ele.indexOf(e)] }}
               >
-                <h3>{ele}</h3>
+                <span>{e}</span>
               </div>
             );
           })}
+          {!expand ? (
+            <img
+              onClick={() => {
+                setExpand((expand) => !expand);
+              }}
+              className="expand-row"
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAAb0lEQVRIie2PsQ2AMAwELyyWcVIyCqSCaQmNI1kIRwEF0fjq998bHMf5lQDEjlyU7OPyDBzA3MglyeyWZGocFzlaDEkCNqu4hwCsIrp+UpcXGuvfSoaVa0lWklqeR5RrSf1k2HJL8km5lnxW7jj3nAwCHOMFhaBLAAAAAElFTkSuQmCC"
+            />
+          ) : (
+            <img
+              onClick={() => {
+                setExpand((expand) => !expand);
+              }}
+              className="expand-row"
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAAbElEQVRIie2Q0QnAIAwFr4uIdIP+dP8JdIIinaT9iSClSEIV+pGDgCh5Hg8cx/kdUWYKATiAE1hnhV8yQz+JQJHg8jh/rqs1r9Zvd8PCNW8qFiDTr6KtLsuOiU0We3YBSMBuDa9orMzmjmPjBhOHH8tY0fZoAAAAAElFTkSuQmCC"
+            ></img>
+          )}
         </div>
-        {isDbClick && (
+        {expand && (
           <div className="manage-table-expand-row">
-            <div className="expand">
-              {!isDbClick && <span>Expand</span>}
-              {isDbClick && <span>Collapse</span>}
-            </div>
             <div className="manage-table-expand">
               <div className="manage-table-content-group">
-                {props.map((ele) => {
+                {props.ele.map((e) => {
                   return (
                     <div
+                      style={{ flex: props.headerSize[props.ele.indexOf(e)] }}
                       key={shortid.generate()}
-                      style={{ flex: props.length, textAlign: 'center' }}
                     >
-                      <h3>{ele}</h3>
+                      <span>{e}</span>
                     </div>
                   );
                 })}
               </div>
               <div className="manage-table-bt-group">
-                <button onClick={() => setDbClick((isDbClick) => !isDbClick)}>
+                <button onClick={() => setExpand((expand) => !expand)}>
                   Save
                 </button>
-                <button onClick={() => setDbClick((isDbClick) => !isDbClick)}>
+                <button onClick={() => setExpand((expand) => !expand)}>
                   Cancel
                 </button>
               </div>
@@ -77,11 +89,20 @@ export default function ManageTable({ props }) {
   return (
     <div className="manage-table">
       <div className="manage-table-flex-box">
-        <HeaderTable props={header}></HeaderTable>
+        <HeaderTable props={{ headerSize, header }}></HeaderTable>
         <div className="manage-table-row">
           {list.map((ele) => {
-            return <RowData key={shortid.generate()} props={ele}></RowData>;
+            return (
+              <RowData
+                key={shortid.generate()}
+                props={{ headerSize, ele }}
+              ></RowData>
+            );
           })}
+        </div>
+        <div className="manage-table-footer">
+          <span>Total: 200</span>
+          <span>Out of stock: 100</span>
         </div>
       </div>
     </div>

@@ -11,7 +11,7 @@ export default function ManageTask({ props }) {
   }, [checked]);
   const HeaderTable = ({ props }) => {
     return (
-      <div className="header">
+      <div className="managetask-header">
         {props.map((ele) => {
           return (
             <div
@@ -89,10 +89,9 @@ export default function ManageTask({ props }) {
             return <RowData key={shortid.generate()} props={ele}></RowData>;
           })}
         </div>
-      </div>
-
-      <div className=" manageTask-footer">
-        <span>total</span>
+        <div className=" manageTask-footer">
+          <span>total</span>
+        </div>
       </div>
     </div>
   );

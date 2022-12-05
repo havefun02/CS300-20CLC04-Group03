@@ -1,24 +1,19 @@
-.trategy-main {
+.customer-main {
   display: block;
   width: 100%;
   height: 100%;
 }
-.trategy-flex-box {
+.customer-flex-box {
   display: flex;
   flex-direction: column;
   height: 100%;
 }
-.trategy-header {
+.customer-header {
   display: block;
-  flex: 0 0 70px;
-  padding: 20px 15px;
+  flex: 0 0 10%;
 }
-.trategy-content {
+.customer-content {
   display: block;
   flex: 0 0 450px;
   padding: 0px 15px;
-}
-.trategy-footer {
-  display: block;
-  height: 50px;
 }
