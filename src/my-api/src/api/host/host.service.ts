@@ -10,8 +10,8 @@ export class HostService {
   constructor(
     @InjectRepository(User)
     private readonly repository: Repository<User>,
-    private readonly productRepository: ProductService,
-  ) {}
+  ) // private readonly productRepository: ProductService,
+  {}
 
   public async uploadDb(body: any, own: User, data: Buffer) {
     // let ProductEntity = await this.productRepository.createProduct(

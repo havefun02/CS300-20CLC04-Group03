@@ -9,9 +9,13 @@ export class Category {
   @Column({ type: 'varchar', nullable: false })
   public name: string;
   @OneToMany(() => Product, (product) => product.cate, { cascade: true })
-  public products: Product[];
-  @OneToMany(() => TrackingProduct, (productTracking) => productTracking.cate, {
-    cascade: true,
-  })
-  public productTracking: TrackingProduct[];
+  public product_cate: Product[];
+  @OneToMany(
+    () => TrackingProduct,
+    (productTracking) => productTracking.tracking_cate,
+    {
+      cascade: true,
+    },
+  )
+  public tracking_cate: TrackingProduct[];
 }

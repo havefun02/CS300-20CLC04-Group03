@@ -17,7 +17,7 @@ import { TrackingModule } from './tracking/tracking.module';
     ProductModule,
     TrackingModule,
   ],
-  controllers: [],
-  providers: [],
+  controllers: [HostController],
+  providers: [HostService],
 })
 export class HostModule {}

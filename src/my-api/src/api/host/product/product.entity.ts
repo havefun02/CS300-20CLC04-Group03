@@ -34,8 +34,6 @@ export class Product extends BaseEntity {
   public id_product!: number;
   @Column({ type: 'varchar', nullable: false })
   public code: string;
-  @Column({ type: 'int', nullable: false })
-  public id_cate: number;
   @Column({ type: 'varchar', nullable: false })
   public name: string | null;
   @Column({ type: 'text', nullable: false })
@@ -60,13 +58,12 @@ export class Product extends BaseEntity {
     },
   )
   public product: ProductDetail[]; //a group of sub product which belong to id_product
-
-  @ManyToOne(() => Category, (cate) => cate.products)
-  @JoinColumn({ name: 'id_cate' })
-  public cate: Category;
   @ManyToOne(() => Brand, (brand) => brand.product_brand)
   @JoinColumn({ name: 'id_brand' })
   public brand: Brand;
+  @ManyToOne(() => Category, (cate) => cate.product_cate)
+  @JoinColumn({ name: 'id_cate' })
+  public cate: Brand;
 }
 @Entity()
 export class ProductDetail extends BaseEntity {
