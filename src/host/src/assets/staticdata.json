@@ -1,7 +1,8 @@
 {
-  "description": "A list of fruits.",
-  "cate": ["originals", "run", "basketball", "sport", "tenis", "football"],
-  "brand": ["originals", "run", "basketball", "sport", "tenis", "football"],
+  "description": "data asset",
+  "brand": ["adidas", "nike", "vans", "puma"],
+  "cate": ["adidas", "nike", "vans", "puma"],
+
   "size": [
     "6 UK",
     "6.5 UK",
@@ -17,5 +18,5 @@
     "11.5 UK",
     "12 UK"
   ],
-  "color": ["color 1", "color 2", "color 3", "color 4", "color 5", "color 6"]
+  "color": ["red", "white", "dark-yellow", "orange", "black", "grey"]
 }

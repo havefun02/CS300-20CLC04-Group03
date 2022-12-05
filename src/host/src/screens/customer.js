@@ -1,12 +1,12 @@
 import { useState } from 'react';
-import './trategy.css';
+import './customer.css';
 import ManageTask from '../components/manageTask';
 import NavBar from '../components/nav_bar';
 import Header from '../components/header';
 import ManageBar from '../components/managebar';
-export default function Trategy() {
+export default function Customer() {
   const [property, setProperty] = useState({
-    title: 'Trategy',
+    title: 'Customer',
     notify: '3',
     avar: ''
   });
@@ -19,12 +19,12 @@ export default function Trategy() {
     }
   ]);
   return (
-    <div className="trategy-main">
-      <div className="trategy-flex-box">
-        <div className="trategy-header">
+    <div className="customer-main">
+      <div className="customer-flex-box">
+        <div className="customer-header">
           <Header props={property}></Header>
         </div>
-        <div className="trategy-content">
+        <div className="customer-content">
           <ManageBar props={subRoute} />
         </div>
       </div>

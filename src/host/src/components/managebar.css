@@ -1,12 +1,11 @@
 .manage_bar {
   display: block;
   height: 100%;
-  border: 1px solid#ccc;
 }
 .manage_bar-flex-box {
   display: flex;
   flex-direction: column;
-  height: 100%;
+  flex: 0 0 90%;
   justify-content: flex-start;
   position: relative;
 }
@@ -30,7 +29,6 @@
   border: none;
   height: 25px;
   background-color: #ccc;
-
   cursor: pointer;
   font-size: 20px;
   font-weight: 700;

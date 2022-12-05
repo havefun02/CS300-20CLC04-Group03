@@ -9,21 +9,30 @@ import Table from './table';
 export default function NavBar({ props }) {
   const [routers, setRoutes] = useState(props); //replace this object by props
   const [list, setList] = useState([
-    ['id', 'id1', 'id2'],
-    ['id', 'id1', 'id2'],
-    ['id', 'id1', 'id2'],
-    ['id', 'id1', 'id2'],
-    ['id', 'id1', 'id2'],
-    ['id', 'id1', 'id2'],
-    ['id', 'id1', 'id2'],
-    ['id', 'id1', 'id2'],
-    ['id', 'id1', 'id2'],
-    ['id', 'id1', 'id2'],
-    ['id', 'id1', 'id2'],
-    ['id', 'id1', 'id2'],
-    ['id', 'id1', 'id2']
+    ['1', '2', '3', '4', '5', '6', '7', '8'],
+    ['1', '2', '3', '4', '5', '6', '7', '8'],
+    ['1', '2', '3', '4', '5', '6', '7', '8'],
+    ['1', '2', '3', '4', '5', '6', '7', '8'],
+    ['1', '2', '3', '4', '5', '6', '7', '8'],
+    ['1', '2', '3', '4', '5', '6', '7', '8'],
+    ['1', '2', '3', '4', '5', '6', '7', '8'],
+    ['1', '2', '3', '4', '5', '6', '7', '8'],
+    ['1', '2', '3', '4', '5', '6', '7', '8'],
+    ['1', '2', '3', '4', '5', '6', '7', '8'],
+    ['1', '2', '3', '4', '5', '6', '7', '8']
   ]); //replace this object by props
-  const [header, setHeader] = useState(['id', 'id1', 'id2']); //replace this object by props
+  const [headerSize, setHeaderSize] = useState([5, 10, 5, 5, 5, 5, 5, 10]);
+
+  const [header, setHeader] = useState([
+    'Code',
+    'Name',
+    'Status',
+    'Date',
+    'Price',
+    'Quantity',
+    'Brand',
+    'Category'
+  ]); //replace this object by props
   return (
     <div className="nav_bar">
       <div className="nav_bar-flex-box">
@@ -54,7 +63,7 @@ export default function NavBar({ props }) {
         </div>
 
         <div className="nav_bar-content">
-          <Table props={{ header: header, list: list }} />
+          <Table props={{ header: header, size: headerSize, list: list }} />
         </div>
       </div>
     </div>

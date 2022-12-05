@@ -1,44 +1,47 @@
+import { tab } from '@testing-library/user-event/dist/tab';
 import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import shortid from 'shortid';
 import './managebar.css';
+const headerSize = [5, 10, 5, 5, 5, 5, 5, 10, 7];
+const header = [
+  'Code',
+  'Name',
+  'Status',
+  'Date',
+  'Price',
+  'Quantity',
+  'Brand',
+  'Category'
+];
 export default function ManageBar({ props }) {
-  const [routers, setRoutes] = useState(props); //replace this object by props
+  const tabs = props;
+  const [stateTab, setStateTabs] = useState(
+    Array(tabs.length).fill(false).fill(true, 0, 1)
+  );
   const [list, setList] = useState([
-    ['id1', 'id1', 'id2'],
-    ['id2', 'id1', 'id2'],
-    ['id3', 'id1', 'id2'],
-    ['id4', 'id1', 'id2'],
-    ['id5', 'id1', 'id2'],
-    ['id6', 'id1', 'id2'],
-    ['id', 'id1', 'id2'],
-    ['id', 'id1', 'id2'],
-    ['id', 'id1', 'id2'],
-    ['id', 'id1', 'id2'],
-    ['id', 'id1', 'id2'],
-    ['id', 'id1', 'id2'],
-    ['id', 'id1', 'id2']
+    ['1', '2', '3', '4', '5', '6', '7', '9'],
+    ['1', '2', '3', '4', '5', '6', '7', '9'],
+    ['1', '2', '3', '4', '5', '6', '7', '9'],
+    ['1', '2', '3', '4', '5', '6', '7', '9'],
+    ['1', '2', '3', '4', '5', '6', '7', '9'],
+    ['1', '2', '3', '4', '5', '6', '7', '9'],
+    ['1', '2', '3', '4', '5', '6', '7', '9'],
+    ['1', '2', '3', '4', '5', '6', '7', '9'],
+    ['1', '2', '3', '4', '5', '6', '7', '9'],
+    ['1', '2', '3', '4', '5', '6', '7', '9'],
+    ['1', '2', '3', '4', '5', '6', '7', '9']
   ]); //replace this object by props
-  const [header, setHeader] = useState(['id', 'id1', 'id2']); //replace this object by props
-  const handleClick = (id) => {
-    routers.map((item) => {
-      if (item.title === id) {
-        item.state = true;
-      } else {
-        item.state = false;
-      }
-    });
-    const newItems = Object.assign([], routers);
-    return setRoutes(newItems);
-  };
+  const [reRender, setReRender] = useState(false);
+
   return (
     <div className="manage_bar">
       <div className="manage_bar-flex-box">
         <div className="manage_bar-title">
-          {routers.map((items) => {
+          {tabs.map((items) => {
             let opacity = 0.5;
             let border = 'none';
-            if (items.state === true) {
+            if (stateTab[tabs.indexOf(items)] === true) {
               opacity = 1;
               border = '2px solid blue';
             }
@@ -50,7 +53,9 @@ export default function ManageBar({ props }) {
               >
                 <button
                   onClick={() => {
-                    handleClick(items.title);
+                    let clone = Array(tabs.length).fill(false);
+                    clone[tabs.indexOf(items)] = true;
+                    setStateTabs(clone);
                   }}
                 >
                   <span style={{ fontSize: '15px' }}>{items.title}</span>
@@ -60,17 +65,23 @@ export default function ManageBar({ props }) {
           })}
           <div className="manage_bar-filter"></div>
         </div>
-        {routers.map((items) => {
-          if (items.state === true)
+        {tabs.map((items) => {
+          if (stateTab[tabs.indexOf(items)] === true)
             return (
               <div className="manage_bar-content" key={shortid.generate()}>
-                <items.component props={{ header: header, list: list }} />
+                <items.component
+                  key={reRender}
+                  props={{
+                    header: header,
+                    size: headerSize,
+                    list: list,
+                    reRender: reRender,
+                    setReRender: setReRender
+                  }}
+                />
               </div>
             );
         })}
-        {/* <div className="manage_bar-footer">
-          <h5>dev by</h5>
-        </div> */}
       </div>
     </div>
   );

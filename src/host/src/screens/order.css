@@ -10,15 +10,10 @@
 }
 .order-header {
   display: block;
-  height: 100px;
-  padding: 20px 15px;
+  flex: 0 0 10%;
 }
 .order-content {
   display: block;
   height: 100%;
   padding: 0px 15px;
-}
-.order-footer {
-  display: block;
-  height: 50px;
 }

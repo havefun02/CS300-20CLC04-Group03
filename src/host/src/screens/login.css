@@ -2,29 +2,30 @@
   display: block;
   height: 100%;
   width: 100%;
-  background-color: #fff;
 }
 .login-flex-box {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   height: 100%;
+  background-color: rgb(244, 247, 242);
+  padding: 80px 100px;
+}
+.to-signup {
+  flex: 0 0 33.33333%;
+  position: relative;
 }
 .login-child {
-  flex: 0 0 60%;
-  max-width: 60%;
-  margin-left: 20%;
+  flex: 0 0 100%;
   background-color: #fff;
+  border: 2px solid #f2f2f2;
   display: flex;
-  margin-top: 10%;
-  margin-bottom: 10%;
-  border-radius: 5%;
-  border: 2px solid #000;
-  justify-content: center;
 }
 .login-form {
   display: flex;
+  flex: 0 0 66.66667%;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
 }
 .login-icon {
   display: flex;
@@ -46,7 +47,17 @@
 }
 .login-input input {
   height: 30px;
+  width: 200px;
   padding: 3px;
+  border: none;
+  outline: none;
+  padding: 0 20px;
+  display: flex;
+  text-indent: 10px;
+  border-bottom: 1px solid #000;
+}
+.login-input input:focus {
+  border-bottom: 2px solid #000;
 }
 
 .login-button {
@@ -56,8 +67,9 @@
   margin-top: 15px;
 }
 .login-button button {
+  cursor: pointer;
   height: 30px;
-  background-color: cornflowerblue;
+  background-color: rgb(244, 247, 242);
   border: none;
   width: 65px;
 }

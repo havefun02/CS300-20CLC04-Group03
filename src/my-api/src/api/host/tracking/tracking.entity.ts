@@ -41,12 +41,12 @@ export class TrackingProduct extends BaseEntity {
   @Column({ type: 'timestamp', nullable: false })
   public upload_At: Date | null;
 
-  @ManyToOne(() => Category, (cate) => cate.products)
-  @JoinColumn({ name: 'id_cate' })
-  public cate: Category;
   @ManyToOne(() => Brand, (brand) => brand.product_brand)
   @JoinColumn({ name: 'id_brand' })
   public brand: Brand;
+  @ManyToOne(() => Category, (cate) => cate.tracking_cate)
+  @JoinColumn({ name: 'id_cate' })
+  public tracking_cate: Category;
   @ManyToOne(() => SizeTable, (size) => size.productsize, {
     cascade: true,
     onDelete: 'CASCADE',
