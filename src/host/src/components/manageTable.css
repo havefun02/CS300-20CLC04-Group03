@@ -23,6 +23,7 @@
   color: #000;
   padding-right: 28px;
   text-align: center;
+  width: 100%;
 }
 .manage-table-row {
   display: flex;
@@ -49,55 +50,55 @@
   cursor: pointer;
 }
 .manage-table .row-data:hover {
-  background-color: rgb(74, 68, 68);
+  background-color: rgb(126, 108, 108);
+  color: #fff;
 }
 .manage-table-expand-row {
   flex: 0 0 90px;
   color: #000;
   display: flex;
   flex-direction: column;
-  border: 2px solid #000;
-}
-.manage-table-expand-row .expand {
-  display: flex;
-  justify-content: center;
-  font-size: 13px;
+  border: 1px solid #000;
 }
 
 .manage-table-expand {
   display: flex;
   flex-direction: column;
-  flex: auto;
-  background-color: #f2f2f2;
+  flex: 100%;
+  background-color: #fff;
+  padding-right: 22px;
 }
+
 .manage-table-bt-group {
   display: flex;
-  flex: 0 0 25px;
+  flex: 0 0 35px;
   align-items: center;
-  justify-content: center;
+  justify-content: space-evenly;
+  margin: 0 30%;
 }
 .manage-table-bt-group button {
   border: none;
   outline: none;
-  margin: 2px;
   cursor: pointer;
+  height: 70%;
+  width: 50px;
 }
 .manage-table-content-group {
   display: flex;
   flex: auto;
   flex-direction: row;
   align-items: center;
-  padding-right: 22px;
 }
 
 .manage-table-footer {
   flex: 0 0 8%;
   border: 1px solid #ddd;
   display: flex;
-  align-items: center;
   justify-content: space-evenly;
+  font-size: 14px;
 }
 
-.manage-table-footer {
-  font-size: 14px;
+.manage-table-footer > span {
+  display: flex;
+  align-items: center;
 }

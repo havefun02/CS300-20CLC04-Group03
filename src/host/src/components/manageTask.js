@@ -2,8 +2,21 @@ import { useEffect, useState } from 'react';
 import shortid from 'shortid';
 import './manageTask.css';
 export default function ManageTask({ props }) {
-  const [header, setHeader] = useState(props.header);
-  const [list, setList] = useState(props.list);
+  const headerSize = [2, 4, 5, 5, 5, 3];
+  const header = ['Id', 'Name', 'Phone', 'Email', 'Address', 'Point'];
+  const [list, setList] = useState([
+    ['0', '2', '3', '4', '5', '6'],
+    ['1', '2', '3', '4', '5', '6'],
+    ['1', '2', '3', '4', '5', '6'],
+    ['1', '2', '3', '4', '5', '6'],
+    ['1', '2', '3', '4', '5', '6'],
+    ['1', '2', '3', '4', '5', '6'],
+    ['1', '2', '3', '4', '5', '6'],
+    ['1', '2', '3', '4', '5', '6'],
+    ['1', '2', '3', '4', '5', '6'],
+    ['1', '2', '3', '4', '5', '6'],
+    ['1', '2', '3', '4', '5', '6']
+  ]);
   const [checked, setChecked] = useState(Array(list.length));
   const [checkedAll, setCheckedAll] = useState(false);
   useEffect(() => {
@@ -12,12 +25,12 @@ export default function ManageTask({ props }) {
   const HeaderTable = ({ props }) => {
     return (
       <div className="managetask-header">
-        {props.map((ele) => {
+        {props.map((ele, index) => {
           return (
             <div
               key={shortid.generate()}
               style={{
-                flex: 'auto',
+                flex: headerSize[index],
                 textAlign: 'center'
               }}
             >
@@ -51,11 +64,11 @@ export default function ManageTask({ props }) {
     return (
       <>
         <div className="row-data">
-          {props.map((ele) => {
+          {props.map((ele, index) => {
             return (
               <div
                 key={shortid.generate()}
-                style={{ flex: 'auto', textAlign: 'center' }}
+                style={{ flex: headerSize[index], textAlign: 'center' }}
               >
                 <h3>{ele}</h3>
               </div>
