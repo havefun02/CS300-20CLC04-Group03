@@ -4,11 +4,7 @@ import Chart from 'react-apexcharts';
 import Dropdown from 'react-dropdown';
 import './statistic.css';
 export default function Statistic() {
-  const [property, setProperty] = useState({
-    title: 'Statistic',
-    notify: '3',
-    avar: ''
-  });
+  const title = 'Stattistic';
   const [listYear, setListYear] = useState([2020, 2021, 2022]);
   const [yearlyData, setYearlyData] = useState({
     series: [
@@ -165,7 +161,7 @@ export default function Statistic() {
     <div className="statistic-main">
       <div className="statistic-flex-box">
         <div className="statistic-header">
-          <Header props={property}></Header>
+          <Header props={title}></Header>
         </div>
         <div className="statistic-content">
           <div

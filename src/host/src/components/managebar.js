@@ -3,35 +3,13 @@ import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import shortid from 'shortid';
 import './managebar.css';
-const headerSize = [5, 10, 5, 5, 5, 5, 5, 10, 7];
-const header = [
-  'Code',
-  'Name',
-  'Status',
-  'Date',
-  'Price',
-  'Quantity',
-  'Brand',
-  'Category'
-];
+
 export default function ManageBar({ props }) {
   const tabs = props;
   const [stateTab, setStateTabs] = useState(
     Array(tabs.length).fill(false).fill(true, 0, 1)
   );
-  const [list, setList] = useState([
-    ['1', '2', '3', '4', '5', '6', '7', '9'],
-    ['1', '2', '3', '4', '5', '6', '7', '9'],
-    ['1', '2', '3', '4', '5', '6', '7', '9'],
-    ['1', '2', '3', '4', '5', '6', '7', '9'],
-    ['1', '2', '3', '4', '5', '6', '7', '9'],
-    ['1', '2', '3', '4', '5', '6', '7', '9'],
-    ['1', '2', '3', '4', '5', '6', '7', '9'],
-    ['1', '2', '3', '4', '5', '6', '7', '9'],
-    ['1', '2', '3', '4', '5', '6', '7', '9'],
-    ['1', '2', '3', '4', '5', '6', '7', '9'],
-    ['1', '2', '3', '4', '5', '6', '7', '9']
-  ]); //replace this object by props
+  //replace this object by props
   const [reRender, setReRender] = useState(false);
 
   return (
@@ -72,9 +50,6 @@ export default function ManageBar({ props }) {
                 <items.component
                   key={reRender}
                   props={{
-                    header: header,
-                    size: headerSize,
-                    list: list,
                     reRender: reRender,
                     setReRender: setReRender
                   }}

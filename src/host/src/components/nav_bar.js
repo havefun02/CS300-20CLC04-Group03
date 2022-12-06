@@ -7,37 +7,36 @@ import './nav_bar.css';
 import Table from './table';
 
 export default function NavBar({ props }) {
-  const [routers, setRoutes] = useState(props); //replace this object by props
+  const tabs = props;
   const [list, setList] = useState([
-    ['1', '2', '3', '4', '5', '6', '7', '8'],
-    ['1', '2', '3', '4', '5', '6', '7', '8'],
-    ['1', '2', '3', '4', '5', '6', '7', '8'],
-    ['1', '2', '3', '4', '5', '6', '7', '8'],
-    ['1', '2', '3', '4', '5', '6', '7', '8'],
-    ['1', '2', '3', '4', '5', '6', '7', '8'],
-    ['1', '2', '3', '4', '5', '6', '7', '8'],
-    ['1', '2', '3', '4', '5', '6', '7', '8'],
-    ['1', '2', '3', '4', '5', '6', '7', '8'],
-    ['1', '2', '3', '4', '5', '6', '7', '8'],
-    ['1', '2', '3', '4', '5', '6', '7', '8']
+    ['1', '2', '3', '4', '5', '6', '7'],
+    ['1', '2', '3', '4', '5', '6', '7'],
+    ['1', '2', '3', '4', '5', '6', '7'],
+    ['1', '2', '3', '4', '5', '6', '7'],
+    ['1', '2', '3', '4', '5', '6', '7'],
+    ['1', '2', '3', '4', '5', '6', '7'],
+    ['1', '2', '3', '4', '5', '6', '7'],
+    ['1', '2', '3', '4', '5', '6', '7'],
+    ['1', '2', '3', '4', '5', '6', '7'],
+    ['1', '2', '3', '4', '5', '6', '7'],
+    ['1', '2', '3', '4', '5', '6', '7']
   ]); //replace this object by props
-  const [headerSize, setHeaderSize] = useState([5, 10, 5, 5, 5, 5, 5, 10]);
+  const [headerSize, setHeaderSize] = useState([2, 4, 3, 3, 3, 5, 9]);
 
   const [header, setHeader] = useState([
-    'Code',
-    'Name',
+    'Id',
+    'Customer',
     'Status',
     'Date',
     'Price',
-    'Quantity',
     'Brand',
-    'Category'
+    'Detail'
   ]); //replace this object by props
   return (
     <div className="nav_bar">
       <div className="nav_bar-flex-box">
         <div className="nav_bar-title">
-          {routers.map((items) => {
+          {tabs.map((items, index) => {
             let opacity = 1;
             let border = 'none';
             return (

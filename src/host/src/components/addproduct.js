@@ -73,7 +73,7 @@ export default function AddForm({ props }) {
                   }}
                 ></input>
                 <input
-                  placeholder="Price(VND)"
+                  placeholder="Price"
                   type="text"
                   onChange={(e) => {
                     setPrice(() => e.target.value);
