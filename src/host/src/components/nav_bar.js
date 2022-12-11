@@ -1,37 +1,42 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import shortid from 'shortid';
 import Dropdown from 'react-dropdown';
 import 'react-dropdown/style.css';
 import './nav_bar.css';
+import axios from 'axios';
 import Table from './table';
+const headerSizeOrder = [2, 4, 3, 3, 3, 5, 9];
+const headerOrder = [
+  'Id',
+  'Email',
+  'Date',
+  'State',
+  'Quantity',
+  'Brands',
+  'Total pay',
+  'Gift',
+  'Detail'
+];
+
+const headerSizeTrans = [2, 4, 3, 3, 3, 3, 5, 3, 9];
+const headerTrans = [
+  'Id',
+  'Email',
+  'Rate',
+  'Date',
+  'Quantity',
+  'Total pay',
+  'Brands',
+  'Gift',
+  'Detail'
+];
 
 export default function NavBar({ props }) {
-  const tabs = props;
-  const [list, setList] = useState([
-    ['1', '2', '3', '4', '5', '6', '7'],
-    ['1', '2', '3', '4', '5', '6', '7'],
-    ['1', '2', '3', '4', '5', '6', '7'],
-    ['1', '2', '3', '4', '5', '6', '7'],
-    ['1', '2', '3', '4', '5', '6', '7'],
-    ['1', '2', '3', '4', '5', '6', '7'],
-    ['1', '2', '3', '4', '5', '6', '7'],
-    ['1', '2', '3', '4', '5', '6', '7'],
-    ['1', '2', '3', '4', '5', '6', '7'],
-    ['1', '2', '3', '4', '5', '6', '7'],
-    ['1', '2', '3', '4', '5', '6', '7']
-  ]); //replace this object by props
-  const [headerSize, setHeaderSize] = useState([2, 4, 3, 3, 3, 5, 9]);
+  const tabs = props.tabs;
+  const [date, setDate] = useState();
+  const [list, setList] = [props.list, props.setList];
 
-  const [header, setHeader] = useState([
-    'Id',
-    'Customer',
-    'Status',
-    'Date',
-    'Price',
-    'Brand',
-    'Detail'
-  ]); //replace this object by props
   return (
     <div className="nav_bar">
       <div className="nav_bar-flex-box">
@@ -51,7 +56,13 @@ export default function NavBar({ props }) {
                   </button>
                 )}
                 {items.optional === 'dropdown' && (
-                  <Dropdown options={items.valueOpt} placeholder={items.title}>
+                  <Dropdown
+                    onChange={(e) => {
+                      setDate(e.value);
+                    }}
+                    options={items.valueOpt}
+                    placeholder={items.title}
+                  >
                     {items.title}
                   </Dropdown>
                 )}
@@ -62,7 +73,28 @@ export default function NavBar({ props }) {
         </div>
 
         <div className="nav_bar-content">
-          <Table props={{ header: header, size: headerSize, list: list }} />
+          {props.title == 'Transaction' && (
+            <Table
+              props={{
+                type: 'trans',
+                headerSize: headerSizeTrans,
+                header: headerTrans,
+                list: list,
+                setList: setList
+              }}
+            />
+          )}
+          {props.title == 'Order' && (
+            <Table
+              props={{
+                type: 'order',
+                headerSize: headerSizeOrder,
+                header: headerOrder,
+                list: list,
+                setList: setList
+              }}
+            />
+          )}
         </div>
       </div>
     </div>

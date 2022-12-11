@@ -1,15 +1,16 @@
 import Header from '../components/header';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Chart from 'react-apexcharts';
 import Dropdown from 'react-dropdown';
 import './statistic.css';
+const listYear = [2020, 2021, 2022];
 export default function Statistic() {
-  const title = 'Stattistic';
-  const [listYear, setListYear] = useState([2020, 2021, 2022]);
-  const [yearlyData, setYearlyData] = useState({
+  const title = 'DashBoard';
+
+  const [revenue, setRevenueData] = useState({
     series: [
       {
-        name: 'Profit',
+        name: 'Revenue',
         data: [100, 150, 200, 101, 49, 36, 32, 233, 143, 84, 590, 200]
       }
     ],
@@ -90,7 +91,7 @@ export default function Statistic() {
         }
       },
       title: {
-        text: 'Year',
+        text: listYear[listYear.length - 1],
         floating: true,
         offsetY: 255,
         align: 'center',
@@ -156,7 +157,17 @@ export default function Statistic() {
       }
     }
   });
-
+  const Comp = ({ props }) => {
+    return (
+      <Chart
+        options={props.options}
+        series={props.series}
+        type="bar"
+        height={280}
+        width={600}
+      />
+    );
+  };
   return (
     <div className="statistic-main">
       <div className="statistic-flex-box">
@@ -175,13 +186,7 @@ export default function Statistic() {
             }}
           >
             <div className="statistic-revenue-year">
-              <Chart
-                options={yearlyData.options}
-                series={yearlyData.series}
-                type="bar"
-                height={280}
-                width={600}
-              />
+              <Comp props={revenue}></Comp>
               <div
                 style={{
                   position: 'absolute',
@@ -190,6 +195,10 @@ export default function Statistic() {
                 }}
               >
                 <Dropdown
+                  onChange={(e) => {
+                    revenue.options.title.text = e.value;
+                    setRevenueData(Object.assign({}, revenue));
+                  }}
                   options={listYear}
                   placeholder={listYear[listYear.length - 1]}
                 ></Dropdown>
@@ -248,8 +257,8 @@ export default function Statistic() {
             </div>
             <div className="statistic-order">
               <Chart
-                options={yearlyData.options}
-                series={yearlyData.series}
+                options={revenue.options}
+                series={revenue.series}
                 type="bar"
                 height={280}
                 width={600}

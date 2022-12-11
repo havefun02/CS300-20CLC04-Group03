@@ -4,8 +4,8 @@
 }
 .nav_bar-flex-box {
   display: flex;
+  height: 100%;
   flex-direction: column;
-  flex: 0 0 90%;
   justify-content: flex-start;
   position: relative;
 }

@@ -16,25 +16,17 @@ const header = [
   'Color',
   'Quantity'
 ];
-
+const url = 'http://localhost:3001/host/get-product/all';
 export default function ManageTable({ props }) {
   const [fetch, setFetch] = useState(false);
   const [list, setList] = useState([
-    ['0', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-    ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-    ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-    ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-    ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-    ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-    ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-    ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-    ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-    ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-    ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
+    ['1', '1', '1', '1', '1', '1', '1', '1', '1', '1']
   ]);
   useEffect(() => {
-    const fetchData = () => {
-      return;
+    const fetchData = async () => {
+      const token = localStorage.getItem('token');
+      const res = await axios.get(url);
+      console.log(res);
     };
   }, [fetch]);
 
@@ -112,7 +104,6 @@ export default function ManageTable({ props }) {
                         <input
                           style={{ width: '50%' }}
                           type="text"
-                          placeholder={e}
                           onChange={(e) => {
                             updateState[index] = e.target.value;
                             console.log(updateState);
