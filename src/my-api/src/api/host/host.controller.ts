@@ -38,33 +38,17 @@ export class HostController {
     return 'ok';
     // return this.service.uploadDb(req.body, <User>req.user, file.buffer);
   }
-  @Get('get-file-product')
-  // @UseGuards(JwtAuthGuard)
-  private async getProduct(@Req() req: Request) {
-    // return this.service.getProduct();
-  }
-  @Post('delete-file-product')
+
+  @Post('delete-product')
   // @UseGuards(JwtAuthGuard)
   private async deleteProduct(@Req() req: Request) {
+    console.log(req.body);
     // return this.service.deleteProduct(req.body.key);
   }
-  @Post('update-product/:id/by-name')
-  @UseGuards(JwtAuthGuard)
-  private async updateNameProduct() {}
 
-  @Post('update-product/:id/by-price')
-  @UseGuards(JwtAuthGuard)
-  private async updatePriceProduct() {}
-
-  @Post('update-product/:id/sale-off')
-  @UseGuards(JwtAuthGuard)
-  private async updateSaleOffProduct() {}
-
-  @Post('update-product/:id/quantity')
-  @UseGuards(JwtAuthGuard)
-  private async updateQuantityProduct() {}
-
-  @Post('update-product/:id/id-cate')
-  @UseGuards(JwtAuthGuard)
-  private async updateCateProduct() {}
+  @Post('update-product')
+  // @UseGuards(JwtAuthGuard)
+  private async updateNameProduct(@Req() req: Request) {
+    console.log(req.body);
+  }
 }
