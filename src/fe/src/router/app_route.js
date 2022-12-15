@@ -8,64 +8,76 @@ import ImgOverlay from '../component/imgoverlay';
 import Page from '../screen/shoppage';
 import Footer from '../component/footer';
 import Cart from '../screen/cart';
+import Profile from '../screen/profile';
+import DetailProduct from '../screen/detailProduct';
 export default function AppRoute() {
   const context = useContext(Context);
   const [isLog, setIsLog] = [context.isLog, context.setIsLog];
   const [access, setAccess] = [context.access, context.setAccess];
-  const [name, setName] = useState('Someone');
 
-  console.log(isLog);
   return (
     <BrowserRouter>
       <div className="route-main">
         <div className="route-grid">
           {!access && <ImgOverlay props={[access, setAccess]} />}
           <div className="route-flex-box">
-            <Header props={{ isLog, name }}></Header>
+            <Header></Header>
             <Routes>
               <Route
                 path="/"
                 element={<Page props={{ title: 'All product' }} />}
               ></Route>
+              <Route path={'/product'} element={<DetailProduct />}>
+                <Route path={':id'} element={<DetailProduct />}></Route>
+              </Route>
+              <Route
+                path="*"
+                element={
+                  <div
+                    style={{
+                      flex: '0 0 500px',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      fontSize: '30px'
+                    }}
+                  >
+                    <span>Page not found</span>
+                  </div>
+                }
+              />
+
               <Route
                 path="/newin"
-                element={<Page props={{ title: 'New in' }} />}
+                element={<Page props={{ title: 'New Product' }} />}
               ></Route>
               <Route
                 path="/sale"
-                element={<Page props={{ title: 'Sale' }} />}
+                element={<Page props={{ title: 'On big sale' }} />}
               ></Route>
               <Route
                 path="/men"
-                element={<Page props={{ title: 'Men' }} />}
+                element={<Page props={{ title: 'For men' }} />}
               ></Route>
               <Route
                 path="/women"
-                element={<Page props={{ title: 'Women' }} />}
+                element={<Page props={{ title: 'For women' }} />}
+              ></Route>
+              {/* <Route path="/bestseller" element={<Page props={} />}></Route> */}
+
+              <Route
+                path="/cart"
+                element={isLog ? <Cart /> : <div></div>}
               ></Route>
               <Route
-                path="/bestseller"
-                element={<Page props={{ title: 'Best seller' }} />}
+                path="/buy"
+                element={isLog ? <Page /> : <div></div>}
               ></Route>
               <Route
-                path="/liked"
-                element={<Page props={{ title: 'Liked' }} />}
+                path="/profile"
+                element={isLog ? <Profile /> : <div></div>}
               ></Route>
             </Routes>
-            {isLog ? (
-              <Routes>
-                <Route
-                  path="/cart"
-                  element={<Cart props={{ title: 'Cart' }} />}
-                ></Route>
-                <Route
-                  path="/buy"
-                  element={<Page props={{ title: 'Liked' }} />}
-                ></Route>
-              </Routes>
-            ) : (
-              <Routes></Routes>
-            )}
             <Footer />
           </div>
         </div>

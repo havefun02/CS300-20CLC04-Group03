@@ -1,11 +1,13 @@
 .imgoverlay {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   bottom: 0;
   height: 100%;
   width: 100%;
   z-index: 1030;
+  display: block;
+  cursor: pointer;
   background-color: rgba(0, 0, 0, 0.6);
 }
 .imgoverlay-flex-box {
