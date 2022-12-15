@@ -1,27 +1,22 @@
 import { useEffect, useState } from 'react';
 import shortid from 'shortid';
+import axios from 'axios';
 import './manageTask.css';
 export default function ManageTask({ props }) {
-  const headerSize = [2, 4, 5, 5, 5, 3];
-  const header = ['Id', 'Name', 'Phone', 'Email', 'Address', 'Point'];
-  const [list, setList] = useState([
-    ['0', '2', '3', '4', '5', '6'],
-    ['1', '2', '3', '4', '5', '6'],
-    ['1', '2', '3', '4', '5', '6'],
-    ['1', '2', '3', '4', '5', '6'],
-    ['1', '2', '3', '4', '5', '6'],
-    ['1', '2', '3', '4', '5', '6'],
-    ['1', '2', '3', '4', '5', '6'],
-    ['1', '2', '3', '4', '5', '6'],
-    ['1', '2', '3', '4', '5', '6'],
-    ['1', '2', '3', '4', '5', '6'],
-    ['1', '2', '3', '4', '5', '6']
-  ]);
+  const headerSize = [2, 4, 5, 5, 5, 3, 2];
+  const header = ['Id', 'Name', 'Phone', 'Email', 'Address', 'Point', 'Member'];
+  const [list, setList] = useState([]);
+  const [fetch, setFetch] = useState(false);
   const [checked, setChecked] = useState(Array(list.length));
   const [checkedAll, setCheckedAll] = useState(false);
   useEffect(() => {
-    console.log(checked);
-  }, [checked]);
+    const fetchData = async () => {
+      const url = 'http://localhost:3001/host/get-customer/all';
+      const token = localStorage.getItem('token');
+      const res = await axios.get(url);
+    };
+  }, [fetch]);
+
   const HeaderTable = ({ props }) => {
     return (
       <div className="managetask-header">
@@ -83,7 +78,6 @@ export default function ManageTask({ props }) {
                 let clone = checked;
                 checked[list.indexOf(props)] = !checked[list.indexOf(props)];
                 let t = Object.assign([], checked);
-                console.log(t);
                 setChecked(t);
               }}
             ></input>
@@ -103,7 +97,31 @@ export default function ManageTask({ props }) {
           })}
         </div>
         <div className=" manageTask-footer">
-          <span>total</span>
+          <span>Total:{list.length}</span>
+          <div>
+            <button
+              style={{
+                height: '80%',
+                borderRadius: '20px',
+                width: '100px',
+                backgroundColor: '#fff',
+                border: '1px solid #ccc'
+              }}
+            >
+              <span>SendGift</span>
+            </button>
+            <button
+              style={{
+                height: '80%',
+                borderRadius: '20px',
+                width: '100px',
+                backgroundColor: '#fff',
+                border: '1px solid #ccc'
+              }}
+            >
+              <span>SendMail</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>

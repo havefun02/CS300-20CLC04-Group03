@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './customer.css';
 import ManageTask from '../components/manageTask';
 import NavBar from '../components/nav_bar';
@@ -7,7 +7,7 @@ import ManageBar from '../components/managebar';
 
 const tabs = [
   {
-    title: 'Task',
+    title: 'All customer',
     optional: 'button',
     component: ManageTask
   }

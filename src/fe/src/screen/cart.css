@@ -1,3 +1,112 @@
 .cart {
-  flex: 0 0 auto;
+  flex: 0 0 1500px;
+}
+.cart-container {
+  padding: 20px 10px;
+  height: 100%;
+  background-color: #f2f2f2;
+}
+.cart-flex-box {
+  max-width: 1200px;
+  height: 100%;
+  width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.cart-header {
+  font-size: 20px;
+  font-weight: 700;
+  display: flex;
+  background-color: #fff;
+  flex: 0 0 100px;
+  padding: 20px 15px;
+  align-items: center;
+  flex-direction: row;
+}
+.cart-header div {
+  display: flex;
+  align-items: center;
+}
+.cart-header div img {
+  height: 40px;
+  width: 40px;
+  right: 30px;
+}
+.cart-header div span {
+  border-left: 1px solid #ccc;
+  margin-left: 20px;
+  padding-left: 20px;
+}
+.cart-title {
+  font-size: 16px;
+  font-weight: 200;
+  display: flex;
+  background-color: #fff;
+  flex: 0 0 50px;
+  padding: 10px 15px;
+  align-items: center;
+  flex-direction: row;
+}
+.cart-check-all {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  padding-left: 15px;
+  align-items: center;
+  height: 100%;
+}
+.cart-check-all div:first-child {
+  height: 100%;
+  width: 30px;
+  display: flex;
+  align-items: center;
+}
+.cart-check-all div:first-child input {
+  height: 15px;
+  width: 15px;
+}
+
+.cart-title div:last-child,
+.cart-product div:last-child {
+  flex: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 100%;
+}
+.cart-title div:last-child div,
+.cart-product div:last-child div {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.cart-product {
+  font-size: 16px;
+  font-weight: 200;
+  display: flex;
+  background-color: #fff;
+  flex: 0 0 150px;
+  padding: 10px 15px;
+  align-items: center;
+  flex-direction: row;
+}
+.cart-bottom-bar {
+}
+.cart-bottom-bar-container {
+  font-size: 20px;
+  font-weight: 700;
+  display: flex;
+  background-color: #fff;
+  height: 150px;
+  padding: 20px 15px;
+  align-items: center;
+  flex-direction: row;
+  position: sticky;
+  bottom: 0;
+  z-index: 999;
+  border-top: 1px solid #ccc;
+  box-shadow: 0px 0px 7px #ccc;
 }

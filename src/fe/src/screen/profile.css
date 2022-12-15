@@ -1,0 +1,183 @@
+.profile-container {
+  flex: 0 0 500px;
+  background-color: #f2f2f2;
+}
+.profile-grid {
+  padding: 20px 0;
+  max-width: 1200px;
+  padding: 20px 40px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  height: 100%;
+}
+.profile-nav {
+  flex: 0 0 16.66667%;
+  display: flex;
+  flex-direction: column;
+}
+.profile-group-function {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 30px 0;
+}
+.profile-nav-element {
+  padding: 7px 0;
+  align-items: center;
+  flex: 0 0 40px;
+  display: flex;
+  flex-direction: row;
+}
+.profile-nav-element-icon {
+  padding-right: 10px;
+}
+.profile-nav-element-title {
+  cursor: pointer;
+}
+.profile-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  margin-left: 30px;
+  padding: 0 20px;
+}
+
+.profile-group-info {
+  flex: 0 0 80px;
+}
+.profile-group-info > div {
+  height: 100%;
+  padding: auto 0;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  border-bottom: 1px solid #b3b1b1;
+}
+
+.profile-title {
+  flex: 0 0 80px;
+  display: flex;
+  padding: 15px 0;
+  flex-direction: column;
+  border-bottom: 1px solid #b3b1b1;
+}
+.profile-edit-form {
+  flex: 1;
+  padding: 30px 0;
+  display: flex;
+}
+.profile-input {
+  width: 100%;
+  flex: 0 0 40px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.profile-bt-note {
+  display: flex;
+  align-items: stretch;
+  flex-direction: column;
+  font-size: 14px;
+  font-weight: 100;
+}
+.profile-bt-select {
+  width: 150px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 5px;
+}
+.profile-bt-select label {
+  width: 100px;
+  height: 30px;
+  border: 1px solid rgb(123, 115, 115);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.profile-icon {
+  width: 150px;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-edit-label {
+  display: flex;
+  flex: 0 0 30%;
+  justify-content: flex-end;
+  padding-right: 30px;
+}
+.profile-edit-label span {
+  font-size: 14px;
+  font-weight: 300;
+}
+.profile-input-tag {
+  flex: 1;
+  height: 80%;
+}
+.profile-input-tag div {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.profile-input-tag div > input {
+  width: 100%;
+  height: 80%;
+  border: 1px solid #ccc;
+  outline: none;
+  padding: 0 20px;
+}
+.profile-input-tag div > button {
+  width: 70px;
+  padding: 5px;
+  height: 80%;
+  margin-left: 10px;
+  background-color: #ccc;
+  border: 1px solid #ddd;
+  cursor: pointer;
+}
+.profile-input-1 {
+  width: 100%;
+  flex: 0 0 40px;
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+}
+.profile-input-1 div {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  padding: 5px 0;
+  margin-left: 30%;
+}
+.profile-input-tag div select {
+  outline: none;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  width: 100px;
+  height: 30px;
+}
+.profile-input-tag div select::-ms-expand {
+  height: 150px;
+}
+.profile-input div select:hover {
+  border-color: red;
+}
+.profile-input-1 div button {
+  width: 60px;
+  height: 100%;
+  border: none;
+  background-color: #ccc;
+  border-radius: 3px;
+}
+.profile-input-1 div button:hover {
+  opacity: 0.7;
+}

@@ -2,7 +2,12 @@ import './imgoverlay.css';
 export default function ImgOverlay({ props }) {
   const [access, setAccess] = props;
   return (
-    <div className="imgoverlay">
+    <div
+      className="imgoverlay"
+      onClick={(e) => {
+        e.target.style.display = 'none';
+      }}
+    >
       <div onClick={() => {}} className="imgoverlay-flex-box">
         <div className="imgoverlay-background">
           <img src={require('../assets/overlay.jpg')}></img>

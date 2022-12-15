@@ -16,5 +16,6 @@
     "11.5 UK",
     "12 UK"
   ],
-  "color": ["color 1", "color 2", "color 3", "color 4", "color 5", "color 6"]
+  "color": ["color 1", "color 2", "color 3", "color 4", "color 5", "color 6"],
+  "brands": ["Adidas", "Nike", "Puma", "Converse", "Vans"]
 }

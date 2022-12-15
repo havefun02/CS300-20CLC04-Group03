@@ -37,6 +37,7 @@
   overflow: auto;
   flex-direction: column;
   position: relative;
+  background-color: #f2f2f2;
 }
 
 .manageTask-table .row-data {
@@ -72,6 +73,17 @@
   flex: 0 0 8%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   border: 1px solid #ccc;
+}
+.manageTask-footer > div {
+  display: flex;
+  width: 30%;
+  height: 100%;
+  align-items: center;
+  justify-content: space-around;
+}
+.manageTask-footer button:hover {
+  cursor: pointer;
+  background-color: #ccc !important;
 }

@@ -1,12 +1,13 @@
 .header {
+  width: 100%;
   background-color: #d2d2d2;
   display: flex;
   flex-direction: column;
-  flex: 0 0 95px;
+  flex: 0 0 100px;
 }
 .header-wrap {
   top: 0;
-  flex: 0 0 135px;
+  flex: 0 0 100px;
   position: sticky;
   z-index: 1000;
   width: 100%;
@@ -19,21 +20,15 @@
   color: #f2f2f2;
   background-color: rgb(56, 54, 54);
 }
-.header-preview {
-  flex: 0 0 70px;
-  display: flex;
-  height: 100%;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  padding: 10px;
-}
+
 .header-logo {
-  flex: 0 0 100px;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+  z-index: 1001;
   cursor: pointer;
+  position: absolute;
+  top: 25px;
+  left: 40px;
+  width: 60px;
+  height: 60px;
 }
 .header-logo img {
   width: 50px;

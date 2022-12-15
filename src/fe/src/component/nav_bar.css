@@ -1,10 +1,12 @@
 .nav {
   display: block;
-  height: 40px;
+  height: 75px;
+  width: 100%;
   background-color: #d2d2d2;
 }
 .nav-flex-box {
   max-width: 1200px;
+  width: 1200px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
@@ -18,12 +20,13 @@
   display: flex;
   flex-direction: row;
   justify-content: space-evenly;
-  margin-left: 50px;
+  margin-left: 70px;
 }
 .nav-info-search {
   cursor: pointer;
   height: 100%;
   display: flex;
+  flex-direction: row;
   align-items: center;
   padding: 0 20px;
 }
@@ -32,21 +35,27 @@
   border-bottom: 1px solid #000;
 }
 .nav-shopping-tools {
-  flex: 0 0 250px;
+  flex: 0 0 500px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   padding: 0 40px;
-  margin-right: 50px;
 }
-.nav-name {
-  position: absolute;
-  right: 0;
-  top: 25%;
+.nav-shopping-search {
+  display: flex;
+  align-items: center;
+  width: 150px;
+  height: 30px;
+  position: relative;
+  padding-top: 3px;
 }
-.nav-shopping-love,
-.nav-shopping-search,
+.nav-shopping-search input {
+  width: 120px;
+  height: 100%;
+  outline: none;
+}
+
 .nav-shopping-cart,
 .nav-shopping-profile,
 .nav-info-shipping {
@@ -54,6 +63,73 @@
   height: 30px;
   width: 34px;
   padding-top: 3px;
+}
+.hover-profile {
+  display: none;
+  height: 90px;
+  width: 120px;
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  top: 95%;
+  right: 0;
+}
+.hover-cart {
+  overflow: hidden;
+  display: none;
+  height: 300px;
+  width: 250px;
+  position: absolute;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  top: 95%;
+  right: 0;
+}
+
+.hover-profile div {
+  height: 30px;
+  padding: 5px;
+  display: flex;
+  justify-content: flex-start;
+}
+.hover-cart div {
+  height: 50px;
+  display: flex;
+  justify-content: flex-start;
+}
+.hover-cart > div:last-child {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+.hover-cart > div:last-child:hover {
+  background-color: #fff;
+  cursor: default;
+}
+
+.hover-profile:hover {
+  display: block;
+}
+.hover-cart:hover {
+  display: block;
+}
+
+.hover-profile div:hover {
+  cursor: pointer;
+  background-color: #ddd;
+}
+
+.hover-cart div:hover {
+  cursor: pointer;
+  background-color: #ddd;
+}
+
+.nav-shopping-profile img:hover + .hover-profile {
+  display: block;
+}
+.nav-shopping-cart img:hover + .hover-cart {
+  display: block;
 }
 
 .nav-info-gg,
@@ -64,61 +140,22 @@
   justify-content: center;
   background-color: #d1d1d1;
 }
-
-.nav-shopping-love span {
-  position: absolute;
-  border: 1px solid #000;
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  right: 0;
-  top: 0;
-  background-color: red;
-  font-size: 13px;
-  display: flex;
-  justify-content: center;
-  align-content: center;
-}
-.nav-shopping-cart span {
-  position: absolute;
-  border: 1px solid #000;
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  right: 0;
-  top: 0;
-  background-color: red;
-  font-size: 13px;
-  display: flex;
-  justify-content: center;
-  align-content: center;
-}
-.nav-info-shipping span {
-  position: absolute;
-  border: 1px solid #000;
-  width: 15px;
-  height: 15px;
-  border-radius: 50%;
-  right: 0;
-  top: 0;
-  background-color: red;
-  font-size: 13px;
-  display: flex;
-  justify-content: center;
-  align-content: center;
-}
-
-.nav-info-shipping img {
+.nav-shopping-cart > span {
   cursor: pointer;
-  width: 25px;
-  height: 25px;
+  position: absolute;
+  border: 1px solid #000;
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  right: 5px;
+  top: 0;
+  background-color: red;
+  font-size: 13px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
 }
 
-.nav-shopping-love img {
-  cursor: pointer;
-  width: 25px;
-  height: 25px;
-}
 .nav-shopping-search img {
   cursor: pointer;
   width: 25px;

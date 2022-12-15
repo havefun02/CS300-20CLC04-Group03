@@ -7,7 +7,6 @@ import shortid from 'shortid';
 export default function Header({ props }) {
   const navigate = useNavigate();
   const context = useContext(Context);
-  console.log(props);
   const [avar, setAvar] = [context.avar, context.setAvar];
   const [notify, setNotify] = [context.notify, context.setNotify];
   const [isLog, setIsLog] = [context.isLog, context.setIsLog];

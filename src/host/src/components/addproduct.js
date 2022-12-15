@@ -32,13 +32,11 @@ export default function AddForm({ props }) {
       formApi.append('files', e);
     });
     cloneProperty.forEach((e) => {
-      console.log(e);
       formApi.append('size', e.size);
       formApi.append('color', e.color);
       formApi.append('quantity', e.quantity);
     });
 
-    console.log(formApi);
     const res = await axios
       .post(url, formApi, {
         headers: {
@@ -46,7 +44,6 @@ export default function AddForm({ props }) {
         }
       })
       .then((res) => {
-        console.log(res);
         setReRender((reRender) => !reRender);
       })
       .catch((e) => {
@@ -107,7 +104,6 @@ export default function AddForm({ props }) {
             </div>
             <div className="addform-picture">
               {avar.map((e) => {
-                console.log(e);
                 return (
                   <div
                     key={shortid.generate()}
@@ -128,10 +124,8 @@ export default function AddForm({ props }) {
                 multiple
                 onChange={(e) => {
                   let clone = avar;
-                  console.log(avar);
                   clone.push(e.target.files[0]);
                   let t = Object.assign([], clone);
-                  console.log(t);
                   setAvar(t);
                 }}
                 id="avar"

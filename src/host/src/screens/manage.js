@@ -29,7 +29,6 @@ export default function Manage() {
         <div className="manage-content">
           <ManageBar props={tabs} />
         </div>
-        <div className="manage-footer"></div>
       </div>
     </div>
   );

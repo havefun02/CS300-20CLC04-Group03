@@ -1,5 +1,6 @@
 .overlay {
   position: fixed;
+  display: block;
   top: 0;
   bottom: 0;
   left: 0;
@@ -9,10 +10,10 @@
   background-color: rgba(0, 0, 0, 0.6);
 }
 .overlay-flex-box {
-  position: relative;
+  cursor: default;
+  position: absolute;
   width: 300px;
   height: 400px;
-  position: fixed;
   top: 30%;
   left: 50%;
   margin-top: -100px;
@@ -24,25 +25,24 @@
   flex-direction: column;
 }
 .overlay-title {
-  padding: 50px 20px;
-  flex: 0 0 20%;
+  padding: 30px 10px;
+  flex: 0 0 10%;
   justify-content: center;
   align-items: center;
 }
 .overlay-avar {
-  flex: 0 0 20%;
   display: flex;
+  height: 50%;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 }
 .overlay-avar img {
-  width: 30px;
-  height: 30px;
-  margin-bottom: 10px;
+  width: 80%;
+  height: auto;
 }
 .overlay-gr-button {
-  flex: 0 0 60%;
+  flex: 0 0 30%;
   flex-direction: row;
   display: flex;
   width: 100%;

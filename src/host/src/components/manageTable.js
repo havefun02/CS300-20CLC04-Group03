@@ -16,25 +16,16 @@ const header = [
   'Color',
   'Quantity'
 ];
-
+const url = 'http://localhost:3001/host/get-product/all';
 export default function ManageTable({ props }) {
   const [fetch, setFetch] = useState(false);
   const [list, setList] = useState([
-    ['0', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-    ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-    ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-    ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-    ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-    ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-    ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-    ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-    ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-    ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-    ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10']
+    ['1', '1', '1', '1', '1', '1', '1', '1', '1', '1']
   ]);
   useEffect(() => {
-    const fetchData = () => {
-      return;
+    const fetchData = async () => {
+      const token = localStorage.getItem('token');
+      const res = await axios.get(url);
     };
   }, [fetch]);
 
@@ -112,10 +103,8 @@ export default function ManageTable({ props }) {
                         <input
                           style={{ width: '50%' }}
                           type="text"
-                          placeholder={e}
                           onChange={(e) => {
                             updateState[index] = e.target.value;
-                            console.log(updateState);
                             setUpdateState(updateState);
                           }}
                         ></input>
@@ -130,7 +119,6 @@ export default function ManageTable({ props }) {
                     onClick={async () => {
                       const url = 'http://localhost:3001/host/update-product';
                       const token = localStorage.getItem('token');
-                      console.log(props.ele);
                       const formApi = { dataArr: updateState };
                       const res = await axios
                         .post(url, formApi, {
@@ -138,9 +126,7 @@ export default function ManageTable({ props }) {
                             // Authorization: `Basic ${token}`
                           }
                         })
-                        .then((res) => {
-                          console.log(res);
-                        })
+                        .then((res) => {})
                         .catch((e) => {
                           throw e;
                         });
@@ -161,7 +147,6 @@ export default function ManageTable({ props }) {
                   onClick={async () => {
                     const url = 'http://localhost:3001/host/delete-product';
                     const token = localStorage.getItem('token');
-                    console.log(props.ele);
                     const formApi = { dataArr: props.ele };
                     const res = await axios
                       .post(url, formApi, {
@@ -169,9 +154,7 @@ export default function ManageTable({ props }) {
                           // Authorization: `Basic ${token}`
                         }
                       })
-                      .then((res) => {
-                        console.log(res);
-                      })
+                      .then((res) => {})
                       .catch((e) => {
                         throw e;
                       });

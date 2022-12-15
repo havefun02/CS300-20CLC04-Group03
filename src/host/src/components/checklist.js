@@ -27,7 +27,6 @@ export default function CheckList({ props }) {
                     property[size.indexOf(items)] = {
                       size: items.substr(0, 2)
                     };
-                  console.log(property);
                   let t1 = Object.assign([], property);
                   setProperty(t1);
                 }}

@@ -13,7 +13,7 @@ export default function Sidebar() {
   const [list, setList] = useState([
     {
       path: '/',
-      avar: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAABD0lEQVRoge2YMQ6CQBBFH/bGC2hpuDshnMArUYgHwAJpgFU28GfDOi+ZguYPP5A/OwuO4yxxA2qgA/qV1QENUCbQnTVpIxpMqwWuhroz6g1NxqoMdWfEfN5QPa10i4VG/RqXK5hqS3RPO4kmww2kxg2kxtLAaweNWYxaGnhYaWwdNmNNKdl+lLinNADDWaZi+BVipm8dennLSSzBUyg1WRqQ5PUHk42siRAPVR14eZONTJXXZhsZCPIaw41MhWS+ZJlChyJbAyZ5rUKV11sTaKyfqPJaYmApRjvgvMbpFzrgsmBgD4rgg7KRSjfbFDoMbiA1WRpQbWRmN3OqGzSzmznVRmZ2MweajUyp6zh/yxuZGNTcc7TV1QAAAABJRU5ErkJggg==',
+      avar: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABmJLR0QA/wD/AP+gvaeTAAADlklEQVR4nO2byWoUQRjHfzHLCLm4MCKYvEBwI6KvYIInwe1iVBS9ZHkHL26HuDyBPoPGqGg0QTMaNB4kB4nRJIIQFDGTRUQSD5WBsaqmuqureprp6R98h1BT3/KfytfV1T2QkZFWuoBZYF2yeaA7wbyqwn5gGbX4ks0ll1r8bAdmqFx8qgVoBJ4QXHxXnEnkgH6gACxtWAHo2xiLkxuoBQ/GHPM/dgHvNUmUbHLjM3FwCliT4o0ATTHFU8hhLr5cBN8rYR9ipZXHmQXynuMY6Se4+JL1eoy7Dfgk+V8FDniMEYrXUhL3Ecu9DRiSxsY9xWwEHqEK3OPJvxVFKYm2srF2aWzRU8xrqMXf9uTbmh+EF2DBQ7wTqE3vOdDswXckxqRkhhAitAMPpbGCY6w9qE1vDtjh6NeJHtTlaLJ7QGuEOFuBacnXKnDQLX13zmInwDrwAeiwiNEIDGv8nPNSgQNBNx8mWwEGQsa5qpl/x1cRUcmj3nYuAi8R/6ffgReIb6kTmEIvxF3M/xLHUZveKAk2PRDbzBEpqTXgqGFOK6JYnQhTiA3MADAB/AX+AK9QL7NfgZ2+C7LlFmoRl0PO7UHt5GHtN3DIVxFROY2a2ANgk4WPDkQjtBXgopcKHNA1vY/Algi+NqNfSSY745a+G7qmVwR2O/otSD5N9xKjmvlHEH0hSDynM8Em4JnkcA04FtVhGQuSX9NW+ptm/jzBxZcs8pHYTY2zK1GdSawQXoCfmvm2fcQaXdMbRuzOfDAh+TbdSzzVzI9VgE7Ub2gacRjhi/OET/6SZn5QgZEFyANfpMlLwF4bJyFoBt4SXPw79KsuFgEqNb2TYR1YkkecGVYq/g2Vz/liEWBQM/F62MkRaUIs8THgF+KgpQBcwHyY6ixAmOvoYyo3vapchw04CxB0HZ1BPHaqRFWuwwZiFWAZsf21SSDIfOMsQDd6ET4DhyMkUHMCJJ2Aaw+peQFce0ik+A2BZYVHDir7th0PwtV/A9gdXqSSqj06joDrCglF3a+AcgGS3sklTiJdOOnxBukDNnjpwkmP130PMF0FqtKFk6buV0AmQNIJJE0mQNIJJI3LPqDWyfYBkAmQCWCzE6x1tD2u7ldAuQBL0lgb6aFd+ruo+5D8unvp+Xyto3u/QPu6fh/qoUFaTfuDjRzmR9NpsUmgRScAiLey0ixCqB9ttSCWyDjq66m1aEXEq7a9GL75jHrlHytvq0MDnmCuAAAAAElFTkSuQmCC',
       title: 'DashBoard',
       style: 'sidebar-func-a'
     },
@@ -40,12 +40,6 @@ export default function Sidebar() {
       avar: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAACk0lEQVRoge2Zv2sUQRTHPwax8QcIQoLchSNqguT/sLC01SL2dhb2Nrn8FRGsIodJCiMWaiolWmqq4C/CnQSM4RKxUi/FvoW9uZm5nZnduY3cF15xb2a+3/duZ3be7MAY/x9OA3eB98BvsXfAgrRVGheBLaBnsC3pU0lMAG8xB5/aG+lbOdxhePCp3Y4VVB1oAYcOwaX2DKiJbXiMPwRWgbmQ4Pc9hFOrKVy+PD9lvDNaAaJFJtADnvgk4DNtsrYhgdeB54FcXVOQpywJ9Ib0VdtDMYxfG2slX2cuGCcwaoTUJrb1Ew0n/gn4JHAJeAVcz/iuAa+ByRzjF8RKh/ouTrEmv3eBGbFd8a0N4ZwHfonNe+rnhomgAXwR31exnvgaFr6zwHaGb1t80RMAmAY+Zdq+kTwJG5Y1nMue+rlgI6gxmIDt39fxhug7CakEl4EdBqfQjrTl5fXVzw0TwTrmRbzuI+SoH0wwRfIanc34ZsU35SPkqB+PQMEZYAnoAG2gKb7S9ItOoKnhbJapX3QCHQ3n91D9mLWQLoi/oaQxEpghqVwfa9p0vsJQxBS6BRwB90kWbJNkAVd+EU8AD4F/MvZRZP0ggvPAUxnzB3iA3+FnJAlcBT5K/33ghqbPJIPniWlgk/6CMHoCN4ED6fsBuGLop5Yi2fJ8M0B/ACYC0466Kv1awDkLr1oMpsGnCZWegGlHvQDcI998rwOfM+M79NdWpSbguqPqoJ4n9uhfEzb93DARtDVtbQfeSk6hRQfeSixilx1Vhe480SAJPnsszZVAyNfpspFL/8R/mbN9Gz0iKQtS+BZ0RcB4wWF7Ai9LCMQXL3wGzZFcsKmLKbb9oP++zQl1kgu27ggC7wIrIcGPEQPHtxcjtmuSOTAAAAAASUVORK5CYII=',
       title: 'Customer',
       style: 'sidebar-func-a'
-    },
-    {
-      path: '/statistic',
-      avar: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABmJLR0QA/wD/AP+gvaeTAAADlklEQVR4nO2byWoUQRjHfzHLCLm4MCKYvEBwI6KvYIInwe1iVBS9ZHkHL26HuDyBPoPGqGg0QTMaNB4kB4nRJIIQFDGTRUQSD5WBsaqmuqureprp6R98h1BT3/KfytfV1T2QkZFWuoBZYF2yeaA7wbyqwn5gGbX4ks0ll1r8bAdmqFx8qgVoBJ4QXHxXnEnkgH6gACxtWAHo2xiLkxuoBQ/GHPM/dgHvNUmUbHLjM3FwCliT4o0ATTHFU8hhLr5cBN8rYR9ipZXHmQXynuMY6Se4+JL1eoy7Dfgk+V8FDniMEYrXUhL3Ecu9DRiSxsY9xWwEHqEK3OPJvxVFKYm2srF2aWzRU8xrqMXf9uTbmh+EF2DBQ7wTqE3vOdDswXckxqRkhhAitAMPpbGCY6w9qE1vDtjh6NeJHtTlaLJ7QGuEOFuBacnXKnDQLX13zmInwDrwAeiwiNEIDGv8nPNSgQNBNx8mWwEGQsa5qpl/x1cRUcmj3nYuAi8R/6ffgReIb6kTmEIvxF3M/xLHUZveKAk2PRDbzBEpqTXgqGFOK6JYnQhTiA3MADAB/AX+AK9QL7NfgZ2+C7LlFmoRl0PO7UHt5GHtN3DIVxFROY2a2ANgk4WPDkQjtBXgopcKHNA1vY/Algi+NqNfSSY745a+G7qmVwR2O/otSD5N9xKjmvlHEH0hSDynM8Em4JnkcA04FtVhGQuSX9NW+ptm/jzBxZcs8pHYTY2zK1GdSawQXoCfmvm2fcQaXdMbRuzOfDAh+TbdSzzVzI9VgE7Ub2gacRjhi/OET/6SZn5QgZEFyANfpMlLwF4bJyFoBt4SXPw79KsuFgEqNb2TYR1YkkecGVYq/g2Vz/liEWBQM/F62MkRaUIs8THgF+KgpQBcwHyY6ixAmOvoYyo3vapchw04CxB0HZ1BPHaqRFWuwwZiFWAZsf21SSDIfOMsQDd6ET4DhyMkUHMCJJ2Aaw+peQFce0ik+A2BZYVHDir7th0PwtV/A9gdXqSSqj06joDrCglF3a+AcgGS3sklTiJdOOnxBukDNnjpwkmP130PMF0FqtKFk6buV0AmQNIJJE0mQNIJJI3LPqDWyfYBkAmQCWCzE6x1tD2u7ldAuQBL0lgb6aFd+ruo+5D8unvp+Xyto3u/QPu6fh/qoUFaTfuDjRzmR9NpsUmgRScAiLey0ixCqB9ttSCWyDjq66m1aEXEq7a9GL75jHrlHytvq0MDnmCuAAAAAElFTkSuQmCC',
-      title: 'Statistic',
-      style: 'sidebar-func-a'
     }
   ]);
   useEffect(() => {
@@ -68,7 +62,15 @@ export default function Sidebar() {
   return (
     <div className="sidebar-main">
       <div className="sidebar-title">
-        <h2>My shop</h2>
+        <NavLink
+          style={{
+            color: '#fff',
+            fontSize: '18px',
+            textDecoration: 'none'
+          }}
+        >
+          My shop
+        </NavLink>
       </div>
       {list.map((el) => {
         return (

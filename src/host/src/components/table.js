@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import shortid from 'shortid';
 import './table.css';
 export default function Table({ props }) {
-  const [header, setHeader] = useState(props.header);
-  const [headerSize, setHeaderSize] = useState(props.size);
-  const [list, setList] = useState(props.list);
+  const header = props.header;
+  const headerSize = props.headerSize;
+  const [list, setList] = [props.list, props.setList];
   const HeaderTable = ({ props }) => {
     return (
       <div className="table-header">
@@ -61,8 +61,8 @@ export default function Table({ props }) {
           })}
         </div>
         <div className="table-footer">
-          <span>Total: 200</span>
-          <span>Out of stock: 100</span>
+          <span>Total:{list.length}</span>
+          <span>Revenue:500</span>
         </div>
       </div>
     </div>

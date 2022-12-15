@@ -1,14 +1,34 @@
 import React from 'react';
 import { useState } from 'react';
 import { createContext } from 'react';
-import { useNavigate, useHisory } from 'react-router-dom';
+import { io } from 'socket.io-client';
 const Context = createContext();
 const ContextProvider = ({ children }) => {
-  const [isLog, setIsLog] = useState(false);
+  const [socket, setSocket] = useState(null);
+  const [isLog, setIsLog] = useState(true);
   const [loading, setLoading] = useState(true);
   const [currentRoute, setCurrentRoute] = useState('/');
   const [avar, setAvar] = useState('');
   const [notify, setNotify] = useState([]);
+  // establish socket connection
+  React.useEffect(() => {
+    setSocket(io('http://localhost:3001'));
+  }, []);
+
+  // subscribe to the socket event
+  React.useEffect(() => {
+    if (!socket) return;
+
+    socket.on('connect', () => {
+      console.log('Connected');
+
+      socket.emit('join', { email: 'test' });
+    });
+
+    socket.on('disconnect', function () {
+      console.log('Disconnected');
+    });
+  }, [socket]);
 
   React.useEffect(() => {
     const getLocal = localStorage.getItem('isLog');
@@ -43,7 +63,9 @@ const ContextProvider = ({ children }) => {
         avar,
         setAvar,
         notify,
-        setNotify
+        setNotify,
+        socket,
+        setSocket
       }}
     >
       {children}

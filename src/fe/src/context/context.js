@@ -3,25 +3,41 @@ import { useState } from 'react';
 import { createContext } from 'react';
 const Context = createContext();
 const ContextProvider = ({ children }) => {
-  const [isLog, setIsLog] = useState(true);
+  const [isLog, setIsLog] = useState(false);
+  const [token, setToken] = useState(null);
   const [access, setAccess] = useState(false);
-  const [currentRoute, setCurrentRoute] = useState('/');
+  const [name, setName] = useState(null);
+  const [email, setEmail] = useState(null);
   React.useEffect(() => {
-    const getLocal = localStorage.getItem('isLog');
+    let getLocal = localStorage.getItem('isLog');
     if (getLocal !== null) setIsLog(() => getLocal);
-  }, []);
 
-  const fetchData = async () => {};
+    let tokenLocal = localStorage.getItem('token');
+    if (tokenLocal !== null) setToken(() => tokenLocal);
+
+    let nameLocal = localStorage.getItem('name');
+    if (nameLocal !== null) setName(() => nameLocal);
+
+    let emailLocal = localStorage.getItem('email');
+    if (emailLocal !== null) setEmail(() => emailLocal);
+  }, [isLog]);
+  React.useEffect(() => {
+    const fetchData = async () => {};
+  });
 
   return (
     <Context.Provider
       value={{
         isLog,
         setIsLog,
+        token,
+        setToken,
+        name,
+        setName,
+        email,
+        setEmail,
         access,
-        setAccess,
-        currentRoute,
-        setCurrentRoute
+        setAccess
       }}
     >
       {children}
