@@ -14,7 +14,6 @@ export default function ManageTask({ props }) {
       const url = 'http://localhost:3001/host/get-customer/all';
       const token = localStorage.getItem('token');
       const res = await axios.get(url);
-      console.log(res);
     };
   }, [fetch]);
 
@@ -79,7 +78,6 @@ export default function ManageTask({ props }) {
                 let clone = checked;
                 checked[list.indexOf(props)] = !checked[list.indexOf(props)];
                 let t = Object.assign([], checked);
-                console.log(t);
                 setChecked(t);
               }}
             ></input>

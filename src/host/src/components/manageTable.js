@@ -26,7 +26,6 @@ export default function ManageTable({ props }) {
     const fetchData = async () => {
       const token = localStorage.getItem('token');
       const res = await axios.get(url);
-      console.log(res);
     };
   }, [fetch]);
 
@@ -106,7 +105,6 @@ export default function ManageTable({ props }) {
                           type="text"
                           onChange={(e) => {
                             updateState[index] = e.target.value;
-                            console.log(updateState);
                             setUpdateState(updateState);
                           }}
                         ></input>
@@ -121,7 +119,6 @@ export default function ManageTable({ props }) {
                     onClick={async () => {
                       const url = 'http://localhost:3001/host/update-product';
                       const token = localStorage.getItem('token');
-                      console.log(props.ele);
                       const formApi = { dataArr: updateState };
                       const res = await axios
                         .post(url, formApi, {
@@ -129,9 +126,7 @@ export default function ManageTable({ props }) {
                             // Authorization: `Basic ${token}`
                           }
                         })
-                        .then((res) => {
-                          console.log(res);
-                        })
+                        .then((res) => {})
                         .catch((e) => {
                           throw e;
                         });
@@ -152,7 +147,6 @@ export default function ManageTable({ props }) {
                   onClick={async () => {
                     const url = 'http://localhost:3001/host/delete-product';
                     const token = localStorage.getItem('token');
-                    console.log(props.ele);
                     const formApi = { dataArr: props.ele };
                     const res = await axios
                       .post(url, formApi, {
@@ -160,9 +154,7 @@ export default function ManageTable({ props }) {
                           // Authorization: `Basic ${token}`
                         }
                       })
-                      .then((res) => {
-                        console.log(res);
-                      })
+                      .then((res) => {})
                       .catch((e) => {
                         throw e;
                       });

@@ -5,7 +5,7 @@ import { io } from 'socket.io-client';
 const Context = createContext();
 const ContextProvider = ({ children }) => {
   const [socket, setSocket] = useState(null);
-  const [isLog, setIsLog] = useState(false);
+  const [isLog, setIsLog] = useState(true);
   const [loading, setLoading] = useState(true);
   const [currentRoute, setCurrentRoute] = useState('/');
   const [avar, setAvar] = useState('');

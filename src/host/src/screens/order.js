@@ -21,7 +21,6 @@ export default function Order() {
       const url = 'http://localhost:3001/host/get-order/all';
       const token = localStorage.getItem('token');
       const res = await axios.get(url);
-      console.log(res);
     };
   }, [fetch]);
   return (

@@ -15,7 +15,6 @@ export default function Login() {
     const res = await axios
       .post('http://localhost:3001/auth/login', form)
       .then((res) => {
-        console.log(res);
         localStorage.setItem('token', res.data);
         localStorage.setItem('isLog', true);
         setIsLog(() => true);

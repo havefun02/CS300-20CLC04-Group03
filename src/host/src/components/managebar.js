@@ -11,7 +11,6 @@ export default function ManageBar({ props }) {
   );
   //replace this object by props
   const [reRender, setReRender] = useState(false);
-
   return (
     <div className="manage_bar">
       <div className="manage_bar-flex-box">
