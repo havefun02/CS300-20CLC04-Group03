@@ -51,4 +51,14 @@ export class HostController {
   private async updateNameProduct(@Req() req: Request) {
     console.log(req.body);
   }
+
+  @Get('get-product/all')
+  private async getProduct() {
+    return 'ok';
+  }
+
+  @Get('get-customer/all')
+  private async getCustomer() {
+    return 'customer';
+  }
 }

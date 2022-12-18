@@ -1,5 +1,3 @@
-import exp from 'constants';
-import internal from 'stream';
 import {
   BaseEntity,
   Column,
@@ -13,7 +11,6 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Cart } from '../cart/cart.entity';
-import { Trans } from '../trans/trans.entity';
 import { UserFromApi } from '../user.entity';
 import { DetailOrder } from './detailorder.entity';
 import { PaymentMethod } from './payment.entity';
@@ -32,10 +29,6 @@ export class Order extends BaseEntity {
 
   @Column({ type: 'varchar' })
   public state: string;
-
-  @ManyToOne(() => UserFromApi, (user) => user.trans)
-  @JoinColumn({ name: 'id_userFromApi' })
-  public user: UserFromApi;
 
   @ManyToOne(() => PaymentMethod, (method) => method.orders)
   @JoinColumn({ name: 'id_method' })

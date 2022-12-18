@@ -12,8 +12,14 @@ import { Order } from './order.entity';
 export class DetailOrder extends BaseEntity {
   @PrimaryColumn()
   public id_order: number;
-  @Column()
-  public id_cart: number; //product in cart
+  @Column({ type: 'int' })
+  public id_product: number;
+  @Column({ type: 'int' })
+  public id_size: number;
+  @Column({ type: 'int' })
+  public id_color: number;
+  @Column({ type: 'int' })
+  public quantity: number;
   @ManyToOne(() => Order, (order) => order.detail)
   @JoinColumn({ name: 'id_order' })
   public order: Order;

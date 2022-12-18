@@ -6,7 +6,6 @@ import { HostController } from './host.controller';
 import { HostService } from './host.service';
 import { ProductModule } from './product/product.module';
 import { User } from './host.entity';
-import { TrackingModule } from './tracking/tracking.module';
 @Module({
   imports: [
     TypeOrmModule.forFeature([User]),
@@ -15,7 +14,6 @@ import { TrackingModule } from './tracking/tracking.module';
     }),
     AuthModule,
     ProductModule,
-    TrackingModule,
   ],
   controllers: [HostController],
   providers: [HostService],
