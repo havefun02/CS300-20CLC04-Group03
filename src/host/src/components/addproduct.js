@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import shortid from 'shortid';
-import Dropdown from 'react-dropdown';
 import data from '../assets/staticdata.json';
 import CheckList from './checklist';
 import './addproduct.css';
@@ -58,38 +57,55 @@ export default function AddForm({ props }) {
             <div className="addform-detail-product">
               <div className="addform-same-format">
                 <input
+                  style={{ width: '200px' }}
                   placeholder="Name"
                   onChange={(e) => {
                     setName(() => e.target.value);
                   }}
                 ></input>
                 <input
+                  style={{ width: '100px' }}
                   placeholder="Code"
                   onChange={(e) => {
                     setCode(() => e.target.value);
                   }}
                 ></input>
                 <input
+                  style={{ width: '100px' }}
                   placeholder="Price"
                   type="text"
                   onChange={(e) => {
                     setPrice(() => e.target.value);
                   }}
                 ></input>
-                <Dropdown
+              </div>
+              <div
+                style={{
+                  padding: '0 8px',
+                  height: '30px',
+                  display: 'flex',
+                  flexDirection: 'row',
+                  justifyContent: 'flex-start'
+                }}
+              >
+                <select
                   onChange={(e) => {
-                    setBrand(e.value);
+                    setCate(e.target.value);
                   }}
-                  options={data.brand}
-                  placeholder="Brand"
-                ></Dropdown>
-                <Dropdown
+                >
+                  {data.cate.map((e, ind) => {
+                    return <option>{e}</option>;
+                  })}
+                </select>
+                <select
                   onChange={(e) => {
-                    setCate(e.value);
+                    setBrand(e.target.value);
                   }}
-                  options={data.cate}
-                  placeholder="Cate"
-                ></Dropdown>
+                >
+                  {data.color.map((e, ind) => {
+                    return <option>{e}</option>;
+                  })}
+                </select>
               </div>
               <div className="addform-another-format">
                 <CheckList

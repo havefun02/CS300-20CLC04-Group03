@@ -4,6 +4,8 @@ import './cart.css';
 export default function Cart() {
   const [list, setList] = useState([{}, {}]);
   const [check, setCheck] = useState(Array(list.length).fill(false));
+  const [gift, setGift] = useState([1, 2, 3, 4, 5, 6]);
+  const [expandGift, setExpandGift] = useState(false);
 
   const AProduct = ({ props }) => {
     return (
@@ -137,7 +139,96 @@ export default function Cart() {
             );
           })}
           <div className="cart-bottom-bar-container">
-            <div className="cart-bottom-bar"></div>
+            <div className="cart-bottom-header">
+              <div>
+                <div>
+                  <span>Your gift</span>
+                </div>
+                <div>
+                  <span
+                    onClick={() => {
+                      setExpandGift((expandGift) => !expandGift);
+                    }}
+                    style={{
+                      fontSize: '15px',
+                      color: 'blue',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    Select your gift
+                  </span>
+
+                  {expandGift && (
+                    <div className="cart-expand-gift">
+                      <div>
+                        {gift.map((e, ind) => {
+                          return (
+                            <div onClick={() => {}} key={shortid.generate()}>
+                              <span>code</span>
+                              <span>discount</span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+            <div className="cart-bottom-display">
+              <div>
+                <div>
+                  <span>Your discount on {gift.length} products</span>
+                </div>
+                <div>
+                  <span>-{'10.000'}</span>
+                </div>
+              </div>
+            </div>
+            <div className="cart-bottom-main">
+              <div className="cart-bottom-function-bar">
+                <div style={{ flex: '0 0 700px' }} className="cart-check-all">
+                  <div>
+                    <input
+                      checked={check.filter((e) => e == true).length > 0}
+                      onChange={(e) => {
+                        if (e.target.checked) {
+                          setCheck(Array(list.length).fill(true));
+                        } else {
+                          setCheck(Array(list.length).fill(false));
+                        }
+                      }}
+                      type="checkbox"
+                    ></input>
+                  </div>
+                  <div>
+                    <span style={{ fontSize: '16px', fontWeight: '500' }}>
+                      Select All ({check.filter((e) => e == true).length})
+                    </span>
+                  </div>
+                </div>
+                <div
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'row',
+                    flex: '0 0 400px',
+                    justifyContent: 'space-between',
+                    paddingRight: '50px',
+                    alignItems: 'center'
+                  }}
+                >
+                  <div className="cart-total">
+                    <span>
+                      Total ({check.filter((e) => e == true).length}):
+                      {'123.000'}
+                    </span>
+                  </div>
+                  <div className="cart-buy">
+                    <button>Buy</button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>

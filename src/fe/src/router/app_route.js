@@ -1,14 +1,16 @@
+import './approute.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import React, { useContext } from 'react';
 import { Context } from '../context/context';
 import Header from '../../../fe/src/component/header';
-import './approute.css';
-import { useState } from 'react';
 import ImgOverlay from '../component/imgoverlay';
 import Page from '../screen/shoppage';
 import Footer from '../component/footer';
 import Cart from '../screen/cart';
+import Order from '../screen/order';
 import Profile from '../screen/profile';
+import Gift from '../screen/gift';
+import Notification from '../screen/notification';
 import DetailProduct from '../screen/detailProduct';
 export default function AppRoute() {
   const context = useContext(Context);
@@ -63,11 +65,22 @@ export default function AppRoute() {
                 path="/women"
                 element={<Page props={{ title: 'For women' }} />}
               ></Route>
-              {/* <Route path="/bestseller" element={<Page props={} />}></Route> */}
 
+              <Route
+                path="/gift"
+                element={isLog ? <Gift /> : <div></div>}
+              ></Route>
+              <Route
+                path="/notification"
+                element={isLog ? <Notification /> : <div></div>}
+              ></Route>
               <Route
                 path="/cart"
                 element={isLog ? <Cart /> : <div></div>}
+              ></Route>
+              <Route
+                path="/order"
+                element={isLog ? <Order /> : <div></div>}
               ></Route>
               <Route
                 path="/buy"

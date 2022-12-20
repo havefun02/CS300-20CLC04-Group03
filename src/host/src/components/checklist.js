@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import Dropdown from 'react-dropdown';
-import { redirect } from 'react-router-dom';
+import shortid from 'shortid';
 import './checklist.css';
 
 export default function CheckList({ props }) {
@@ -34,17 +33,11 @@ export default function CheckList({ props }) {
               <label htmlFor="checkbox"> {items}</label>
             </div>
 
-            <Dropdown
-              disabled={property[size.indexOf(items)] === null}
-              onChange={(e) => {
-                let clone = property;
-                clone[size.indexOf(items)].color = e.value;
-                let t = Object.assign([], clone);
-                setProperty(t);
-              }}
-              options={color}
-              placeholder="Color"
-            ></Dropdown>
+            <select>
+              {color.map((e, ind) => {
+                return <option key={shortid.generate()}>{e}</option>;
+              })}
+            </select>
             <input
               type="text"
               disabled={property[size.indexOf(items)] === null}

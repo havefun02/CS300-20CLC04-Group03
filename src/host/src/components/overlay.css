@@ -1,0 +1,122 @@
+.overlay {
+  position: fixed;
+  display: block;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 10;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+.overlay-flex-box {
+  cursor: default;
+  position: absolute;
+  width: 900px;
+  height: 500px;
+  top: 50%;
+  left: 50%;
+  margin-top: -250px;
+  margin-left: -450px;
+  background-color: #f2f2f2;
+  text-align: center;
+  z-index: 11;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 20px;
+  border: 2px solid #ccc;
+}
+.overlay-title {
+  flex: 0 0 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.overlay-main {
+  max-height: 400px;
+  width: 100%;
+  background-color: #fff;
+  padding: 10px;
+  overflow-y: auto;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+}
+
+.overlay-exit {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 30px;
+  height: 30px;
+  background-color: #ccc;
+}
+.overlay-exit img {
+  width: 30px;
+  height: 30px;
+}
+
+.gift-list > div {
+  height: 100px;
+  flex: 0 0 50%;
+  padding-bottom: 10px;
+  position: relative;
+}
+.gift-list {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.gift-list > div {
+  height: 100px;
+  flex: 0 0 50%;
+  padding-bottom: 10px;
+  position: relative;
+}
+.gift-list > div:nth-child(2n + 1) {
+  padding-right: 20px;
+}
+.gift-element {
+  border: 1px solid #ccc;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.gift-list > div:nth-child(2n) > div:last-child {
+  right: 10px;
+}
+.gift-list > div > div:last-child {
+  position: absolute;
+  top: 15px;
+  right: 30px;
+  cursor: pointer;
+}
+.gift-list > div > div:last-child:hover {
+  color: red;
+}
+
+.gift-element > div:first-child {
+  height: 100%;
+  width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgb(186, 228, 102);
+}
+.gift-element > div:last-child {
+  padding: 10px 15px;
+  font-size: 14px;
+  font-weight: 300;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+.gift-element > div:last-child div {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}

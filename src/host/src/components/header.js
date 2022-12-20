@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './header.css';
 import { useContext } from 'react';
 import { Context } from '../context/context';
@@ -12,6 +12,9 @@ export default function Header({ props }) {
   const [isLog, setIsLog] = [context.isLog, context.setIsLog];
   const [expandHeader, setExpandHeader] = useState(false);
   const [expandNotify, setExpandNotify] = useState(false);
+  useEffect(() => {
+    //emit
+  }, []);
 
   const handleClick = () => {
     setExpandNotify((expandNotify) => !expandNotify);

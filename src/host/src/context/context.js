@@ -12,7 +12,7 @@ const ContextProvider = ({ children }) => {
   const [notify, setNotify] = useState([]);
   // establish socket connection
   React.useEffect(() => {
-    setSocket(io('http://localhost:3001'));
+    // setSocket(io('http://localhost:3001'));
   }, []);
 
   // subscribe to the socket event

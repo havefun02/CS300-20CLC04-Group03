@@ -65,13 +65,13 @@
   flex: 0 0 8%;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 .addform-same-format > input {
   padding: 5px;
   outline: none;
   border: none;
-  width: 15%;
+  margin-right: 40px;
 }
 
 .addform-same-format:nth-child(3) {
@@ -80,19 +80,12 @@
 .addform-another-format {
   height: 100%;
 }
-.addform-same-format > .Dropdown-root {
-  width: 15%;
-}
-.addform-same-format.Dropdown-control {
-  position: relative;
-  overflow: hidden;
-  background-color: white;
+.addform select {
+  margin-right: 40px;
+  height: 30px;
+  width: 90px;
   border: none;
-  color: #333;
-  cursor: default;
   outline: none;
-  width: 100%;
-  flex: 0 0 8%;
-  padding: 5px 10px !important;
-  transition: all 200ms ease;
+}
+.addform option {
 }

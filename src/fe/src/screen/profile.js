@@ -1,8 +1,10 @@
 import { useState, useContext } from 'react';
 import { Context } from '../context/context';
 import './profile.css';
+import { useNavigate } from 'react-router-dom';
 import shortid from 'shortid';
 export default function Profile() {
+  const navigate = useNavigate();
   const context = useContext(Context);
   const [editSex, setEditSex] = useState(false);
   const [editName, setEditName] = useState(false);
@@ -64,34 +66,78 @@ export default function Profile() {
           <div className="profile-group-function">
             <div className="profile-nav-element">
               <div className="profile-nav-element-icon">
-                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAADMklEQVRoge2YT2gUVxzHP7NJFKPRiEe95aAWvHiq+Ac8VGhDD2o0qFDEIlsU/60oaCTkkpIN1Us0ElsVK9bYGL1V8KJBD948KCIinkS9RFv/pSU7v28P49qlrmZm3iMTIV8Y3u7M7Pw+n/fe7mMfTGYyTgm8P3FgaBWBrSe0ZZjNw0Iwe4yFNxADbP72qs9y/gQuXlsAuV+Qlr6D5n0rq2xvUrKt5Fvu+yjrR2Dw+koUXEaaNQZ8+fVfSKvJt15zLe0uEPX8rQTwUQt/MmpL2LHRaSRyzgLRtEkGL0EYNkJ4GsmpE90EBoZWxZjzH8L/d+5Les58lZ0AanWAj97L1rkQ1DrxW7jUER6k5S4IbiNgNtcRHqS5GQqEMxzhQZqRoYAzfHRkJuADXpaRgBR4gXccgXSLyJk/vkal35A1OsNHxzAWrOXgtqGkKOlGQKVOj/AgzSEIu9KgpFsHZE0e4cvTaEEalHQjYPbEMzygZ+MoEJ71DA/Sr+MnMDL9MLJ+JPMAb8B5GoIjaVDc/g8cO9ePWatbzwf9tO3YkBbBcSHTFTd4gPCKC4KbwIhdRBpOD6/njNZdyk5g33dvMPWmhAejh47tr7MTAKh51YnsTmJ4cY/pYdG1vLvAzp3/gDYgniWAf0ouWEehMOJa3t++UHdfE9jDGPBQY00c2PPIR1m/O3PFXo0Jj+DQbm91PWyrVCQOvOf4EyiebIgFL0Gx2OCrrD8BjTTHggcYnfqNr7J+5mJXbzMWngVmjwkfZRhpNe2FG66l3QS6ehah3H5km6JnxYIvx4Bz5HLdtO26mxYhuUBHXz31pRZCtoBW8H5vMxF8ZQQMEXCKUv0gHfm3SXDiC3T3LUb2A1IraGbsL2yyvARdQDpO+97bcT4wtkDx5HxypU5ka5CC2D+VyeErI2CQGmvj4N4Hn7rx0wI/ndiE7GekabFWWD/wlXmL9D3thf6P3fBxgcMn1mL2O1IuI/hyjEAtHCpcrnaxusCPR+dQV/sQqTFj+HJeUDu1iQPbXvz/QvWFbEpdfgLBA8wm/Dtf7UJ1AVnzBIJ/VyNorna6uoBp4YSCj/LFeBWazGQ+p/wLer+IBJVeJ8AAAAAASUVORK5CYII=" />
+                <img
+                  onClick={() => {
+                    navigate('/profile');
+                  }}
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAADMklEQVRoge2YT2gUVxzHP7NJFKPRiEe95aAWvHiq+Ac8VGhDD2o0qFDEIlsU/60oaCTkkpIN1Us0ElsVK9bYGL1V8KJBD948KCIinkS9RFv/pSU7v28P49qlrmZm3iMTIV8Y3u7M7Pw+n/fe7mMfTGYyTgm8P3FgaBWBrSe0ZZjNw0Iwe4yFNxADbP72qs9y/gQuXlsAuV+Qlr6D5n0rq2xvUrKt5Fvu+yjrR2Dw+koUXEaaNQZ8+fVfSKvJt15zLe0uEPX8rQTwUQt/MmpL2LHRaSRyzgLRtEkGL0EYNkJ4GsmpE90EBoZWxZjzH8L/d+5Les58lZ0AanWAj97L1rkQ1DrxW7jUER6k5S4IbiNgNtcRHqS5GQqEMxzhQZqRoYAzfHRkJuADXpaRgBR4gXccgXSLyJk/vkal35A1OsNHxzAWrOXgtqGkKOlGQKVOj/AgzSEIu9KgpFsHZE0e4cvTaEEalHQjYPbEMzygZ+MoEJ71DA/Sr+MnMDL9MLJ+JPMAb8B5GoIjaVDc/g8cO9ePWatbzwf9tO3YkBbBcSHTFTd4gPCKC4KbwIhdRBpOD6/njNZdyk5g33dvMPWmhAejh47tr7MTAKh51YnsTmJ4cY/pYdG1vLvAzp3/gDYgniWAf0ouWEehMOJa3t++UHdfE9jDGPBQY00c2PPIR1m/O3PFXo0Jj+DQbm91PWyrVCQOvOf4EyiebIgFL0Gx2OCrrD8BjTTHggcYnfqNr7J+5mJXbzMWngVmjwkfZRhpNe2FG66l3QS6ehah3H5km6JnxYIvx4Bz5HLdtO26mxYhuUBHXz31pRZCtoBW8H5vMxF8ZQQMEXCKUv0gHfm3SXDiC3T3LUb2A1IraGbsL2yyvARdQDpO+97bcT4wtkDx5HxypU5ka5CC2D+VyeErI2CQGmvj4N4Hn7rx0wI/ndiE7GekabFWWD/wlXmL9D3thf6P3fBxgcMn1mL2O1IuI/hyjEAtHCpcrnaxusCPR+dQV/sQqTFj+HJeUDu1iQPbXvz/QvWFbEpdfgLBA8wm/Dtf7UJ1AVnzBIJ/VyNorna6uoBp4YSCj/LFeBWazGQ+p/wLer+IBJVeJ8AAAAAASUVORK5CYII="
+                />
               </div>
               <div className="profile-nav-element-title">
-                <span>My profile</span>
+                <span
+                  onClick={() => {
+                    navigate('/profile');
+                  }}
+                >
+                  My profile
+                </span>
               </div>
             </div>
             <div className="profile-nav-element">
               <div className="profile-nav-element-icon">
-                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAABfElEQVRoge2VsUvDQBTGv5c0oUG6FDOYP0Xo6C6IY3VxdVWnWnR3cHbL6NLdTfSvcDZLpyrSEkjOQUNzIcXzzOUMvB9kuPDu8r28974DGIbpNKQStJ+IZwC7BIxygAh4/N5scv00i2jUVAJCJa5pZhH9qM9pQ4hJOAHb9HQ2PdzeIV2tGhXiB33snZ78ep9WBZoWDwDpUu9MrQT8oK/1MRNnso3ahhOwTecTaO0e2OTzxVmt3gNq3tXOWWyjtjE6Ayp9zTOgEsQzYBC+B/4Mz0DH4QRso+VCVVRcqeoy1T3tulAVHSdpyMnYhWzT+QTkIT6c+tticE2CxgB27EhaEx7crFuXKIFAPHcWE9xP0+K1lEBIwytBdGal4WsQrldeRgDOQwwxBy6Kl1ILZY5/lDseqo8t6rRkjn9cjpEqIFyv9ue/vryZ1LmRSgUKsvJCqkDu9uL/XoHc8eJyjFSBxTKYDLYyEMQYXz1nFeFK8hIBit8/3EtbehiGMcAnu3Smwyi63wAAAAAASUVORK5CYII="></img>
+                <img
+                  onClick={() => {
+                    navigate('/order');
+                  }}
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAABfElEQVRoge2VsUvDQBTGv5c0oUG6FDOYP0Xo6C6IY3VxdVWnWnR3cHbL6NLdTfSvcDZLpyrSEkjOQUNzIcXzzOUMvB9kuPDu8r28974DGIbpNKQStJ+IZwC7BIxygAh4/N5scv00i2jUVAJCJa5pZhH9qM9pQ4hJOAHb9HQ2PdzeIV2tGhXiB33snZ78ep9WBZoWDwDpUu9MrQT8oK/1MRNnso3ahhOwTecTaO0e2OTzxVmt3gNq3tXOWWyjtjE6Ayp9zTOgEsQzYBC+B/4Mz0DH4QRso+VCVVRcqeoy1T3tulAVHSdpyMnYhWzT+QTkIT6c+tticE2CxgB27EhaEx7crFuXKIFAPHcWE9xP0+K1lEBIwytBdGal4WsQrldeRgDOQwwxBy6Kl1ILZY5/lDseqo8t6rRkjn9cjpEqIFyv9ue/vryZ1LmRSgUKsvJCqkDu9uL/XoHc8eJyjFSBxTKYDLYyEMQYXz1nFeFK8hIBit8/3EtbehiGMcAnu3Smwyi63wAAAAAASUVORK5CYII="
+                ></img>
               </div>
               <div className="profile-nav-element-title">
-                <span>Order</span>
+                <span
+                  onClick={() => {
+                    navigate('/order');
+                  }}
+                >
+                  Order
+                </span>
               </div>
             </div>
             <div className="profile-nav-element">
               <div className="profile-nav-element-icon">
-                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAACiUlEQVRoge2Zy2sTURSHv5OW2ib4whYftQiKj64s7qxVqWtL3VjRv0Go1LUQFCGCdePOfyA26kJ3LuJCpG6Eroq2mlVtfaAVWzIN2Jnjoi5i08CZRzJa5oO7uXPOPb8f98xMbgYSNiE6TZtb4o5XYsH7wLxbIqfTtMWty4w7S86bRauHO0uuEbWkEYvqWxaAveumP0tvzVxoWqNeEAB3Q6F7GlEqMgNaoKWyi1OuMFxZBPXWBoCk1oZT5K4oT9sXmZQR3Cjqhm4hnaSjvMKoCGNAlzHtq8J4pp370s9KmPqhDDgvGFG4B3QHXGJOhLH0II+DakgFSVJFykWyCg8JLh6gR5WCUySn2WBafO+AZkmVz5AXGAlSsO66MJF5yRXJ4vnJ8+165Sy3oxYPIHDJOc3NAHl2/vT8hN8iPlCBi+lzPLEmmA3oJB1OhRmgJ5A0O/PpMkdkCMcSbG6hcoVrNF48QHc5w1VrsGkHtECL08kn7M/5sHxJf6Pb8rIz7UClkwGaJx5gd6WLk5ZAkwEXhsPp8Y8aa5oMCPSHk+MfVVtN6018MISWoByyBFkNbA8hJCg7LEFWA3EcB7dYggL9gPqXSAzETWIgbhIDcZMYiJvEQNz89wbq/jeqc3Twi/OqjDZTUDVeiTeiPGCVvBxjeaOYmjOxvme/p9wQuAxsbbhKG8sK+ZRwSw7zsfpCrYF3TKH0NU+bL6aklxPVE7UttMqBpsnxT422WgMe11HGgZ3NUOSDH8DY+snIPzHNP2OJOveOCD/3DdmOilYi/8S0LUNRhAt1Lj+Pul7kO1B5xdEW5TXrW1D53urSJ4N/P0XCEvmLrH2AmVaP48AjYAlYUig0QnxCQsIm4De/e7SILky8rQAAAABJRU5ErkJggg==" />
+                <img
+                  onClick={() => {
+                    navigate('/notification');
+                  }}
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAACiUlEQVRoge2Zy2sTURSHv5OW2ib4whYftQiKj64s7qxVqWtL3VjRv0Go1LUQFCGCdePOfyA26kJ3LuJCpG6Eroq2mlVtfaAVWzIN2Jnjoi5i08CZRzJa5oO7uXPOPb8f98xMbgYSNiE6TZtb4o5XYsH7wLxbIqfTtMWty4w7S86bRauHO0uuEbWkEYvqWxaAveumP0tvzVxoWqNeEAB3Q6F7GlEqMgNaoKWyi1OuMFxZBPXWBoCk1oZT5K4oT9sXmZQR3Cjqhm4hnaSjvMKoCGNAlzHtq8J4pp370s9KmPqhDDgvGFG4B3QHXGJOhLH0II+DakgFSVJFykWyCg8JLh6gR5WCUySn2WBafO+AZkmVz5AXGAlSsO66MJF5yRXJ4vnJ8+165Sy3oxYPIHDJOc3NAHl2/vT8hN8iPlCBi+lzPLEmmA3oJB1OhRmgJ5A0O/PpMkdkCMcSbG6hcoVrNF48QHc5w1VrsGkHtECL08kn7M/5sHxJf6Pb8rIz7UClkwGaJx5gd6WLk5ZAkwEXhsPp8Y8aa5oMCPSHk+MfVVtN6018MISWoByyBFkNbA8hJCg7LEFWA3EcB7dYggL9gPqXSAzETWIgbhIDcZMYiJvEQNz89wbq/jeqc3Twi/OqjDZTUDVeiTeiPGCVvBxjeaOYmjOxvme/p9wQuAxsbbhKG8sK+ZRwSw7zsfpCrYF3TKH0NU+bL6aklxPVE7UttMqBpsnxT422WgMe11HGgZ3NUOSDH8DY+snIPzHNP2OJOveOCD/3DdmOilYi/8S0LUNRhAt1Lj+Pul7kO1B5xdEW5TXrW1D53urSJ4N/P0XCEvmLrH2AmVaP48AjYAlYUig0QnxCQsIm4De/e7SILky8rQAAAABJRU5ErkJggg=="
+                />
               </div>
               <div className="profile-nav-element-title">
-                <span>Notification</span>
+                <span
+                  onClick={() => {
+                    navigate('/notification');
+                  }}
+                >
+                  Notification
+                </span>
               </div>
             </div>
             <div className="profile-nav-element">
               <div className="profile-nav-element-icon">
-                <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAABlUlEQVRoge2UPU/CUBSG34toYmJiopMDrvIb/Bj4AY6mIS5OxJ0BBhJwk0R3nVwsxNUdGYTZ1Rhd2m6AYVc5DgUDpS1yarhIzpM0aXtz3vs+6QcgCPqwqjDsCrpWFYVp5to1FDoP6HbqMKJ2UNxBx8QRKVQAxPtJ5UQa+UlznRpKUCj2L7+UwslGCrfcHjHOkFWFMVIeAAg520QpbM5THgCWiHAT5UmwBBThGsPlfxZQDJLwKT8gDsIVpwfAFCCFi8BFH4mQ8m4e4ZLTw92OiW0iB4XzkORyIo38pPJQKG2mcMbtwRYAJkusrKMZX8VeyO6RyrsREQmSWF5zj5CdI5d3Y4Zon2abRNjlhsWM8Ve5d5flxuH95TVghRo79fsDwPMRRyk/W9T+4Iz1F5onREA3XoGGlhbTQngcnPr+Rp+2ksTJ3Tafx+5Zx8mpc5zPj8C1w9bbSOeFe4X+HSKgGxHQjQjoRgR0IwK6EQHdiIBuREA3IqAbEdDNwgo4M23xe2zvDV8Bol4G8ydhx4CM7hKCIPwx30B7bMWuBFzhAAAAAElFTkSuQmCC" />
+                <img
+                  onClick={() => {
+                    navigate('/gift');
+                  }}
+                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAABlUlEQVRoge2UPU/CUBSG34toYmJiopMDrvIb/Bj4AY6mIS5OxJ0BBhJwk0R3nVwsxNUdGYTZ1Rhd2m6AYVc5DgUDpS1yarhIzpM0aXtz3vs+6QcgCPqwqjDsCrpWFYVp5to1FDoP6HbqMKJ2UNxBx8QRKVQAxPtJ5UQa+UlznRpKUCj2L7+UwslGCrfcHjHOkFWFMVIeAAg520QpbM5THgCWiHAT5UmwBBThGsPlfxZQDJLwKT8gDsIVpwfAFCCFi8BFH4mQ8m4e4ZLTw92OiW0iB4XzkORyIo38pPJQKG2mcMbtwRYAJkusrKMZX8VeyO6RyrsREQmSWF5zj5CdI5d3Y4Zon2abRNjlhsWM8Ve5d5flxuH95TVghRo79fsDwPMRRyk/W9T+4Iz1F5onREA3XoGGlhbTQngcnPr+Rp+2ksTJ3Tafx+5Zx8mpc5zPj8C1w9bbSOeFe4X+HSKgGxHQjQjoRgR0IwK6EQHdiIBuREA3IqAbEdDNwgo4M23xe2zvDV8Bol4G8ydhx4CM7hKCIPwx30B7bMWuBFzhAAAAAElFTkSuQmCC"
+                />
               </div>
               <div className="profile-nav-element-title">
-                <span>Gift</span>
+                <span
+                  onClick={() => {
+                    navigate('/gift');
+                  }}
+                >
+                  Gift
+                </span>
               </div>
             </div>
           </div>

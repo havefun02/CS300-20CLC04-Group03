@@ -1,19 +1,218 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import './order.css';
-import NavBar from '../components/nav_bar';
 import Header from '../components/header';
-import Table from '../components/table';
 import axios from 'axios';
-const title = 'Order';
+import shortid from 'shortid';
 const tabs = [
   {
     title: 'All orders',
     optional: 'button',
     valueOpt: []
+  },
+  {
+    title: 'SortByDate',
+    optional: 'dropdown',
+    valueOpt: ['Inc', 'Dec']
+  },
+  {
+    title: 'GroupById',
+    optional: 'dropdown',
+    valueOpt: ['Inc', 'Dec']
   }
 ];
+const headerSize = [2, 4, 3, 3, 3, 3, 5, 3, 9];
+const header = [
+  'No.',
+  'Email',
+  'Address',
+  'Date',
+  'Quantity',
+  'Total pay',
+  'Brands',
+  'Gift Apply',
+  'Detail'
+];
+
+const title = 'Order';
 export default function Order() {
-  const [list, setList] = useState([]);
+  const [list, setList] = useState([
+    [
+      'No.',
+      'Email',
+      'Address',
+      'Date',
+      'Quantity',
+      'Total pay',
+      'Brands',
+      'Gift Apply',
+      'Detail'
+    ],
+    [
+      'No.',
+      'Email',
+      'Address',
+      'Date',
+      'Quantity',
+      'Total pay',
+      'Brands',
+      'Gift',
+      'Detail'
+    ],
+    [
+      'No.',
+      'Email',
+      'Address',
+      'Date',
+      'Quantity',
+      'Total pay',
+      'Brands',
+      'Gift',
+      'Detail'
+    ],
+    [
+      'No.',
+      'Email',
+      'Address',
+      'Date',
+      'Quantity',
+      'Total pay',
+      'Brands',
+      'Gift',
+      'Detail'
+    ],
+    [
+      'No.',
+      'Email',
+      'Address',
+      'Date',
+      'Quantity',
+      'Total pay',
+      'Brands',
+      'Gift',
+      'Detail'
+    ],
+    [
+      'No.',
+      'Email',
+      'Address',
+      'Date',
+      'Quantity',
+      'Total pay',
+      'Brands',
+      'Gift',
+      'Detail'
+    ],
+    [
+      'No.',
+      'Email',
+      'Address',
+      'Date',
+      'Quantity',
+      'Total pay',
+      'Brands',
+      'Gift',
+      'Detail'
+    ],
+    [
+      'No.',
+      'Email',
+      'Address',
+      'Date',
+      'Quantity',
+      'Total pay',
+      'Brands',
+      'Gift',
+      'Detail'
+    ],
+    [
+      'No.',
+      'Email',
+      'Address',
+      'Date',
+      'Quantity',
+      'Total pay',
+      'Brands',
+      'Gift',
+      'Detail'
+    ],
+    [
+      'No.',
+      'Email',
+      'Address',
+      'Date',
+      'Quantity',
+      'Total pay',
+      'Brands',
+      'Gift',
+      'Detail'
+    ],
+    [
+      'No.',
+      'Email',
+      'Address',
+      'Date',
+      'Quantity',
+      'Total pay',
+      'Brands',
+      'Gift',
+      'Detail'
+    ],
+    [
+      'No.',
+      'Email',
+      'Address',
+      'Date',
+      'Quantity',
+      'Total pay',
+      'Brands',
+      'Gift',
+      'Detail'
+    ],
+    [
+      'No.',
+      'Email',
+      'Address',
+      'Date',
+      'Quantity',
+      'Total pay',
+      'Brands',
+      'Gift',
+      'Detail'
+    ],
+    [
+      'No.',
+      'Email',
+      'Address',
+      'Date',
+      'Quantity',
+      'Total pay',
+      'Brands',
+      'Gift',
+      'Detail'
+    ],
+    [
+      'No.',
+      'Email',
+      'Address',
+      'Date',
+      'Quantity',
+      'Total pay',
+      'Brands',
+      'Gift',
+      'Detail'
+    ],
+    [
+      'No.',
+      'Email',
+      'Address',
+      'Date',
+      'Quantity',
+      'Total pay',
+      'Brands',
+      'Gift',
+      'Detail'
+    ]
+  ]);
   const [fetch, useFetch] = useState(false);
   //replace this object by
   useEffect(() => {
@@ -21,8 +220,57 @@ export default function Order() {
       const url = 'http://localhost:3001/host/get-order/all';
       const token = localStorage.getItem('token');
       const res = await axios.get(url);
+      console.log(res);
     };
+    fetchData();
   }, [fetch]);
+  const HeaderTable = () => {
+    return (
+      <div className="order-table-header">
+        <div>
+          {header.map((ele, ind) => {
+            return (
+              <div
+                key={shortid.generate()}
+                style={{
+                  flex: headerSize[ind],
+                  textAlign: 'center'
+                }}
+              >
+                <span>{ele}</span>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    );
+  };
+
+  const RowData = ({ props }) => {
+    console.log(props);
+    return (
+      <div className="order-row-data">
+        {props.e.map((el, ind) => {
+          return (
+            <div
+              key={shortid.generate()}
+              style={{
+                flex: headerSize[ind],
+                textAlign: 'center',
+                height: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                flexDirection: 'row',
+                justifyContent: 'center'
+              }}
+            >
+              <span>{el}</span>
+            </div>
+          );
+        })}
+      </div>
+    );
+  };
   return (
     <div className="order-main">
       <div className="order-flex-box">
@@ -30,11 +278,18 @@ export default function Order() {
           <Header props={title}></Header>
         </div>
         <div className="order-content">
-          <NavBar
-            props={{ title: title, tabs: tabs, list: list, setList: setList }}
-          />
+          <div>
+            <HeaderTable props={{}} />
+            <div>
+              {list.map((e, ind) => {
+                return <RowData props={{ e }}></RowData>;
+              })}
+            </div>
+          </div>
+          <div className="order-footer">
+            <span>Total:{list.length}</span>
+          </div>
         </div>
-        <div className="order-footer"></div>
       </div>
     </div>
   );

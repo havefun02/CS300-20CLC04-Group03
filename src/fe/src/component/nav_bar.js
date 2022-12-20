@@ -70,6 +70,7 @@ export default function Navbar({ props }) {
             <img
               onClick={() => {
                 setOverlay((overlay) => !overlay);
+                if (isLog) navigate('/profile');
               }}
               src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAADT0lEQVRoge3ZzY8URRzG8Y+7LsLoAXlH8CUxRm6GoIiJ0aBevOmBQIR438S7N/UkJirGiAFC4j8gSIKrJ/XkRYWYqBcUo67rG7InQXZM2PFQvabtrd5UdfdMMO43qWSmu+b5PVVTXfWrapZZ5v/NdR3pjGMndmMHtmEzbiruX8LPOIez+AifYr6j+I25FS9hBoPM8iMOYuvIXWM9jqGfaHap0scRrBuV+acw24HxarmIfcM0PoHjQzBeLUeLWEmkPsQ9nMDjifX/xAc4X8S4E48VOim8jz2FTmsmCsGU3pvHK1gd0VmNQ0WdFK0pGf/EUqQOm3nsT9A7kNGII23N708MNBB6PpXXMnT3NjW/Xvpsc1l82NRxszC+U7R/x9omDTiWGGCA0w30pzL038wV3ypvkXq5QQNezdDv47aYyFiN+DNYkWGmq5yqjhWYTK08Lj+3GfYQGmBafYf/iwcyhZs8xGukP8TlsrMqFGvR7gwjC/TwXEb957GqQZxHUiqdlN8zA2FxOpCg/7T0haxa3k5pwFcNxRcacUiY56uswestzA/wRVU0NnvMFsHacAUf4pvi+114VLNhU+aisMD+Q6wBfXlT6CjpY2X5QtK0dC0Ta8ClkbtI54/qhVgDfhmBkaYs8hZrwNcjMNKUc9UL10cqfYYnM4Xn8DE+wedCT/2K34r7G7EJt2A77seDuCEzzpmUSrukZ4gn8YT0vW6ZXvHbd/BXYsz7UoTHhEOnOpGrwl7h9gam67hD2LpeXSLuDzJmzYM1IjN4qEPjVR5Wnwm/mCMU29DMCmeew2abxVvZOWyJVa77S2bwVuVaT/tUIIWexc/UcfyUK7ROyD3KPXFemFGGxSZ8W4l5QYvcbJ/FY/FLbGjrNMIG8Ux4T1vhoxHR73BPW+ES2/F9JM7hLsTHcSoifgUvyF+Mykzg2UKrqj8lvtA2oof3IkEGwpidlLeY3Vj8pjreF8q7mXpJTAhnlXULzWVhyzcprOabhdx9ZfF5V3HvRFG3TuewDns+xl7huK/ptrCuXNDBA5vKWuG4b64D43N4Q/ttbCO2CGnHdKLZcpkW0oPoCptKV0eCY7hXOLfZgbsFY+XXrDPCXuOM8Jr1rGvgNesyy/zX+RvmMDyiA9hxNwAAAABJRU5ErkJggg=="
             ></img>
@@ -83,7 +84,11 @@ export default function Navbar({ props }) {
                 >
                   <span>My account</span>
                 </div>
-                <div onClick={() => {}}>
+                <div
+                  onClick={() => {
+                    navigate('/order');
+                  }}
+                >
                   <span>Order</span>
                 </div>
                 <div

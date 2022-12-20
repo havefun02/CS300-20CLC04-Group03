@@ -26,7 +26,6 @@ export class Order extends BaseEntity {
   public set_at: Date | null;
   @Column({ type: 'varchar' })
   public id_method: number;
-
   @Column({ type: 'varchar' })
   public state: string;
 

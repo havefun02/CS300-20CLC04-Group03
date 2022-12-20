@@ -26,7 +26,9 @@ export default function ManageTable({ props }) {
     const fetchData = async () => {
       const token = localStorage.getItem('token');
       const res = await axios.get(url);
+      console.log(res);
     };
+    fetchData();
   }, [fetch]);
 
   const HeaderTable = ({ props }) => {

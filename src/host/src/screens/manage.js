@@ -1,9 +1,8 @@
 import { useState, useContext, useEffect } from 'react';
 import './manage.css';
 import Header from '../components/header';
-import ManageBar from '../components/managebar';
 import Login from './login';
-import Table from '../components/table';
+import ManageBar from '../components/managebar';
 import AddForm from '../components/addproduct';
 import ManageTable from '../components/manageTable';
 const tabs = [

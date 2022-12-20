@@ -1,6 +1,6 @@
 .profile-container {
-  flex: 0 0 500px;
   background-color: #f2f2f2;
+  min-height: 500px;
 }
 .profile-grid {
   padding: 20px 0;
