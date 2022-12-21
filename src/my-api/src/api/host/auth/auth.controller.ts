@@ -7,6 +7,7 @@ import {
   UseInterceptors,
   UseGuards,
   Req,
+  Get,
 } from '@nestjs/common';
 import { RegisterDto, LoginDto } from './auth.dto';
 import { JwtAuthGuard } from './auth.guard';
@@ -37,4 +38,6 @@ export class AuthController {
   private refresh(@Req() { user }: Request): Promise<string | never> {
     return this.service.refresh(<User>user);
   }
+
+  
 }

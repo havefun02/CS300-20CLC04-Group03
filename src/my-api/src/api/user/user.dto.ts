@@ -1,7 +1,16 @@
-import { IsOptional, IsString } from 'class-validator';
+import { Trim } from 'class-sanitizer';
+import { IsEmail, IsNumber, IsOptional, IsString, MinLength } from 'class-validator';
+import internal from 'stream';
 
-export class UpdateNameDto {
+export class UserDataDto {
+  //{ id_userFromApi, email, name, phonenumber, address, point, level }
+  @Trim()
+  @IsEmail()
+  public readonly email!: string;
   @IsString()
-  @IsOptional()
-  public readonly name?: string;
+  public readonly name: string;
+  @IsString()
+  public readonly phonenumber: string;
+  @IsString()
+  public readonly address: string;
 }

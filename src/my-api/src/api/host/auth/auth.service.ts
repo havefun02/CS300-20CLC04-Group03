@@ -17,7 +17,7 @@ export class AuthService {
   public async register(body: RegisterDto): Promise<User | never> {
     const { username, password }: RegisterDto = body;
     let user: User = await this.repository.findOne({ where: { username } });
-
+    this.repository.find
     if (user) {
       throw new HttpException('Conflict', HttpStatus.CONFLICT);
     }
@@ -54,4 +54,6 @@ export class AuthService {
 
     return this.helper.generateToken(user);
   }
+
+  
 }

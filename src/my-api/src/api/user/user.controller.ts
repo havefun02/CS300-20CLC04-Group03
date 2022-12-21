@@ -9,10 +9,11 @@ import {
   Inject,
   Get,
   Param,
+  Post,
 } from '@nestjs/common';
 import { Request } from 'express';
 import { JwtAuthGuard } from '@/api/host/auth/auth.guard';
-import { UpdateNameDto } from './user.dto';
+import { UserDataDto } from './user.dto';
 import { UserFromApi } from './user.entity';
 import { UserService } from './user.service';
 
@@ -36,5 +37,20 @@ export class UserController {
   @Get('sale-off')
   private async getBySaleOff() {
     return this.service.getbySaleOff();
+  }
+
+
+  @Get('stream')
+  @UseInterceptors(ClassSerializerInterceptor)
+  @UseGuards(JwtAuthGuard)
+  private get_data(): Promise<UserFromApi> {
+    return this.service.get_data()
+  }
+
+  @Post('stream_in')
+  @UseInterceptors(ClassSerializerInterceptor)
+  private set_data(@Body() body: UserDataDto): Promise<UserFromApi> {
+    console.log(body)
+    return this.service.set_data(body)
   }
 }
