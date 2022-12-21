@@ -39,8 +39,12 @@ export class UserController {
     return this.service.getbySaleOff();
   }
 
-  @Get('new-user')
-  private async addUser(@Body() body: any) {
-    return this.service.addUser(body);
+  @Post('set-user')
+  private async setUser(@Body() body: any) {
+    return this.service.setUser(body);
+  }
+  @Get('get-user')
+  private async getUser(): Promise<[UserFromApi[], number]> {
+    return this.service.getUser();
   }
 }
