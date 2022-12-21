@@ -11,6 +11,6 @@ import { OrderModule } from './order/order.module';
 @Module({
   imports: [TypeOrmModule.forFeature([UserFromApi]), OrderModule, CartModule],
   controllers: [UserController],
-  providers: [UserService, GoogleStrategy],
+  providers: [UserService],
 })
 export class UserModule {}

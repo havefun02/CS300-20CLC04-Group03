@@ -15,6 +15,7 @@ import { JwtAuthGuard } from '@/api/host/auth/auth.guard';
 import { UpdateNameDto } from './user.dto';
 import { UserFromApi } from './user.entity';
 import { UserService } from './user.service';
+import { Post } from '@nestjs/common/decorators';
 
 @Controller('user')
 export class UserController {
@@ -36,5 +37,10 @@ export class UserController {
   @Get('sale-off')
   private async getBySaleOff() {
     return this.service.getbySaleOff();
+  }
+
+  @Get('new-user')
+  private async addUser(@Body() body: any) {
+    return this.service.addUser(body);
   }
 }

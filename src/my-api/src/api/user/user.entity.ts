@@ -28,19 +28,17 @@ export class UserFromApi extends BaseEntity {
   public phonenumber: string;
   @Column({ type: 'varchar', nullable: false })
   public address: string;
-  @Column({ type: 'int', nullable: false })
+  @Column({ type: 'int', nullable: true })
   public point: number;
-  @Column({ type: 'int', nullable: false })
+  @Column({ type: 'int', nullable: true })
   public level: number;
   @OneToMany(() => Voucher, (user_voucher) => user_voucher.voucher, {
     cascade: true,
+    nullable: true,
   })
   public user_voucher: Voucher[];
   @OneToOne(() => Cart, { cascade: true, onDelete: 'CASCADE' })
-  @JoinColumn({
-    name: 'id_userFromApi',
-  })
-  cart: Cart;
+  cart!: Cart;
 }
 @Entity()
 export class Voucher extends BaseEntity {
