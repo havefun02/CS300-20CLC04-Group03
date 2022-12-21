@@ -32,13 +32,17 @@ export class UserFromApi extends BaseEntity {
   public point: number;
   @Column({ type: 'int', nullable: true })
   public level: number;
-  @OneToMany(() => Voucher, (user_voucher) => user_voucher.voucher)
-  public user_voucher: Voucher[];
-  @OneToOne(() => Cart)
-  @JoinColumn({
-    name: 'id_userFromApi',
+
+  
+
+  @OneToMany(() => Voucher, (user_voucher) => user_voucher.voucher, {
+    cascade: true,
+    nullable: true,
   })
-  cart: Cart;
+  public user_voucher: Voucher[];
+  @OneToOne(() => Cart, { cascade: true, onDelete: 'CASCADE' })
+  cart!: Cart;
+
 }
 @Entity()
 export class Voucher extends BaseEntity {

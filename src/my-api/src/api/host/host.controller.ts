@@ -35,7 +35,8 @@ export class HostController {
     @UploadedFiles() files: Express.Multer.File,
   ): Promise<any> {
     console.log(req.body);
-    return 'ok';
+    console.log(files);
+    return;
     // return this.service.uploadDb(req.body, <User>req.user, file.buffer);
   }
 

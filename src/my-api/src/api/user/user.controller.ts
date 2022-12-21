@@ -40,6 +40,7 @@ export class UserController {
   }
 
 
+
   @Get('stream')
   @UseInterceptors(ClassSerializerInterceptor)
   @UseGuards(JwtAuthGuard)
@@ -52,5 +53,13 @@ export class UserController {
   private set_data(@Body() body: UserDataDto): Promise<UserFromApi> {
     console.log(body)
     return this.service.set_data(body)
+  } 
+  @Post('set-user')
+  private async setUser(@Body() body: any) {
+    return this.service.setUser(body);
+  }
+  @Get('get-user')
+  private async getUser(): Promise<[UserFromApi[], number]> {
+    return this.service.getUser();
   }
 }

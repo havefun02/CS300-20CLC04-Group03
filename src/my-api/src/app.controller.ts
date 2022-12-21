@@ -26,10 +26,4 @@ export class AppController {
     return this.appService.postlist();
   }
 
-  @Post('auth/getdata')
-  getdata(@Req() req: Request, @Body() body: Body): any
-  {
-    console.log(Body);
-    return 'Thanh Cong';
-  }
 }
