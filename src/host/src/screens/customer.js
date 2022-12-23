@@ -3,6 +3,7 @@ import './customer.css';
 import Header from '../components/header';
 import shortid from 'shortid';
 import axios from 'axios';
+import MesOverlay from '../components/message';
 import Overlay from '../components/overlay';
 const tabs = [
   {
@@ -21,7 +22,7 @@ const tabs = [
     valueOpt: ['Inc', 'Dec']
   }
 ];
-const headerSize = [2, 4, 3, 3, 3, 3, 5, 9];
+const headerSize = [2, 3, 4, 4, 3, 3, 3, 3, 4];
 const header = [
   'Id',
   'Name',
@@ -29,6 +30,7 @@ const header = [
   'Phone',
   'DoB',
   'Address',
+  'Orders',
   'Point',
   'Level'
 ];
@@ -36,27 +38,28 @@ const header = [
 const title = 'Customer';
 export default function Customer() {
   const [list, setList] = useState([
-    ['Id', 'Name', 'Email', 'Phone', 'DoB', 'Address', 'Point', 'Level'],
-    ['Id', 'Name', 'Email', 'Phone', 'DoB', 'Address', 'Point', 'Level'],
-    ['Id', 'Name', 'Email', 'Phone', 'DoB', 'Address', 'Point', 'Level'],
-    ['Id', 'Name', 'Email', 'Phone', 'DoB', 'Address', 'Point', 'Level'],
-    ['Id', 'Name', 'Email', 'Phone', 'DoB', 'Address', 'Point', 'Level'],
-    ['Id', 'Name', 'Email', 'Phone', 'DoB', 'Address', 'Point', 'Level'],
-    ['Id', 'Name', 'Email', 'Phone', 'DoB', 'Address', 'Point', 'Level'],
-    ['Id', 'Name', 'Email', 'Phone', 'DoB', 'Address', 'Point', 'Level'],
-    ['Id', 'Name', 'Email', 'Phone', 'DoB', 'Address', 'Point', 'Level'],
-    ['Id', 'Name', 'Email', 'Phone', 'DoB', 'Address', 'Point', 'Level'],
-    ['Id', 'Name', 'Email', 'Phone', 'DoB', 'Address', 'Point', 'Level'],
-    ['Id', 'Name', 'Email', 'Phone', 'DoB', 'Address', 'Point', 'Level'],
-    ['Id', 'Name', 'Email', 'Phone', 'DoB', 'Address', 'Point', 'Level'],
-    ['Id', 'Name', 'Email', 'Phone', 'DoB', 'Address', 'Point', 'Level'],
-    ['Id', 'Name', 'Email', 'Phone', 'DoB', 'Address', 'Point', 'Level']
+    ['Id', 'Name', 'Email', 'Phone', 'DoB', 'Address','ordering', 'Point', 'Level'],
+    ['Id', 'Name', 'Email', 'Phone', 'DoB', 'Address','ordering', 'Point', 'Level'],
+    ['Id', 'Name', 'Email', 'Phone', 'DoB', 'Address','ordering', 'Point', 'Level'],
+    ['Id', 'Name', 'Email', 'Phone', 'DoB', 'Address','ordering', 'Point', 'Level'],
+    ['Id', 'Name', 'Email', 'Phone', 'DoB', 'Address','ordering', 'Point', 'Level'],
+    ['Id', 'Name', 'Email', 'Phone', 'DoB', 'Address','ordering', 'Point', 'Level'],
+    ['Id', 'Name', 'Email', 'Phone', 'DoB', 'Address','ordering', 'Point', 'Level'],
+    ['Id', 'Name', 'Email', 'Phone', 'DoB', 'Address','ordering', 'Point', 'Level'],
+    ['Id', 'Name', 'Email', 'Phone', 'DoB', 'Address','ordering', 'Point', 'Level'],
+    ['Id', 'Name', 'Email', 'Phone', 'DoB', 'Address','ordering', 'Point', 'Level'],
+    ['Id', 'Name', 'Email', 'Phone', 'DoB', 'Address','ordering', 'Point', 'Level'],
+    ['Id', 'Name', 'Email', 'Phone', 'DoB', 'Address','ordering', 'Point', 'Level'],
+    ['Id', 'Name', 'Email', 'Phone', 'DoB', 'Address','ordering', 'Point', 'Level'],
+    ['Id', 'Name', 'Email', 'Phone', 'DoB', 'Address','ordering', 'Point', 'Level'],
+    ['Id', 'Name', 'Email', 'Phone', 'DoB', 'Address','ordering', 'Point', 'Level']
   ]);
-  const [listCode, setListCode] = useState([]);
   const [check, setCheck] = useState(Array(list.length).fill(false));
   const [checkAll, setCheckAll] = useState(false);
-  const [send, setSendCode] = useState(false);
   const [overlay, setOverlay] = useState(false);
+  const [mesOverlay, setMesOverlay] = useState(false);
+
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -67,10 +70,7 @@ export default function Customer() {
     };
     fetchData();
   }, [fetch]);
-  useEffect(() => {
-    //call socket
-    console.log('emit');
-  }, [send]);
+
   const HeaderTable = () => {
     return (
       <div className="customer-table-header">
@@ -172,7 +172,7 @@ export default function Customer() {
               </div>
               <div
                 style={{
-                  width: '80px',
+                  width: '150px',
                   height: '100%',
                   display: 'flex',
                   alignItems: 'center'
@@ -180,11 +180,10 @@ export default function Customer() {
               >
                 <button
                   onClick={() => {
-                    if (listCode.length === 0) {
-                      setOverlay(true);
-                    } else {
-                      setSendCode((send) => !send);
+                    if (check.filter((e,ind)=>e===true).length!==0){
+                      setOverlay(overlay=>!overlay);
                     }
+                    
                   }}
                   style={{
                     width: '100%',
@@ -195,17 +194,48 @@ export default function Customer() {
                     cursor: 'pointer'
                   }}
                 >
-                  Send
+                  Send Gift
+                </button>
+              </div>
+              <div
+                style={{
+                  width: '150px',
+                  height: '100%',
+                  display: 'flex',
+                  alignItems: 'center'
+                }}
+              >
+                <button
+                  onClick={() => {
+                    if (check.filter((e,ind)=>e===true).length!==0)
+                      setMesOverlay(mesOverlay=>!mesOverlay)
+                  }}
+                  style={{
+                    width: '100%',
+                    height: '25px',
+                    borderRadius: '5px',
+                    backgroundColor: '#000',
+                    color: '#fff',
+                    cursor: 'pointer'
+                  }}
+                >
+                  Send Message
                 </button>
               </div>
             </div>
           </div>
         </div>
+        {mesOverlay && (
+          <MesOverlay
+            props={[
+              [mesOverlay, setMesOverlay]
+            ]}
+          />
+        )}
         {overlay && (
           <Overlay
             props={[
-              [overlay, setOverlay],
-              [listCode, setListCode]
+              [overlay, setOverlay]
             ]}
           />
         )}

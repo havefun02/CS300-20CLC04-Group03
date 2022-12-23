@@ -1,12 +1,20 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import shortid from 'shortid';
+import axios from 'axios';
 import './overlay.css';
 export default function Overlay({ props }) {
   const [overlay, setOverlay] = props[0];
-  const [listCode, setListCode] = props[1];
+  const [listCode, setListCode] = useState([])
   const [gift, setGift] = useState([{}, {}, {}, {}, {}, {}, {}, {}, {}]);
   const [isSelect, setSelect] = useState(Array(gift.length).fill(false));
 
+    useEffect(()=>{
+      const fetch=async()=>{
+        const url = 'http://localhost:3001/host/emit-gift';
+        const token=localStorage.getItem('token')
+        const res=await axios.get(url)  
+      }
+    },[])
   return (
     <div className="overlay">
       <div className="overlay-flex-box">
@@ -91,15 +99,20 @@ export default function Overlay({ props }) {
             Cancel All
           </button>
           <button
-            onClick={() => {
+            onClick={async() => {
               let clone = [];
               isSelect.forEach((e, ind) => {
                 if (e === true) {
                   clone.push(gift[ind]);
                 }
               });
-              setOverlay((overlay) => !overlay);
               setListCode(clone);
+
+              const url = 'http://localhost:3001/host/emit-gift';
+              const res=await axios.post(url,{listCode})
+              setOverlay((overlay) => !overlay);
+  
+
             }}
             style={{
               width: '140px',

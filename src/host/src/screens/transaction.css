@@ -15,8 +15,8 @@
 .transaction-content {
   display: flex;
   flex: 1;
-  width: 900px;
-  max-height: 470px;
+  width: 800px;
+  max-height:500px;
   margin: 0 auto;
   margin-bottom: 20px;
   flex-direction: column;

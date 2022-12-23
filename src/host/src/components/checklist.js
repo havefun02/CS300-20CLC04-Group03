@@ -13,7 +13,7 @@ export default function CheckList({ props }) {
     <div className="CheckList-component" key={render}>
       {size.map((items) => {
         return (
-          <div key={items} className="checklist-elements">
+          <div key={shortid.generate()} className="checklist-elements">
             <div className="checklist-elements-children">
               <input
                 id="checkbox"
@@ -33,7 +33,7 @@ export default function CheckList({ props }) {
               <label htmlFor="checkbox"> {items}</label>
             </div>
 
-            <select>
+            <select disabled={property[size.indexOf(items)] === null}>
               {color.map((e, ind) => {
                 return <option key={shortid.generate()}>{e}</option>;
               })}

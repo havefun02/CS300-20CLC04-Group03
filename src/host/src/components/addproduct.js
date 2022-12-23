@@ -94,7 +94,7 @@ export default function AddForm({ props }) {
                   }}
                 >
                   {data.cate.map((e, ind) => {
-                    return <option>{e}</option>;
+                    return  <option key={shortid.generate()}>{e}</option>;
                   })}
                 </select>
                 <select
@@ -103,7 +103,7 @@ export default function AddForm({ props }) {
                   }}
                 >
                   {data.color.map((e, ind) => {
-                    return <option>{e}</option>;
+                    return <option key={shortid.generate()}>{e}</option>;
                   })}
                 </select>
               </div>

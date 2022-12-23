@@ -27,7 +27,7 @@
 }
 .manage-table-row {
   display: flex;
-  flex: 0 0 85%;
+  flex: 0 0 100%;
   overflow: auto;
   flex-direction: column;
   position: relative;

@@ -1,0 +1,97 @@
+.mesOverlay {
+    position: fixed;
+    display: block;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 10;
+    background-color: rgba(0, 0, 0, 0.6);
+  }
+  .mesOverlay-flex-box {
+    cursor: default;
+    position: absolute;
+    width: 800px;
+    height: 500px;
+    top: 50%;
+    left: 50%;
+    margin-top: -250px;
+    margin-left: -450px;
+    background-color: #f2f2f2;
+    text-align: center;
+    z-index: 11;
+    display: flex;
+    flex-direction: column;
+    padding: 10px 20px;
+    border: 2px solid #ccc;
+  }
+  .mesOverlay-title {
+    flex: 0 0 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .mesOverlay-main {
+    max-height: 400px;
+    height: 400px;
+    width: 100%;
+    background-color: #fff;
+    padding: 10px;
+    overflow-y: auto;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  .mesOverlay-main>div {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+  .mesOverlay-main>div input{
+    width: 100%;
+    text-indent: 10px;
+    
+  }
+  .mesOverlay-main>div textarea:nth-child(1){
+    width: 100%;
+    height: 100%;
+    padding: 5px;
+    font-size: 16px;
+  }
+  .mesOverlay-main>div>div:first-child {
+flex: 0 0 100px;  
+}
+.mesOverlay-main>div>div:last-child {
+    flex: 1;  
+    }
+  .mes-title{
+    align-items: center;
+
+   flex: 2; 
+  }
+  .mes-body{
+
+    flex:8; 
+   }
+   .mes-footer{
+    align-items: center;
+
+    flex: 1; 
+   }
+  .mesOverlay-exit {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 30px;
+    height: 30px;
+    background-color: #ccc;
+  }
+  .mesOverlay-exit img {
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+  
+  }
+  
+  

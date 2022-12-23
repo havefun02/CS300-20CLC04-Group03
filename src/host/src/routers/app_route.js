@@ -19,7 +19,7 @@ export default function AppRoute() {
     <BrowserRouter>
       <div className="route-main">
         <div className="route-grid">
-          {isLog == 'true' ? (
+          {isLog ===true ? (
             <div className="route-row">
               <Sidebar></Sidebar>
               <Routes>
