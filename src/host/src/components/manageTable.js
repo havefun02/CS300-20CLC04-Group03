@@ -16,13 +16,14 @@ const header = [
   'Color',
   'Quantity'
 ];
-const url = 'http://localhost:3001/host/get-product/all';
 export default function ManageTable({ props }) {
+
   const [fetch, setFetch] = useState(false);
   const [list, setList] = useState([
     ['1', '1', '1', '1', '1', '1', '1', '1', '1', '1']
   ]);
   useEffect(() => {
+    const url = 'http://localhost:3001/host/get-product/all';
     const fetchData = async () => {
       const token = localStorage.getItem('token');
       const res = await axios.get(url);
@@ -119,7 +120,7 @@ export default function ManageTable({ props }) {
                 {update ? (
                   <button
                     onClick={async () => {
-                      const url = 'http://localhost:3001/host/update-product';
+                      const url = `http://localhost:3001/host/update-product:${props.ele[0]}`;
                       const token = localStorage.getItem('token');
                       const formApi = { dataArr: updateState };
                       const res = await axios
@@ -133,21 +134,24 @@ export default function ManageTable({ props }) {
                           throw e;
                         });
                       setFetch((fetch) => !fetch);
+                      setUpdate(false)
                     }}
                   >
                     Save
                   </button>
                 ) : (
-                  <button onClick={() => setUpdate((update) => !update)}>
-                    Update
+                  <button onClick={() => {
+                    
+                    setUpdate(true)
+                  }}>Update
                   </button>
                 )}
-                <button onClick={() => setExpand((expand) => !expand)}>
+                <button onClick={() => {setUpdate(false); setExpand((expand) => !expand)}}>
                   Cancel
                 </button>
                 <button
                   onClick={async () => {
-                    const url = 'http://localhost:3001/host/delete-product';
+                    const url = `http://localhost:3001/host/delete-product:${props.ele[0]}`;
                     const token = localStorage.getItem('token');
                     const formApi = { dataArr: props.ele };
                     const res = await axios

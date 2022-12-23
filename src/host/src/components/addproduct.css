@@ -88,4 +88,5 @@
   outline: none;
 }
 .addform option {
+  height: 40px;
 }
