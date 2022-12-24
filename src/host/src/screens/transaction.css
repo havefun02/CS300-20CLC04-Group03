@@ -2,6 +2,8 @@
   display: block;
   width: 100%;
   height: 100%;
+  position: relative;
+  overflow: auto;
 }
 .transaction-flex-box {
   display: flex;
@@ -16,7 +18,7 @@
   display: flex;
   flex: 1;
   width: 800px;
-  max-height:500px;
+  max-height: 450px;
   margin: 0 auto;
   margin-bottom: 20px;
   flex-direction: column;
@@ -29,8 +31,8 @@
   flex-direction: row;
   align-items: center;
   width: 300px;
-  margin: 0 auto;
-  justify-content: space-around;
+  padding: 0 15px;
+  justify-content: space-between;
 }
 .transaction-content > div:first-child {
   flex: 1;
@@ -72,4 +74,38 @@
 }
 .trans-row-data:hover {
   background-color: #ddd;
+}
+.transaction-footer > div {
+  position: relative;
+}
+.transaction-footer > div > span {
+  font-weight: 700;
+  cursor: pointer;
+}
+.display-filter {
+  height: 90px;
+  width: 120px;
+  background-color: #ccc;
+  position: absolute;
+  display: none;
+  flex-direction: column;
+  top: -90px;
+}
+.display-filter > div {
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+
+  flex: 0 0 30px;
+  cursor: pointer;
+}
+.display-filter > div:hover {
+  background-color: #000;
+  color: #fff;
+}
+.display-filter:hover {
+  display: flex;
+}
+.transaction-footer > div > span:hover + .display-filter {
+  display: flex;
 }

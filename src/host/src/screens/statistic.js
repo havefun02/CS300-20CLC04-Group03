@@ -1,9 +1,9 @@
 import Header from '../components/header';
 import { useEffect, useState } from 'react';
 import Chart from 'react-apexcharts';
-import Dropdown from 'react-dropdown';
+import shortid from 'shortid';
 import './statistic.css';
-const listYear = [2020, 2021, 2022];
+const listYear = [2020, 2021, 2022].reverse();
 export default function Statistic() {
   const title = 'DashBoard';
 
@@ -91,9 +91,9 @@ export default function Statistic() {
         }
       },
       title: {
-        text: listYear[listYear.length - 1],
+        text: `Revenue ${listYear[listYear.length - 1]}`,
         floating: true,
-        offsetY: 255,
+        offsetY: 380,
         align: 'center',
         style: {
           color: '#444'
@@ -102,68 +102,13 @@ export default function Statistic() {
     }
   });
 
-  const [transaction, setTransaction] = useState({
-    series: [
-      {
-        name: 'Amount',
-        data: [100, 150, 200, 101, 49, 36, 32, 233, 143, 84, 590, 200]
-      }
-    ],
-    options: {
-      chart: {
-        type: 'area',
-        height: 350,
-        zoom: {
-          enabled: false
-        }
-      },
-      dataLabels: {
-        enabled: false
-      },
-      stroke: {
-        curve: 'straight'
-      },
-
-      title: {
-        text: 'Transaction history',
-        align: 'left'
-      },
-      subtitle: {
-        text: 'Amount',
-        align: 'left'
-      },
-      labels: [
-        'Jan',
-        'Feb',
-        'Mar',
-        'Apr',
-        'May',
-        'Jun',
-        'Jul',
-        'Aug',
-        'Sep',
-        'Oct',
-        'Nov',
-        'Dec'
-      ],
-      xaxis: {
-        type: 'string'
-      },
-      yaxis: {
-        opposite: true
-      },
-      legend: {
-        horizontalAlign: 'left'
-      }
-    }
-  });
   const Comp = ({ props }) => {
     return (
       <Chart
         options={props.options}
         series={props.series}
         type="bar"
-        height={280}
+        height={400}
         width={600}
       />
     );
@@ -175,105 +120,62 @@ export default function Statistic() {
           <Header props={title}></Header>
         </div>
         <div className="statistic-content">
-          <div
-            style={{
-              display: 'flex',
-              flex: '0 0 50%',
-              padding: '0px 15px',
-              position: 'relative',
-              flexDirection: 'row',
-              justifyContent: 'space-between'
-            }}
-          >
-            <div className="statistic-revenue-year">
-              <Comp props={revenue}></Comp>
-              <div
-                style={{
-                  position: 'absolute',
-                  bottom: '10px',
-                  left: '15px'
-                }}
-              >
-                <Dropdown
-                  onChange={(e) => {
-                    revenue.options.title.text = e.value;
-                    setRevenueData(Object.assign({}, revenue));
-                  }}
-                  options={listYear}
-                  placeholder={listYear[listYear.length - 1]}
-                ></Dropdown>
-              </div>
-            </div>
-            <div className="statistic-transaction">
-              <Chart
-                options={transaction.options}
-                series={transaction.series}
-                type="area"
-                height={280}
-              />
-              <div
-                style={{
-                  position: 'absolute',
-                  bottom: '5px',
-                  left: '15px'
-                }}
-              >
-                <Dropdown
-                  options={listYear}
-                  placeholder={listYear[listYear.length - 1]}
-                ></Dropdown>
-              </div>
-            </div>
+          <div className="statistic-revenue-year">
+            <Comp props={revenue}></Comp>
+            <select
+              value={12}
+              onChange={(e) => {
+                let clone = revenue;
+                clone.options.title.text = `Revenue ${e.target.value}`;
+                setRevenueData(Object.assign({}, clone));
+              }}
+              style={{
+                width: '70px',
+                height: '30px',
+                position: 'absolute',
+                outline: 'none',
+                top: '91%',
+                left: '60%'
+              }}
+            >
+              {listYear.map((e, ind) => {
+                return <option key={shortid.generate()}>{e}</option>;
+              })}
+            </select>
           </div>
-          <div
-            style={{
-              display: 'flex',
-              flex: '0 0 50%',
-              padding: '0px 15px',
-              position: 'relative',
-              flexDirection: 'row',
-              justifyContent: 'space-between'
-            }}
-          >
-            <div className="statistic-new-customer">
-              <Chart
-                options={transaction.options}
-                series={transaction.series}
-                type="area"
-                height={280}
-              />
-              <div
-                style={{
-                  position: 'absolute',
-                  bottom: '5px',
-                  left: '15px'
-                }}
-              >
-                <Dropdown
-                  options={listYear}
-                  placeholder={listYear[listYear.length - 1]}
-                ></Dropdown>
+          <div className="static-data-manual">
+            <div className="static-data">
+              <div>
+                <span>Recent Order</span>
+              </div>
+              <div>
+                {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((e, ind) => {
+                  return (
+                    <div key={shortid.generate()}>
+                      <span>Product</span>
+                      <span>Email</span>
+                      <span>Address</span>
+                      <span>Date</span>
+                    </div>
+                  );
+                })}
               </div>
             </div>
-            <div className="statistic-order">
-              <Chart
-                options={revenue.options}
-                series={revenue.series}
-                type="bar"
-                height={280}
-                width={600}
-              />
-              <div
-                style={{
-                  position: 'absolute',
-                  bottom: '10px',
-                  left: '15px'
-                }}
-              >
-                <Dropdown
-                  options={listYear}
-                  placeholder={listYear[listYear.length - 1]}
-                ></Dropdown>
+            <div className="static-data">
+              <div>
+                <span>New Customer</span>
+              </div>
+              <div>
+                {[1, 2, 3].map((e, ind) => {
+                  return (
+                    <div key={shortid.generate()}>
+                      <span>Name</span>
+                      <span>Email</span>
+                      <span>Address</span>
+                      <span>Date</span>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>

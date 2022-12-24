@@ -2,6 +2,8 @@
   display: block;
   width: 100%;
   height: 100%;
+  position: relative;
+  overflow: auto;
 }
 .order-flex-box {
   display: flex;
@@ -18,7 +20,7 @@
   width: 800px;
   margin: 0 auto;
   margin-bottom: 20px;
-  max-height: 500px;
+  max-height: 450px;
   flex-direction: column;
   border: 1px solid #ccc;
   justify-content: space-between;
@@ -29,8 +31,8 @@
   flex-direction: row;
   align-items: center;
   width: 300px;
-  margin: 0 auto;
-  justify-content: space-around;
+  padding: 0 10px;
+  justify-content: space-between;
   max-height: 470px;
 }
 .order-content > div:first-child {
@@ -73,4 +75,39 @@
 }
 .order-row-data:hover {
   background-color: #ddd;
+}
+
+.order-footer > div {
+  position: relative;
+}
+.order-footer > div > span {
+  font-weight: 700;
+  cursor: pointer;
+}
+.display-filter {
+  height: 90px;
+  width: 120px;
+  background-color: #ccc;
+  position: absolute;
+  display: none;
+  flex-direction: column;
+  top: -90px;
+}
+.display-filter > div {
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+
+  flex: 0 0 30px;
+  cursor: pointer;
+}
+.display-filter > div:hover {
+  background-color: #000;
+  color: #fff;
+}
+.display-filter:hover {
+  display: flex;
+}
+.order-footer > div > span:hover + .display-filter {
+  display: flex;
 }

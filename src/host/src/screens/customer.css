@@ -2,6 +2,8 @@
   display: block;
   width: 100%;
   height: 100%;
+  position: relative;
+  overflow: auto;
 }
 .customer-flex-box {
   display: flex;
@@ -15,7 +17,7 @@
 .customer-content {
   display: flex;
   flex: 1;
-  max-height: 500px;
+  max-height: 450px;
   width: 800px;
   margin: 0 auto;
   margin-bottom: 20px;
@@ -31,7 +33,7 @@
 .customer-footer > div {
   max-width: 600px;
   display: flex;
-  flex:1;
+  flex: 1;
   padding-left: 40px;
   justify-content: space-between;
   align-items: center;

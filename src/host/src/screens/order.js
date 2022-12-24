@@ -20,7 +20,7 @@ const tabs = [
     valueOpt: ['Inc', 'Dec']
   }
 ];
-const headerSize = [2, 4, 3, 3, 3, 3, 5, 3, 9];
+const headerSize = [2, 4, 3, 3, 3, 3, 5, 4, 9];
 const header = [
   'No.',
   'Email',
@@ -35,6 +35,9 @@ const header = [
 
 const title = 'Order';
 export default function Order() {
+  const [sortPay, setSortPay] = useState('desc');
+  const [sortEmail, setSortEmail] = useState('desc');
+  const [sortDate, setSortDate] = useState('desc');
   const [list, setList] = useState([
     [
       'No.',
@@ -287,6 +290,39 @@ export default function Order() {
             </div>
           </div>
           <div className="order-footer">
+            <div style={{ position: 'relative' }}>
+              <span>Filter</span>
+              <div className="display-filter">
+                <div
+                  onClick={() => {
+                    if (sortPay === 'desc') return setSortPay('asc');
+                    else setSortPay('desc');
+                  }}
+                  className="display-filter-e"
+                >
+                  <span>SortByPay </span>
+                </div>
+                <div
+                  onClick={() => {
+                    if (sortDate === 'desc') return setSortDate('asc');
+                    else setSortDate('desc');
+                  }}
+                  className="display-filter-e"
+                >
+                  <span>SortByDate</span>
+                </div>
+                <div
+                  onClick={() => {
+                    if (sortEmail === 'desc') return setSortEmail('asc');
+                    else setSortEmail('desc');
+                  }}
+                  className="display-filter-e"
+                >
+                  <span>SortByEmail</span>
+                </div>
+              </div>
+            </div>
+
             <span>Total:{list.length}</span>
           </div>
         </div>

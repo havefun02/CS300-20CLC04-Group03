@@ -17,7 +17,9 @@ const header = [
   'Quantity'
 ];
 export default function ManageTable({ props }) {
-
+  const [sortPay, setSortPay] = useState('desc');
+  const [sortEmail, setSortEmail] = useState('desc');
+  const [sortDate, setSortDate] = useState('desc');
   const [fetch, setFetch] = useState(false);
   const [list, setList] = useState([
     ['1', '1', '1', '1', '1', '1', '1', '1', '1', '1']
@@ -100,7 +102,7 @@ export default function ManageTable({ props }) {
                         textAlign: 'center'
                       }}
                     >
-                      {!update ? (
+                      {!update || index == 0 ? (
                         <span style={{ color: 'red' }}>{e}</span>
                       ) : (
                         <input
@@ -134,19 +136,26 @@ export default function ManageTable({ props }) {
                           throw e;
                         });
                       setFetch((fetch) => !fetch);
-                      setUpdate(false)
+                      setUpdate(false);
                     }}
                   >
                     Save
                   </button>
                 ) : (
-                  <button onClick={() => {
-                    
-                    setUpdate(true)
-                  }}>Update
+                  <button
+                    onClick={() => {
+                      setUpdate(true);
+                    }}
+                  >
+                    Update
                   </button>
                 )}
-                <button onClick={() => {setUpdate(false); setExpand((expand) => !expand)}}>
+                <button
+                  onClick={() => {
+                    setUpdate(false);
+                    setExpand((expand) => !expand);
+                  }}
+                >
                   Cancel
                 </button>
                 <button
@@ -193,8 +202,46 @@ export default function ManageTable({ props }) {
           })}
         </div>
         <div className="manage-table-footer">
-          <span>Total: 200</span>
-          <span>Out of stock: 100</span>
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              width: '300px',
+              justifyContent: 'space-between'
+            }}
+          >
+            <div style={{ position: 'relative', fontWeight: '700' }}>
+              <span className="filter-span">Filter</span>
+              <div className="display-filter">
+                <div
+                  onClick={() => {
+                    if (sortPay === 'desc') return setSortPay('asc');
+                    else setSortPay('desc');
+                  }}
+                  style={{ display: 'flex', alignItems: 'center' }}
+                >
+                  SortByPay
+                </div>
+                <div
+                  onClick={() => {
+                    if (sortDate === 'desc') return setSortDate('asc');
+                    else setSortDate('desc');
+                  }}
+                >
+                  SortByDate
+                </div>
+                <div
+                  onClick={() => {
+                    if (sortEmail === 'desc') return setSortEmail('asc');
+                    else setSortEmail('desc');
+                  }}
+                >
+                  SortByEmail
+                </div>
+              </div>
+            </div>
+            <span>Total:{list.length}</span>
+          </div>
         </div>
       </div>
     </div>

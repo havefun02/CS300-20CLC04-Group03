@@ -1,5 +1,6 @@
 .sidebar-main {
-  height: 100%;
+  min-height: 100%;
+  flex: 1 1 100%;
   background-color: rgb(1, 1, 248);
   flex: 0 0 16.66667%;
   max-width: 16.66667%;

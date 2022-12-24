@@ -24,7 +24,6 @@
 .addform-picture {
   display: flex;
   flex: 0 0 40%;
-  height: 100%;
   flex-wrap: wrap;
   border: 1px solid rgb(109, 99, 99);
   flex-direction: row;

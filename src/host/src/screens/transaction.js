@@ -3,28 +3,11 @@ import './transaction.css';
 import Header from '../components/header';
 import axios from 'axios';
 import shortid from 'shortid';
-const tabs = [
-  {
-    title: 'All Transactions',
-    optional: 'button',
-    valueOpt: []
-  },
-  {
-    title: 'SortByDate',
-    optional: 'dropdown',
-    valueOpt: ['Inc', 'Dec']
-  },
-  {
-    title: 'GroupById',
-    optional: 'dropdown',
-    valueOpt: ['Inc', 'Dec']
-  }
-];
-const headerSize = [2, 4, 3, 3, 3, 3, 5, 3, 9];
+
+const headerSize = [2, 4, 3, 3, 3, 5, 3, 9];
 const header = [
   'Id',
   'Email',
-  'Rate',
   'Date',
   'Quantity',
   'Total pay',
@@ -35,11 +18,13 @@ const header = [
 
 const title = 'Transaction';
 export default function Transaction() {
+  const [sortPay, setSortPay] = useState('desc');
+  const [sortEmail, setSortEmail] = useState('desc');
+  const [sortDate, setSortDate] = useState('desc');
   const [list, setList] = useState([
     [
       'Id',
       'Email',
-      'Rate',
       'Date',
       'Quantity',
       'Total pay',
@@ -50,7 +35,6 @@ export default function Transaction() {
     [
       'Id',
       'Email',
-      'Rate',
       'Date',
       'Quantity',
       'Total pay',
@@ -58,138 +42,7 @@ export default function Transaction() {
       'Gift',
       'Detail'
     ],
-    [
-      'Id',
-      'Email',
-      'Rate',
-      'Date',
-      'Quantity',
-      'Total pay',
-      'Brands',
-      'Gift',
-      'Detail'
-    ],
-    [
-      'Id',
-      'Email',
-      'Rate',
-      'Date',
-      'Quantity',
-      'Total pay',
-      'Brands',
-      'Gift',
-      'Detail'
-    ],
-    [
-      'Id',
-      'Email',
-      'Rate',
-      'Date',
-      'Quantity',
-      'Total pay',
-      'Brands',
-      'Gift',
-      'Detail'
-    ],
-    [
-      'Id',
-      'Email',
-      'Rate',
-      'Date',
-      'Quantity',
-      'Total pay',
-      'Brands',
-      'Gift',
-      'Detail'
-    ],
-    [
-      'Id',
-      'Email',
-      'Rate',
-      'Date',
-      'Quantity',
-      'Total pay',
-      'Brands',
-      'Gift',
-      'Detail'
-    ],
-    [
-      'Id',
-      'Email',
-      'Rate',
-      'Date',
-      'Quantity',
-      'Total pay',
-      'Brands',
-      'Gift',
-      'Detail'
-    ],
-    [
-      'Id',
-      'Email',
-      'Rate',
-      'Date',
-      'Quantity',
-      'Total pay',
-      'Brands',
-      'Gift',
-      'Detail'
-    ],
-    [
-      'Id',
-      'Email',
-      'Rate',
-      'Date',
-      'Quantity',
-      'Total pay',
-      'Brands',
-      'Gift',
-      'Detail'
-    ],
-    [
-      'Id',
-      'Email',
-      'Rate',
-      'Date',
-      'Quantity',
-      'Total pay',
-      'Brands',
-      'Gift',
-      'Detail'
-    ],
-    [
-      'Id',
-      'Email',
-      'Rate',
-      'Date',
-      'Quantity',
-      'Total pay',
-      'Brands',
-      'Gift',
-      'Detail'
-    ],
-    [
-      'Id',
-      'Email',
-      'Rate',
-      'Date',
-      'Quantity',
-      'Total pay',
-      'Brands',
-      'Gift',
-      'Detail'
-    ],
-    [
-      'Id',
-      'Email',
-      'Rate',
-      'Date',
-      'Quantity',
-      'Total pay',
-      'Brands',
-      'Gift',
-      'Detail'
-    ]
+    ['Id', 'Email', 'Date', 'Quantity', 'Total pay', 'Brands', 'Gift', 'Detail']
   ]);
   const [fetch, useFetch] = useState(false);
   //replace this object by
@@ -225,9 +78,10 @@ export default function Transaction() {
   };
 
   const RowData = ({ props }) => {
+    console.log(props);
     return (
       <div className="trans-row-data">
-        {props.e.map((el, ind) => {
+        {props.map((el, ind) => {
           return (
             <div
               key={shortid.generate()}
@@ -256,16 +110,47 @@ export default function Transaction() {
         </div>
         <div className="transaction-content">
           <div>
-            <HeaderTable props={{}} />
+            <HeaderTable />
             <div>
               {list.map((e, ind) => {
-                return <RowData props={{ e }}></RowData>;
+                return <RowData key={shortid.generate()} props={e}></RowData>;
               })}
             </div>
           </div>
           <div className="transaction-footer">
+            <div style={{ position: 'relative' }}>
+              <span>Filter</span>
+              <div className="display-filter">
+                <div
+                  onClick={() => {
+                    if (sortPay === 'desc') return setSortPay('asc');
+                    else setSortPay('desc');
+                  }}
+                  className="display-filter-e"
+                >
+                  <span>SortByPay </span>
+                </div>
+                <div
+                  onClick={() => {
+                    if (sortDate === 'desc') return setSortDate('asc');
+                    else setSortDate('desc');
+                  }}
+                  className="display-filter-e"
+                >
+                  <span>SortByDate</span>
+                </div>
+                <div
+                  onClick={() => {
+                    if (sortEmail === 'desc') return setSortEmail('asc');
+                    else setSortEmail('desc');
+                  }}
+                  className="display-filter-e"
+                >
+                  <span>SortByEmail</span>
+                </div>
+              </div>
+            </div>
             <span>Total:{list.length}</span>
-            <span>Revenue:500</span>
           </div>
         </div>
       </div>

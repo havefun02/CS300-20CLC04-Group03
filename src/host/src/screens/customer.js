@@ -5,23 +5,6 @@ import shortid from 'shortid';
 import axios from 'axios';
 import MesOverlay from '../components/message';
 import Overlay from '../components/overlay';
-const tabs = [
-  {
-    title: 'All customers',
-    optional: 'button',
-    valueOpt: []
-  },
-  {
-    title: 'SortByDate',
-    optional: 'dropdown',
-    valueOpt: ['Inc', 'Dec']
-  },
-  {
-    title: 'GroupById',
-    optional: 'dropdown',
-    valueOpt: ['Inc', 'Dec']
-  }
-];
 const headerSize = [2, 3, 4, 4, 3, 3, 3, 3, 4];
 const header = [
   'Id',
@@ -38,28 +21,176 @@ const header = [
 const title = 'Customer';
 export default function Customer() {
   const [list, setList] = useState([
-    ['Id', 'Name', 'Email', 'Phone', 'DoB', 'Address','ordering', 'Point', 'Level'],
-    ['Id', 'Name', 'Email', 'Phone', 'DoB', 'Address','ordering', 'Point', 'Level'],
-    ['Id', 'Name', 'Email', 'Phone', 'DoB', 'Address','ordering', 'Point', 'Level'],
-    ['Id', 'Name', 'Email', 'Phone', 'DoB', 'Address','ordering', 'Point', 'Level'],
-    ['Id', 'Name', 'Email', 'Phone', 'DoB', 'Address','ordering', 'Point', 'Level'],
-    ['Id', 'Name', 'Email', 'Phone', 'DoB', 'Address','ordering', 'Point', 'Level'],
-    ['Id', 'Name', 'Email', 'Phone', 'DoB', 'Address','ordering', 'Point', 'Level'],
-    ['Id', 'Name', 'Email', 'Phone', 'DoB', 'Address','ordering', 'Point', 'Level'],
-    ['Id', 'Name', 'Email', 'Phone', 'DoB', 'Address','ordering', 'Point', 'Level'],
-    ['Id', 'Name', 'Email', 'Phone', 'DoB', 'Address','ordering', 'Point', 'Level'],
-    ['Id', 'Name', 'Email', 'Phone', 'DoB', 'Address','ordering', 'Point', 'Level'],
-    ['Id', 'Name', 'Email', 'Phone', 'DoB', 'Address','ordering', 'Point', 'Level'],
-    ['Id', 'Name', 'Email', 'Phone', 'DoB', 'Address','ordering', 'Point', 'Level'],
-    ['Id', 'Name', 'Email', 'Phone', 'DoB', 'Address','ordering', 'Point', 'Level'],
-    ['Id', 'Name', 'Email', 'Phone', 'DoB', 'Address','ordering', 'Point', 'Level']
+    [
+      'Id',
+      'Name',
+      'Email',
+      'Phone',
+      'DoB',
+      'Address',
+      'ordering',
+      'Point',
+      'Level'
+    ],
+    [
+      'Id',
+      'Name',
+      'Email',
+      'Phone',
+      'DoB',
+      'Address',
+      'ordering',
+      'Point',
+      'Level'
+    ],
+    [
+      'Id',
+      'Name',
+      'Email',
+      'Phone',
+      'DoB',
+      'Address',
+      'ordering',
+      'Point',
+      'Level'
+    ],
+    [
+      'Id',
+      'Name',
+      'Email',
+      'Phone',
+      'DoB',
+      'Address',
+      'ordering',
+      'Point',
+      'Level'
+    ],
+    [
+      'Id',
+      'Name',
+      'Email',
+      'Phone',
+      'DoB',
+      'Address',
+      'ordering',
+      'Point',
+      'Level'
+    ],
+    [
+      'Id',
+      'Name',
+      'Email',
+      'Phone',
+      'DoB',
+      'Address',
+      'ordering',
+      'Point',
+      'Level'
+    ],
+    [
+      'Id',
+      'Name',
+      'Email',
+      'Phone',
+      'DoB',
+      'Address',
+      'ordering',
+      'Point',
+      'Level'
+    ],
+    [
+      'Id',
+      'Name',
+      'Email',
+      'Phone',
+      'DoB',
+      'Address',
+      'ordering',
+      'Point',
+      'Level'
+    ],
+    [
+      'Id',
+      'Name',
+      'Email',
+      'Phone',
+      'DoB',
+      'Address',
+      'ordering',
+      'Point',
+      'Level'
+    ],
+    [
+      'Id',
+      'Name',
+      'Email',
+      'Phone',
+      'DoB',
+      'Address',
+      'ordering',
+      'Point',
+      'Level'
+    ],
+    [
+      'Id',
+      'Name',
+      'Email',
+      'Phone',
+      'DoB',
+      'Address',
+      'ordering',
+      'Point',
+      'Level'
+    ],
+    [
+      'Id',
+      'Name',
+      'Email',
+      'Phone',
+      'DoB',
+      'Address',
+      'ordering',
+      'Point',
+      'Level'
+    ],
+    [
+      'Id',
+      'Name',
+      'Email',
+      'Phone',
+      'DoB',
+      'Address',
+      'ordering',
+      'Point',
+      'Level'
+    ],
+    [
+      'Id',
+      'Name',
+      'Email',
+      'Phone',
+      'DoB',
+      'Address',
+      'ordering',
+      'Point',
+      'Level'
+    ],
+    [
+      'Id',
+      'Name',
+      'Email',
+      'Phone',
+      'DoB',
+      'Address',
+      'ordering',
+      'Point',
+      'Level'
+    ]
   ]);
   const [check, setCheck] = useState(Array(list.length).fill(false));
   const [checkAll, setCheckAll] = useState(false);
   const [overlay, setOverlay] = useState(false);
   const [mesOverlay, setMesOverlay] = useState(false);
-
-  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -180,10 +311,9 @@ export default function Customer() {
               >
                 <button
                   onClick={() => {
-                    if (check.filter((e,ind)=>e===true).length!==0){
-                      setOverlay(overlay=>!overlay);
+                    if (check.filter((e, ind) => e === true).length !== 0) {
+                      setOverlay((overlay) => !overlay);
                     }
-                    
                   }}
                   style={{
                     width: '100%',
@@ -207,8 +337,8 @@ export default function Customer() {
               >
                 <button
                   onClick={() => {
-                    if (check.filter((e,ind)=>e===true).length!==0)
-                      setMesOverlay(mesOverlay=>!mesOverlay)
+                    if (check.filter((e, ind) => e === true).length !== 0)
+                      setMesOverlay((mesOverlay) => !mesOverlay);
                   }}
                   style={{
                     width: '100%',
@@ -225,20 +355,8 @@ export default function Customer() {
             </div>
           </div>
         </div>
-        {mesOverlay && (
-          <MesOverlay
-            props={[
-              [mesOverlay, setMesOverlay]
-            ]}
-          />
-        )}
-        {overlay && (
-          <Overlay
-            props={[
-              [overlay, setOverlay]
-            ]}
-          />
-        )}
+        {mesOverlay && <MesOverlay props={[[mesOverlay, setMesOverlay]]} />}
+        {overlay && <Overlay props={[[overlay, setOverlay]]} />}
       </div>
     </div>
   );

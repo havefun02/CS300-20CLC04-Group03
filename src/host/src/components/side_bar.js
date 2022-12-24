@@ -63,6 +63,8 @@ export default function Sidebar() {
     <div className="sidebar-main">
       <div className="sidebar-title">
         <NavLink
+          to="/"
+          onClick={() => handleClick(list[0])}
           style={{
             color: '#fff',
             fontSize: '18px',

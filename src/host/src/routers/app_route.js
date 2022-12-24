@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, matchPath } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Sidebar from '../components/side_bar';
 import './approute.css';
 import Order from '../screens/order';
@@ -15,11 +15,12 @@ import { Context } from '../context/context';
 export default function AppRoute() {
   const context = useContext(Context);
   const [isLog, setIsLog] = [context.isLog, context.setIsLog];
+  console.log(isLog);
   return (
     <BrowserRouter>
       <div className="route-main">
         <div className="route-grid">
-          {isLog ===true ? (
+          {isLog.toString() == 'true' ? (
             <div className="route-row">
               <Sidebar></Sidebar>
               <Routes>
@@ -33,8 +34,8 @@ export default function AppRoute() {
             </div>
           ) : (
             <Routes>
-              <Route path={'/'} element={<Login />}></Route>
-              <Route path={'/login'} element={<Login />}></Route>
+              <Route path="/" element={<Login />}></Route>
+              <Route path="/login" element={<Login />}></Route>
               <Route path="/register" element={<Register />}></Route>
               <Route path="/changepass" element={<ChangePass />}></Route>
             </Routes>
