@@ -13,7 +13,7 @@ h1 {
   text-align: center;
 }
 
-input[type='password'] {
+.Changepass-container input[type='password'] {
   width: 50%;
   padding: 15px;
   display: inline-block;
