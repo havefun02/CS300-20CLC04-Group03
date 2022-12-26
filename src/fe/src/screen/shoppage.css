@@ -28,7 +28,7 @@
 .page-filter {
   height: 100%;
   display: flex;
-  flex: 0 0 90px;
+  flex: 0 0 120px;
   align-items: center;
   justify-content: space-between;
 }
@@ -42,7 +42,7 @@
 .page-function .page-view span,
 .page-product span,
 .page-filter span {
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 100;
   display: flex;
   text-align: center;
@@ -53,8 +53,8 @@
   width: 20px;
 }
 .page-expand-feature {
-  height: 180px;
-  width: 180px;
+  height: 150px;
+  width: 150px;
   position: absolute;
   top: 100%;
   right: 35px;
@@ -297,4 +297,23 @@
 }
 .product-name1 > span:last-child {
   margin-top: 15px;
+}
+.filter-item {
+  display: flex;
+  gap: 10px;
+  flex-direction: row;
+  padding: 10px 0;
+  flex-wrap: wrap;
+}
+.filter-item div {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  background-color: #ddd;
+  width: fit-content;
+  padding: 10px;
+}
+.filter-item div > span:last-child:hover {
+  color: red;
+  cursor: pointer;
 }

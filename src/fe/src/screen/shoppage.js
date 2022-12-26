@@ -30,6 +30,7 @@ export default function Page({ props }) {
     { code: 3, liked: false },
     { code: 4, liked: true }
   ]);
+  const [filter, setFilter] = useState(['123123123', '3123123123123', 3, 4]);
 
   const Product = ({ props }) => {
     return (
@@ -146,14 +147,6 @@ export default function Page({ props }) {
                 </div>
                 <div
                   onClick={() => {
-                    setTitleFeature('Best selling');
-                  }}
-                  className="page-expand-feature-elements"
-                >
-                  <span>Best selling</span>
-                </div>
-                <div
-                  onClick={() => {
                     setTitleFeature('Price ascending');
                   }}
                   className="page-expand-feature-elements"
@@ -214,7 +207,10 @@ export default function Page({ props }) {
                   >
                     {cateList.map((e, ind) => {
                       return (
-                        <div className="page-element-expand-child">
+                        <div
+                          onClick={() => {}}
+                          className="page-element-expand-child"
+                        >
                           <span>1</span>
                         </div>
                       );
@@ -312,6 +308,31 @@ export default function Page({ props }) {
                   </div>
                 )}
               </div>
+              {filter.length !== 0 && (
+                <div className="filter-item">
+                  {filter.map((e, ind) => {
+                    return (
+                      <div>
+                        <span>{e}</span>
+                        <span
+                          onClick={() => {
+                            filter.splice(ind, 1);
+                            return setFilter(Object.assign([], filter));
+                          }}
+                          style={{
+                            position: 'absolute',
+                            top: '-10%',
+                            right: '0',
+                            fontSize: '12px'
+                          }}
+                        >
+                          x
+                        </span>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
               <div
                 style={{
                   width: '100%',
@@ -341,6 +362,7 @@ export default function Page({ props }) {
                     Apply
                   </button>
                 </div>
+
                 <div
                   style={{
                     height: '100%',
@@ -351,7 +373,9 @@ export default function Page({ props }) {
                   }}
                 >
                   <button
-                    onClick={() => {}}
+                    onClick={() => {
+                      setFilter([]);
+                    }}
                     style={{
                       cursor: 'pointer',
                       width: '70px',
