@@ -5,6 +5,7 @@ import shortid from 'shortid';
 import './statistic.css';
 const listYear = [2020, 2021, 2022].reverse();
 export default function Statistic() {
+  const [year, setYear] = useState(listYear[0]);
   const title = 'DashBoard';
 
   const [revenue, setRevenueData] = useState({
@@ -91,7 +92,7 @@ export default function Statistic() {
         }
       },
       title: {
-        text: `Revenue ${listYear[listYear.length - 1]}`,
+        text: `Revenue ${listYear[0]}`,
         floating: true,
         offsetY: 380,
         align: 'center',
@@ -123,11 +124,12 @@ export default function Statistic() {
           <div className="statistic-revenue-year">
             <Comp props={revenue}></Comp>
             <select
-              value={12}
+              value={year}
               onChange={(e) => {
                 let clone = revenue;
                 clone.options.title.text = `Revenue ${e.target.value}`;
                 setRevenueData(Object.assign({}, clone));
+                setYear(e.target.value);
               }}
               style={{
                 width: '70px',
@@ -139,7 +141,11 @@ export default function Statistic() {
               }}
             >
               {listYear.map((e, ind) => {
-                return <option key={shortid.generate()}>{e}</option>;
+                return (
+                  <option value={e} key={shortid.generate()}>
+                    {e}
+                  </option>
+                );
               })}
             </select>
           </div>

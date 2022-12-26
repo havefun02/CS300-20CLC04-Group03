@@ -67,7 +67,9 @@ export default function Sidebar() {
           onClick={() => handleClick(list[0])}
           style={{
             color: '#fff',
-            fontSize: '18px',
+            fontSize: '19px',
+            fontWeight: '700',
+            letterSpacing: '1.5px',
             textDecoration: 'none'
           }}
         >
