@@ -1,37 +1,132 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
-
 import './shoppage.css';
 import shortid from 'shortid';
-
+import { Context } from '../context/context';
+import { useContext } from 'react';
+import axios from 'axios';
+import LoginOverlay from '../component/loginOverlay';
 export default function Page({ props }) {
   const navigate = useNavigate();
+  const context = useContext(Context);
+  const id_user = context.id;
+  const [fetchdata, setFetch] = useState(false);
+  const [overlay, setOverlay] = useState(false);
+
+  const [liked, setLike] = useState([1, 2, 4]);
   const [cateList, setCateList] = useState([1, 1, 1, 1, 1, 1, 1]);
   const [colorList, setColorList] = useState([1, 1, 1, 1, 1]);
   const [sizeList, setSizeList] = useState([1, 1, 1, 1, 1, 1, 1, 1]);
-  const [brandList, setBrandList] = useState([]);
-  const [view1, setView1] = useState({ opacity: '1' });
-  const [view2, setView2] = useState({});
-  const [viewType, setViewType] = useState('');
+  const [brandList, setBrandList] = useState([1, 2, 3, 4, 5, 6, 7, 8]);
   const [eventCate, setEventCate] = useState(false);
   const [eventSize, setEventSize] = useState(false);
   const [eventBrand, setEventBrand] = useState(false);
   const [eventColor, setEventColor] = useState(false);
-  const [cate, setCate] = useState(null);
-  const [Size, setSize] = useState(null);
-  const [Brand, setBrand] = useState(null);
-  const [Color, setColor] = useState(null);
-
-  const [expandFeature, setExpandFeature] = useState(false);
-  const [titleFeature, setTitleFeature] = useState('Featured');
   const [list, setList] = useState([
-    { code: 1, liked: false },
-    { code: 2, liked: false },
-    { code: 3, liked: false },
-    { code: 4, liked: true }
+    { id: 1, avar: '', name: 1, price: '', sale: '' },
+    { id: 2, avar: '', name: 1, price: '', sale: '' },
+    { id: 3, avar: '', name: 1, price: '', sale: '' },
+    { id: 4, avar: '', name: 1, price: '', sale: '' }
   ]);
+  const [view1, setView1] = useState({ opacity: '1' });
+  const [view2, setView2] = useState({});
+  const [viewType, setViewType] = useState('');
+  const [titleFeature, setTitleFeature] = useState('Default');
+  const [expandFeature, setExpandFeature] = useState(false);
   const [filter, setFilter] = useState(['123123123', '3123123123123', 3, 4]);
 
+  useEffect(() => {
+    const fetchCate = async () => {
+      const url = `http://localhost:3001/get-cate`;
+      const res = await axios.get(url).then((data) => {
+        setCateList(data);
+      });
+    };
+    const fetchBrand = async () => {
+      const url = `http://localhost:3001/get-brand`;
+      const res = await axios.get(url).then((data) => {
+        setBrandList(data);
+      });
+    };
+    const fetchColor = async () => {
+      const url = `http://localhost:3001/get-color`;
+      const res = await axios.get(url).then((data) => {
+        setColorList(data);
+      });
+    };
+    const fetchSize = async () => {
+      const url = `http://localhost:3001/get-size`;
+      const res = await axios.get(url).then((data) => {
+        setSizeList(data);
+      });
+    };
+  }, []);
+  useEffect(() => {
+    const fetch = async () => {
+      const url = `http://localhost:3001/user:${id_user}/get-cart`;
+      const res = await axios.get(url).then((data) => {
+        setLike();
+      });
+    };
+  }, []);
+
+  useEffect(() => {
+    const fetch = async () => {
+      const url = `http://localhost:3001/get-product/:${props.id_page}`;
+      const res = await axios.get(url).then((data) => {
+        setList();
+      });
+    };
+  }, [fetchdata]);
+
+  const handleLike = async (mode, id_product) => {
+    if (mode === 1) {
+      const url = `http://localhost:3001/user:${id_user}/add-cart:${id_product}`;
+      const res = await axios.post(url).then((data) => {
+        setLike(liked.push(id_product));
+      });
+    } else if (mode === 0) {
+      const url = `http://localhost:3001/user:${id_user}/del-cart:${id_product}`;
+      const res = await axios.post(url).then((data) => {
+        let clone = liked.splice(liked.indexOf(id_product), 1);
+        setLike(clone);
+      });
+    }
+  };
+
+  const handleApply = async () => {
+    const url = `http://localhost:3001/get-product/apply:${filter}`;
+    const res = await axios.get(url).then((data) => {
+      setList();
+    });
+  };
+  const handleGroupBy = async (title) => {
+    switch (title) {
+      case 0: {
+        break;
+      }
+      case 1: {
+        list.sort((a, b) => a.price - b.price);
+
+        break;
+      }
+      case 2: {
+        list.sort((a, b) => b.price - a.price);
+
+        break;
+      }
+      case 3: {
+        list.sort((a, b) => a.name - b.name);
+        break;
+      }
+      case 4: {
+        list.sort((a, b) => b.name - a.name);
+        break;
+      }
+      default:
+        break;
+    }
+  };
   const Product = ({ props }) => {
     return (
       <div className={'product' + viewType}>
@@ -67,15 +162,21 @@ export default function Page({ props }) {
           </div>
         </div>
         <div className={'product-add-like' + viewType}>
-          {!props.liked ? (
+          {!liked.includes(props.id) ? (
             <img
-              onClick={() => {}}
+              onClick={() => {
+                if (id_user === null) setOverlay(true);
+                else handleLike(1, props.id);
+              }}
               src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAABK0lEQVRYhe2VP05CQRCHPymwsSOcgMRwBi2k4S4cAQ+gyB3suQM2qLEzXoEGsLBSaCjkUcy8ZPmTPPb3lFDsl2wmb3f2ze/Nzs6DRCJxgrwBmY8foHtsAa+BgAxYAY1ji8gZuIjOfwWoFKw/u71xO2YzO7HjMVbAyG0LOAueVZ6UTVNMfVMMWgXmwC9Q314sygDAi9uWKOAauAA+gC9FwHYdxNJ2OxT308SO4BOrg1jefb+aQUCvgxp29gvgfJ/DIUcAeh20PcYIWJYRoNZBfv7S9QtpYC1ZaT4r4LKsALCf0ndk8Dlw+xfBwRpKH5hhRdnzuVgfmQd2v/Be8JHJr+IV1t0yn4v12eDQWxASNqOshE80PXbTeyf4yFQ9wBSY+Iv3FWGRTyJxWqwBUZF8jqhPfG0AAAAASUVORK5CYII="
             ></img>
           ) : (
             <img
-              onClick={() => {}}
-              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAABrElEQVRYhe2VMW4UQRBFX42srhbsRogEEiQnvoMDOzFn4AAEHAFBjA03ICGAhDtAYiOTcgAQImGdkK13i23JnnLgsViNd73TjVZyME+aoLv+6P/pqpmBnp6e24aF8NVUvbnGf0N4vk6/6tqOSD23GrrI/kx1c50hlmIxfjRVn6o+W5fHxk1Fdz8SeCIiO8BbU/0FPCo1c3spanN6Wn83vXWzCfzv2wSbLrIH61LkTcP2ffZKojU/UUwlaJqUMw1VNTPT8dDO636zeeAAAiXwDORHZLAsxi3AYGiHwbTiZ/sgO4+9FlDtkpCVDDHoDDp0X1lQHac5AbQOBxY5Tf/ytK52A8HN4z1XNTnTjoIs3qGYDiOdhIaQ+oBA4FUnGA0jnwf/1fevydejpT3azhR1d9O0cFWzGl74uKnU4gpvRT3F84jDPNJ+L+cpl5Fs0H5Y2pnpjqyGI8cAi5mmIsxtdzv2k3VZ/GuJ+radO5p6Y6Ah5QVduAUNfHwMmdlB7maNp0ew2Xh/b/0GQGEPkAQF0fN0+Gi7zP1pTiECzGg+ar+Hsa46uFQ7hC09Nz67gA7ZzSKgZNkUYAAAAASUVORK5CYII="
+              onClick={() => {
+                if (id_user === null) setOverlay(true);
+                else handleLike(0, props.id);
+              }}
+              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAABX0lEQVR4nO2VTU4CQRCFy1A1cwDjCUiMZ5CNnkKPQAJVbHHlSkbuoHHJBbyBcaV3cAO6BqweNjKmmcb4H7ubIIv5kt5MqrpeV7+uAaioqNg0VOjWCBV2KdPECHbXK4DpZilgIUJonnNaX6uIJco4KEVgE/4DFWyWV4EDJ+jhfXd8lzJeeAmYtZM9l/xUAGyp4FWMANOhI+8uGMGRTbZivJMBoDiFRIWmyvQyYdhZuw9yrh26DtytxAe+qFDPPekzCGH2yQe++Ubo3ubnndpBkIAYH4xbsG3vXpmeC4YUQtFAHxihY9e96+DiMT5QwUsnvAMx5JzW7UgOGj5C81kr2YVYjGBXhcaexaeG8QRWQWEHClPfMD1aUypTZr/5xgSjQuffnLDnGxP9FA3jvmljoyyAI9+YeAFtbLxtzjj0jQlGmbKvv9eP4/UvMcEUpcGyxSkZh3bjH0z4a0xFxcbxCgc3uO99qxdYAAAAAElFTkSuQmCC"
             ></img>
           )}
         </div>
@@ -117,37 +218,35 @@ export default function Page({ props }) {
           </div>
           <div className="page-filter">
             <span>{titleFeature}</span>
-            <img
-              onClick={(e) => {
-                if (
-                  e.target.src ===
-                  'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAAb0lEQVRIie2PsQ2AMAwELyyWcVIyCqSCaQmNI1kIRwEF0fjq998bHMf5lQDEjlyU7OPyDBzA3MglyeyWZGocFzlaDEkCNqu4hwCsIrp+UpcXGuvfSoaVa0lWklqeR5RrSf1k2HJL8km5lnxW7jj3nAwCHOMFhaBLAAAAAElFTkSuQmCC'
-                ) {
-                  setExpandFeature((expandFeature) => !expandFeature);
-                  e.target.src =
-                    'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAAbElEQVRIie2Q0QnAIAwFr4uIdIP+dP8JdIIinaT9iSClSEIV+pGDgCh5Hg8cx/kdUWYKATiAE1hnhV8yQz+JQJHg8jh/rqs1r9Zvd8PCNW8qFiDTr6KtLsuOiU0We3YBSMBuDa9orMzmjmPjBhOHH8tY0fZoAAAAAElFTkSuQmCC';
-                } else {
-                  setExpandFeature((expandFeature) => !expandFeature);
+            {!expandFeature ? (
+              <img
+                onClick={() => setExpandFeature(true)}
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAAb0lEQVRIie2PsQ2AMAwELyyWcVIyCqSCaQmNI1kIRwEF0fjq998bHMf5lQDEjlyU7OPyDBzA3MglyeyWZGocFzlaDEkCNqu4hwCsIrp+UpcXGuvfSoaVa0lWklqeR5RrSf1k2HJL8km5lnxW7jj3nAwCHOMFhaBLAAAAAElFTkSuQmCC"
+              ></img>
+            ) : (
+              <img
+                onClick={() => setExpandFeature(false)}
+                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAAbElEQVRIie2Q0QnAIAwFr4uIdIP+dP8JdIIinaT9iSClSEIV+pGDgCh5Hg8cx/kdUWYKATiAE1hnhV8yQz+JQJHg8jh/rqs1r9Zvd8PCNW8qFiDTr6KtLsuOiU0We3YBSMBuDa9orMzmjmPjBhOHH8tY0fZoAAAAAElFTkSuQmCC"
+              ></img>
+            )}
 
-                  e.target.src =
-                    'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAAb0lEQVRIie2PsQ2AMAwELyyWcVIyCqSCaQmNI1kIRwEF0fjq998bHMf5lQDEjlyU7OPyDBzA3MglyeyWZGocFzlaDEkCNqu4hwCsIrp+UpcXGuvfSoaVa0lWklqeR5RrSf1k2HJL8km5lnxW7jj3nAwCHOMFhaBLAAAAAElFTkSuQmCC';
-                }
-              }}
-              src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAAb0lEQVRIie2PsQ2AMAwELyyWcVIyCqSCaQmNI1kIRwEF0fjq998bHMf5lQDEjlyU7OPyDBzA3MglyeyWZGocFzlaDEkCNqu4hwCsIrp+UpcXGuvfSoaVa0lWklqeR5RrSf1k2HJL8km5lnxW7jj3nAwCHOMFhaBLAAAAAElFTkSuQmCC"
-            ></img>
             {expandFeature && (
               <div className="page-expand-feature">
                 <div
                   onClick={() => {
-                    setTitleFeature('Featured');
+                    setExpandFeature(false);
+                    setTitleFeature('Default');
+                    handleGroupBy(0);
                   }}
                   className="page-expand-feature-elements"
                 >
-                  <span>Featured</span>
+                  <span>Default</span>
                 </div>
                 <div
                   onClick={() => {
+                    setExpandFeature(false);
                     setTitleFeature('Price ascending');
+                    handleGroupBy(1);
                   }}
                   className="page-expand-feature-elements"
                 >
@@ -155,7 +254,9 @@ export default function Page({ props }) {
                 </div>
                 <div
                   onClick={() => {
+                    setExpandFeature(false);
                     setTitleFeature('Price descending');
+                    handleGroupBy(2);
                   }}
                   className="page-expand-feature-elements"
                 >
@@ -163,7 +264,9 @@ export default function Page({ props }) {
                 </div>
                 <div
                   onClick={() => {
+                    setExpandFeature(false);
                     setTitleFeature('Title ascending');
+                    handleGroupBy(3);
                   }}
                   className="page-expand-feature-elements"
                 >
@@ -171,11 +274,13 @@ export default function Page({ props }) {
                 </div>
                 <div
                   onClick={() => {
+                    setExpandFeature(false);
                     setTitleFeature('Title descending');
+                    handleGroupBy(4);
                   }}
                   className="page-expand-feature-elements"
                 >
-                  <span> Title ascending</span>
+                  <span> Title descending</span>
                 </div>
               </div>
             )}
@@ -208,6 +313,7 @@ export default function Page({ props }) {
                     {cateList.map((e, ind) => {
                       return (
                         <div
+                          key={shortid.generate()}
                           onClick={() => {}}
                           className="page-element-expand-child"
                         >
@@ -237,11 +343,18 @@ export default function Page({ props }) {
                 {eventColor && (
                   <div
                     className="page-element-expand"
-                    style={{ flexDirection: 'row', flex: 'auto' }}
+                    style={{
+                      flexDirection: 'row',
+                      flex: 'auto',
+                      padding: '10px'
+                    }}
                   >
                     {colorList.map((e, ind) => {
                       return (
-                        <div className="page-element-expand-size">
+                        <div
+                          key={shortid.generate()}
+                          className="page-element-expand-size"
+                        >
                           <span>1</span>
                         </div>
                       );
@@ -268,12 +381,19 @@ export default function Page({ props }) {
                 {eventSize && (
                   <div
                     className="page-element-expand"
-                    style={{ flexDirection: 'row', flex: 'auto' }}
+                    style={{
+                      flexDirection: 'row',
+                      flex: 'auto',
+                      padding: '10px'
+                    }}
                   >
                     {sizeList.map((e, ind) => {
                       return (
-                        <div className="page-element-expand-size">
-                          <span>1</span>
+                        <div
+                          key={shortid.generate()}
+                          className="page-element-expand-size"
+                        >
+                          <span>{e}</span>
                         </div>
                       );
                     })}
@@ -297,11 +417,17 @@ export default function Page({ props }) {
                   ></img>
                 </div>
                 {eventBrand && (
-                  <div className="page-element-expand">
+                  <div
+                    style={{ flexWrap: 'nowrap' }}
+                    className="page-element-expand"
+                  >
                     {brandList.map((e, ind) => {
                       return (
-                        <div className="page-element-expand-child">
-                          <span>1</span>
+                        <div
+                          key={shortid.generate()}
+                          className="page-element-expand-child"
+                        >
+                          <span>{e}</span>
                         </div>
                       );
                     })}
@@ -312,12 +438,12 @@ export default function Page({ props }) {
                 <div className="filter-item">
                   {filter.map((e, ind) => {
                     return (
-                      <div>
+                      <div key={shortid.generate()}>
                         <span>{e}</span>
                         <span
                           onClick={() => {
                             filter.splice(ind, 1);
-                            return setFilter(Object.assign([], filter));
+                            setFilter(Object.assign([], filter));
                           }}
                           style={{
                             position: 'absolute',
@@ -351,12 +477,13 @@ export default function Page({ props }) {
                   }}
                 >
                   <button
-                    onClick={() => {}}
+                    onClick={() => handleApply}
                     style={{
                       cursor: 'pointer',
                       width: '70px',
                       height: '30px',
-                      backgroundColor: '#ccc'
+                      backgroundColor: '#000',
+                      color: '#fff'
                     }}
                   >
                     Apply
@@ -380,7 +507,8 @@ export default function Page({ props }) {
                       cursor: 'pointer',
                       width: '70px',
                       height: '30px',
-                      backgroundColor: '#ccc'
+                      backgroundColor: '#000',
+                      color: '#fff'
                     }}
                   >
                     Cancel
@@ -396,6 +524,9 @@ export default function Page({ props }) {
             })}
           </div>
         </div>
+        {overlay && id_user === null && (
+          <LoginOverlay props={[overlay, setOverlay]} />
+        )}
       </div>
     </div>
   );

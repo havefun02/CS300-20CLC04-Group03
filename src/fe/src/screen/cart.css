@@ -56,27 +56,27 @@
   align-items: center;
   height: 100%;
 }
-.cart-check-all div:first-child {
+.cart-check-all > div:first-child {
   height: 100%;
   width: 30px;
   display: flex;
   align-items: center;
 }
-.cart-check-all div:first-child input {
+.cart-check-all > div:first-child input {
   height: 15px;
   width: 15px;
 }
 
-.cart-title div:last-child,
-.cart-product div:last-child {
+.cart-title > div:last-child,
+.cart-product > div:last-child {
   flex: 1;
   display: flex;
   flex-direction: row;
   align-items: center;
   height: 100%;
 }
-.cart-title div:last-child div,
-.cart-product div:last-child div {
+.cart-title > div:last-child > div,
+.cart-product > div:last-child > div {
   flex: 1;
   display: flex;
   justify-content: center;
@@ -122,6 +122,7 @@
   width: 200px;
   display: flex;
   flex-direction: column;
+  z-index: 1001;
 }
 .cart-expand-gift > div {
   overflow-y: auto;
@@ -130,7 +131,7 @@
   display: flex;
   flex-direction: column;
 }
-.cart-expand-gift > div div {
+.cart-expand-gift > div > div {
   flex: 0 0 25px;
   padding: 0 10px;
   display: flex;
@@ -140,7 +141,7 @@
   align-items: center;
   cursor: pointer;
 }
-.cart-expand-gift > div div:hover {
+.cart-expand-gift > div > div:hover {
   background-color: #ccc;
 }
 .cart-bottom-display {
@@ -193,6 +194,96 @@
 .cart-buy button {
   width: 100%;
   height: 30px;
+  background-color: #000;
+  color: #fff;
+}
+.cart-delete > span {
+  cursor: pointer;
+}
+.cart-delete > span:hover {
+  color: red;
+}
+
+.cart-quantity > div {
+  display: flex;
+  flex-direction: row;
+  max-width: 100px;
+}
+.cart-quantity > div > span {
+  display: flex;
+  justify-content: center;
+  width: 30px;
+  font-size: 17px;
+  cursor: pointer;
+}
+.cart-quantity > div > span:nth-child(2) {
+  width: 40px;
+  font-size: 15px;
+  cursor: default;
+}
+.cart-quantity > div > span:not(:nth-child(2)):hover {
+  color: red;
+}
+
+.edit-size {
+  position: relative;
+}
+.edit-size > span:first-child {
+  height: 20px;
+  line-height: 1.5;
+}
+.edit-size > span:first-child:hover {
+  cursor: pointer;
+  color: red;
+}
+.edit-size > img {
+  cursor: pointer;
+  width: 20px;
+  height: 20px;
+}
+.fix-console {
+  position: absolute;
+  top: 100%;
+  width: 230px;
+  z-index: 1010;
+  height: auto !important;
+  padding: 20px 15px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  flex-direction: column !important;
+  align-items: unset !important;
+}
+.fix-item {
+  display: flex;
+  flex-direction: column !important;
+  width: 100% !important;
+  justify-content: flex-start;
+}
+.list-fix {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+.list-fix > span {
+  padding: 5px;
+  margin-right: 3px;
+  margin-bottom: 3px;
+  border: 1px solid #ccc;
+}
+
+.list-fix > span:hover {
+  background-color: #f2f2f2;
+  cursor: pointer;
+}
+.fix-gr-button {
+  padding: 20px 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.fix-gr-button > button {
+  height: 30px;
+  width: 70px;
   background-color: #000;
   color: #fff;
 }

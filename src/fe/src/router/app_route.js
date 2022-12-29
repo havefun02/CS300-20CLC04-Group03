@@ -21,13 +21,15 @@ export default function AppRoute() {
     <BrowserRouter>
       <div className="route-main">
         <div className="route-grid">
-          {!access && <ImgOverlay props={[access, setAccess]} />}
+          {access === false && <ImgOverlay props={[access, setAccess]} />}
           <div className="route-flex-box">
             <Header></Header>
             <Routes>
               <Route
                 path="/"
-                element={<Page props={{ title: 'All product' }} />}
+                element={
+                  <Page props={{ title: 'All product', id_page: 'all' }} />
+                }
               ></Route>
               <Route path={'/product'} element={<DetailProduct />}>
                 <Route path={':id'} element={<DetailProduct />}></Route>
@@ -51,19 +53,25 @@ export default function AppRoute() {
 
               <Route
                 path="/newin"
-                element={<Page props={{ title: 'New Product' }} />}
+                element={
+                  <Page props={{ title: 'New Product', id_page: 'new' }} />
+                }
               ></Route>
               <Route
                 path="/sale"
-                element={<Page props={{ title: 'On big sale' }} />}
+                element={
+                  <Page props={{ title: 'On big sale', id_page: 'sale' }} />
+                }
               ></Route>
               <Route
                 path="/men"
-                element={<Page props={{ title: 'For men' }} />}
+                element={<Page props={{ title: 'For men', id_page: 'men' }} />}
               ></Route>
               <Route
                 path="/women"
-                element={<Page props={{ title: 'For women' }} />}
+                element={
+                  <Page props={{ title: 'For women', id_page: 'women' }} />
+                }
               ></Route>
 
               <Route

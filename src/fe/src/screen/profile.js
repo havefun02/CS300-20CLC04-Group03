@@ -1,19 +1,41 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { Context } from '../context/context';
 import './profile.css';
 import { useNavigate } from 'react-router-dom';
 import shortid from 'shortid';
+import axios from 'axios';
 export default function Profile() {
   const navigate = useNavigate();
   const context = useContext(Context);
+  const [trigger, setTrigger] = [context.trigger, context.setTrigger];
+  const [name, email, sex, phone, date] = [
+    context.name,
+    context.email,
+    context.sex,
+    context.phone,
+    context.date
+  ];
+  const id = context.id;
   const [editSex, setEditSex] = useState(false);
   const [editName, setEditName] = useState(false);
-  const [editEmail, setEditEmail] = useState(false);
   const [editPhone, setEditPhone] = useState(false);
   const [newName, setNewName] = useState(null);
-  const [newEmail, setNewEmail] = useState(null);
   const [newPhone, setNewPhone] = useState(null);
   const [newSex, setNewSex] = useState(null);
+  const [render, setRender] = useState(false);
+
+  const handleSubmit = async () => {
+    const url = `http://localhost:3000/user/update-profile:${id}`;
+    const form = {
+      name: newName,
+      phone: newPhone,
+      sex: newSex
+    };
+    const res = await axios.post(url, form).then((data) => {
+      setTrigger((trigger) => !trigger);
+    });
+  };
+
   return (
     <div className="profile-container">
       <div className="profile-grid">
@@ -79,7 +101,7 @@ export default function Profile() {
                     navigate('/profile');
                   }}
                 >
-                  My profile
+                  My Profile
                 </span>
               </div>
             </div>
@@ -186,7 +208,7 @@ export default function Profile() {
                             marginRight: '10px'
                           }}
                         >
-                          lapphan
+                          {name}
                         </span>
                         <span
                           onClick={() => {
@@ -227,47 +249,17 @@ export default function Profile() {
                     <span>Email</span>
                   </div>
                   <div className="profile-input-tag">
-                    {!editEmail ? (
-                      <div>
-                        <span
-                          style={{
-                            fontWeight: '300',
-                            fontSize: '14px',
-                            marginRight: '10px'
-                          }}
-                        >
-                          lapphan@gmail.com
-                        </span>
-                        <span
-                          onClick={() => setEditEmail(true)}
-                          style={{
-                            fontWeight: '300',
-                            fontSize: '14px',
-                            color: 'blue',
-                            textDecoration: 'underline',
-                            cursor: 'pointer'
-                          }}
-                        >
-                          Change
-                        </span>
-                      </div>
-                    ) : (
-                      <div>
-                        <input
-                          onChange={(e) => setNewEmail(e.target.value)}
-                          type="text"
-                          placeholder="New Email"
-                        ></input>
-                        <button>Save</button>
-                        <button
-                          onClick={() => {
-                            setEditEmail(false);
-                          }}
-                        >
-                          Cancel
-                        </button>
-                      </div>
-                    )}
+                    <div>
+                      <span
+                        style={{
+                          fontWeight: '300',
+                          fontSize: '14px',
+                          marginRight: '10px'
+                        }}
+                      >
+                        {email}
+                      </span>
+                    </div>
                   </div>
                 </div>
                 <div className="profile-input">
@@ -284,7 +276,7 @@ export default function Profile() {
                             marginRight: '10px'
                           }}
                         >
-                          012345678
+                          {phone}
                         </span>
                         <span
                           onClick={() => setEditPhone(true)}
@@ -332,7 +324,7 @@ export default function Profile() {
                             marginRight: '10px'
                           }}
                         >
-                          Men
+                          {sex}
                         </span>
                         <span
                           onClick={() => setEditSex(true)}
@@ -387,7 +379,13 @@ export default function Profile() {
                   </div>
                   <div className="profile-input-tag">
                     <div>
-                      <select style={{}} name="day" id="day">
+                      <select
+                        onChange={() => {}}
+                        style={{}}
+                        name="day"
+                        id="day"
+                      >
+                        <option value={date.day}>{date.day}(default)</option>
                         {Array(30)
                           .fill(0)
                           .map((e, index) => {
@@ -398,7 +396,17 @@ export default function Profile() {
                             );
                           })}
                       </select>
-                      <select style={{}} name="month" id="month">
+                      <select
+                        onChange={() => {}}
+                        value={{}}
+                        style={{}}
+                        name="month"
+                        id="month"
+                      >
+                        <option value={date.month}>
+                          {date.month}(default)
+                        </option>
+
                         {Array(11)
                           .fill(0)
                           .map((e, index) => {
@@ -409,7 +417,14 @@ export default function Profile() {
                             );
                           })}
                       </select>
-                      <select style={{}} name="year" id="year">
+                      <select
+                        onChange={() => {}}
+                        value={{}}
+                        style={{}}
+                        name="year"
+                        id="year"
+                      >
+                        <option value={date.year}>{date.year}(default)</option>
                         {Array(2022)
                           .fill(0)
                           .map((e, index) => {
@@ -425,8 +440,17 @@ export default function Profile() {
                 </div>
                 <div className="profile-input-1">
                   <div>
-                    <button>
+                    <button onClick={() => handleSubmit()}>
                       <span>Save</span>
+                    </button>
+                  </div>
+                  <div>
+                    <button
+                      onClick={() => {
+                        setRender((render) => !render);
+                      }}
+                    >
+                      <span>Cancel</span>
                     </button>
                   </div>
                 </div>
@@ -443,37 +467,10 @@ export default function Profile() {
                   flexDirection: 'column'
                 }}
               >
-                <div className="profile-icon">
-                  <div
-                    style={{
-                      backgroundColor: '#f2f2f2',
-                      width: '100px',
-                      height: '100px',
-                      borderRadius: '50px',
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center'
-                    }}
-                  >
-                    <img
-                      style={{ width: '60px', height: '60px' }}
-                      src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABmJLR0QA/wD/AP+gvaeTAAALCElEQVR4nO1ba3BTxxX+VlcPS7JkYxs9jOwgP4GEAAVsgzEOJdiEJk2TTvKnNDMMeAIkZaaZdNpfHf530kzbtLxcPJk0/QGTdKaPFMhkBrDdBNthSkIMsvwA15ZlOxZYQm/du/0h6frKtqzVw+m09fdrd7Xn7Nlzd8+es3sErOD/G+SbGKS9vb0I4HcTIuyilKwHUAnAAEAb6+IlBJOUYhhAP6XoCoeF68ePH3+w3LItmwI6OjryeD7wEqV4hRDybQCyNFnwAD6hFO/5/aGLJ06cCC6DmLlXwIULv1S73ZrXALwBwJwbrtRBCHlLp/OdevnlN/y54RlFThVw9uypZ2Uy8msA1oRBCEFJSQmMRhOKioqg1xdArVZDLpcDACKRCHw+PzyeWczMzGBychIzM1+DUjp/iGFK8aO2tqMf5UrmnCgg9tV/BaBN2q7ValFbuw5r166FWq1Ji6ff78PIyAhsNht8Pm/Cb5TitFyu+vGhQ4cC2cqetQLOnDlj5jj6EYDN8TaVSoXNm7egoqISMlm6Wz8RgiBgaGgQt279E8Gg1AyQzymVfaetrW0yG/5ZKeD8+d9VCILsYwAV8Tar1Ypt2+qgVCqzYb0AoVAQvb29uHdvRNo8RCm3r62tbSQZXSpkrIDYl+9CbPIymQx1dfWorKzKlCUT7HY7+vp6IAhCvGmIUq4x05WQkQJie/4fiC17uVyOpqZmlJaWZsIubTgcDnR2XkMkEom1kM85TrkrE5uQ0QaNGbzNQPTLf5OTB4DS0lI0N++R2Be6leeDb2XCK+0VEDvq/hKvNzTsSGvZT09PYXR0FFNTU/D7fQAAtVoDg8GA8vJyrF5tYOZltw+gp+eGtOmZI0eOXmJmgDQVEFv6XyF2zlutVuzcuYuJ1u12o6+vBxMTE0v2M5lM2LatHgUFeia+XV1duH8/bgPJIMcpN6azFdLaAh6P9nXEJq9UqrB163YmOqfTicuXP0o5eWlfh8PBxLuurg4qlSpWo1WCEDrKRBgD8wqI+vbBYcTc2/r6BlRVVaeke/DAhStXLosGSyaToaqqCuXla6HX6wFQzM66cf/+PQwPD4nWnePkaGlpQVFRccoxBgZs6O3tidWow+cLV7DGDswrgOcDLyE2ea1Wi4qKypQ0giCgs7NTnLxOp8eBA89i+/Z6GI1GqNVqqNUamEwm1Nc3YP/+A9Bq82PjRdDV1Sk97pKisrIKGk3c0ySlGo3q+6zzYlYApXglXq6pqWXy8Ox2OzweN4Cod7h3714UFBQk7b9q1Srs3btXdKI8Hg/s9oGU43Ach5qadVJpf5iSKAYmBbS3txcRQvYA0cDGarWmIgEADA8PieVNmzaLX3cp6HR6bNz4pFgfGhpaovccrNa1IETc0U+fOXMmuaYlYFIAIeFmABwAlJSUMAU2gUAALtcMgOh+tlorUlDMobKyGhzHAYjakEAgtVHXaLRSeyGXy/lmlrFYt0BjvGA0mpgIvN5HYrmwsFAMfVmgUMhRUFC4KK+lYDIZxbIgyJjOZyYFxK6xAADFxUVMwoRCYbGsVCqYaKRQqeaCKSmvpSA9MQjBuiW6imBdAeJ5l5/PtLWQl6cSy35/+pc4Upq8vDwmGr0+QbYaFhpWBYiq1WjUTAT5+TrxpHj48KHo9rLA7/dhdnYWQNTC63Q6Jjq1WiobZVqqrAoQzTfrXlYoFDAa5/Zkf/9XjEMB/f13xOswk8nEPGZiP8LkS2d3XZMCNTW1Ytlms2F8fDwljcPhgM12R6zX1q5fonf2YFWAO14Ih9kMEgBYLGUwmaKnBqUUnZ3XMDBgW+yyE5RS2O0DuH79qvi7xWKB2cx+sTx3PwAA1J20owSsZ9MDACUA4PcHJMFHajQ2NuHSpb/D630EnufR29sDm+0uyssfg15fAEIAt3sWo6P3MTs7J7NOp8eOHY1LcF6IRGNLXCw0rAoYQOwkcLsforCQ7SQAoha8tbUVV69eFR0jt9uN27e/TEqzatUqNDfvSfte0e2enS9zSjBuASJaMJeLSbEJUKs12LevBZs2bYZCkdwnUCoV2LLlW2htfQZarTZpv2SYmZkRy5TiLgsN0wogRPiM0qif7XROANiStnByuRxPPLER69ath9M5EbsRii5ZtVoNg8EAs9kMjmP3GOdjctIpkRmdTHKxdFKpwp8EAsowAIXL5YLf75935rJDLpfDYimDxVKWEX0yeL1e6eqM5OWFrrHQMW2BgwdPuCml14CotR4aGsxMymXEvXsjktOFfnzw4ImcngIgBL8H8DQADA4OYsOGx9N69QmFwpiacmJiYgIulwterxd+vx+ERCM5jUaN4uLVMJvNMBgMaQVPPM/DZrOJdUrJe6y0zKPo9cUfut2uSQBGr/cR7PYB1Namjjc8Hjf6+/sxMjIMnucX/E5pNNrzeh9henoad+/2Q6FQoKKiChs2rIdGk9oYDg7apa72mN8f+pB1Xhxrx4sXL/LPP/9cBMB+IHoaVFXNxe3zEYlE0NfXi88++xQu18yizk8yCIKAmZmvMTBgQzgchsFgTLragsEgrl+/JlXuz48de62bday0TK7XGzyl0ShPALAGAgHcuHEDTU1NC/q5XDPo7u6C2524DYuLi1FaWgqj0Yz8fC1UqjxQShEI+OHxPILT6YDD4RADIUEQcOdOP5zOCezc2bSo/9HTcwOhUChetft8odPpzCnth5Fz504fIAR/jdPW1dWjunou8uR5Hh98cDHBZS4rK8OGDY+jpGQ10xgOhwO3b3+J6ekpsU2j0eKFF15M6Gez2dDX1yPWCSGthw+/eiWd+aQdDEWTE6io5d7eHoyN/SuhT/xuTqlUoqlpN3bvfop58kD06aulpRXbt9eJxnD+FhofH8fNm31inVL8Jt3JA2lugTh4XvYmx9GtAOoopeju7kJjYxMsFgs4jsO+ffsxOelAefljaSdGSFFTUwuz2Yzx8TGsWTPnN4yNjaG7O+HKvMfvD/0kkzEyfh4/deqUQaEgn0LyPL5163bU1DBdxGQMm82Gmzf7pJO3h8N017Fjx6aWokuGrBIkOjpOreV5chmS66fS0lI0NOzI6ssvhmAwiJ6eGxgdvS9ttnMcbTl06Ni9TPlmnSJz/vz51ZQG/0YpER8KlUolNm7chKqqqrQcmsXA8zwGB+344otbUmsPAD3hMH0u0y8fR06SpDo6OvIikeDbhCDhYVKpVKKmphbV1dVMDo0UPp9XTJJaeJ9I3vH5gm/mIncwp2ly7e2n9wP4LSQ5Q3EUFOhhMplhMBih0+mh1Wogl0dD40gkAq/XC4/HHUuTc8Llci3mPNkJIa9nYu2TIeeJkrFX5FcB/AwA2ytKClCKcULwC58vdDrXGaPLlip74cIFpds98yJADgHYAyDd15EIgCuU4g9+f+jD/5pU2cXQ0dFRyPOhpwDaANAnCSFWSmEEoAMgAPAAZAqgg5TiLiHozMsLXWMNaVewghWsIFNkZQRPnjwps1iMPwDIN5clmQDqGBubfP/kyZOpE4mSICs/tazMdJBSvJsNj+xAYLEYAYD5DnA+snocpenccy0TKCVZyZDVChgbm3x/zRoTJQRPZMMnU1CK2+Pjzj/+J8ZewQpW8L+BnAdDZ8+erZHJhEuY99c5BoQB8vaRI6/+VNp47tw5KyH8xwBVE0IOHD589FbupF2GHCGZTPgu0p88ACgAenxhs/AigMqos0W+l6V4C5BzBQiC7M8A2BJ8ExEihL4zv5Hj+D8BZBDAAKWR97MWcAWJ+DeHXiz2KMwB/gAAAABJRU5ErkJggg=="
-                    ></img>
-                  </div>
-                </div>
-                <div className="profile-bt-select">
-                  <input
-                    id="avatar"
-                    type="file"
-                    hidden
-                    accept="JPEG,PNG"
-                  ></input>
-                  <label htmlFor="avatar">Avatar</label>
-                </div>
-                <div className="profile-bt-note">
-                  <span>Maximum 1MB</span>
-                  <span>Format:.JPEG, .PNG</span>
-                </div>
+                <img
+                  style={{ width: '250px', height: '300px' }}
+                  src={require('../assets/th.jpg')}
+                ></img>
               </div>
             </div>
           </div>

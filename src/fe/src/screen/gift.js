@@ -1,12 +1,29 @@
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { Context } from '../context/context';
 import './gift.css';
 import { useNavigate } from 'react-router-dom';
 import shortid from 'shortid';
+import axios from 'axios';
 export default function Gift() {
   const navigate = useNavigate();
   const context = useContext(Context);
-  const [gift, setGift] = useState([{}, {}, {}, {}, {}]);
+  const id = context.id;
+  const name = context.name;
+  const [gift, setGift] = useState([
+    { title: 'ok', discount: '10%', date: '10/2/2020' },
+    { title: 'ok', discount: '10%', date: '10/2/2020' },
+    { title: 'ok', discount: '10%', date: '10/2/2020' },
+    { title: 'ok', discount: '10%', date: '10/2/2020' },
+    { title: 'ok', discount: '10%', date: '10/2/2020' }
+  ]);
+  useEffect(() => {
+    const fetch = async () => {
+      const url = `http://localhost:3001/user/get-gift:${id}`;
+      const res = await axios.get(url).then((data) => {
+        setGift();
+      });
+    };
+  }, []);
   return (
     <div className="gift-container">
       <div className="gift-grid">
@@ -15,6 +32,9 @@ export default function Gift() {
             <div>
               <div>
                 <img
+                  onClick={() => {
+                    navigate('/profile');
+                  }}
                   style={{
                     borderRadius: '30px',
                     width: '45px',
@@ -31,7 +51,7 @@ export default function Gift() {
                     fontWeight: '700'
                   }}
                 >
-                  name
+                  {name}
                 </div>
                 <div
                   style={{
@@ -41,10 +61,12 @@ export default function Gift() {
                   }}
                 >
                   <img
+                    onClick={() => navigate('/profile')}
                     style={{ width: '20px', height: '20px' }}
                     src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAAxUlEQVRIie3SsW0CQRCF4S9wAxbCkRshogp0AY5dhREUgcigAYpwGZbchG3JmRFHcLO6FYmDG4juSSPt7Er/e7O7jOr0hm80t4Bv0Ead8HIL+B+O1Tplkjr5PvaKyVcW/IRz1EGXvtW9SQp8idcwKNOsM+D1PTdh1sb5YHhJDgv9taQkH+H3h7dYxV5TwQf9FphgF7DPMEmDF031U5QaDF9iVvWP+klSkm/xc2UyyYLDuy7tL+YZwIer/ilMPvCcYTDqX10AcWRae1nJ6gAAAAAASUVORK5CYII="
                   ></img>
                   <span
+                    onClick={() => navigate('/profile')}
                     style={{
                       padding: '0 3px',
                       fontSize: '13px'
@@ -61,7 +83,7 @@ export default function Gift() {
               <div className="gift-nav-element-icon">
                 <img
                   onClick={() => {
-                    navigate('/gift');
+                    navigate('/profile');
                   }}
                   src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAADMklEQVRoge2YT2gUVxzHP7NJFKPRiEe95aAWvHiq+Ac8VGhDD2o0qFDEIlsU/60oaCTkkpIN1Us0ElsVK9bYGL1V8KJBD948KCIinkS9RFv/pSU7v28P49qlrmZm3iMTIV8Y3u7M7Pw+n/fe7mMfTGYyTgm8P3FgaBWBrSe0ZZjNw0Iwe4yFNxADbP72qs9y/gQuXlsAuV+Qlr6D5n0rq2xvUrKt5Fvu+yjrR2Dw+koUXEaaNQZ8+fVfSKvJt15zLe0uEPX8rQTwUQt/MmpL2LHRaSRyzgLRtEkGL0EYNkJ4GsmpE90EBoZWxZjzH8L/d+5Les58lZ0AanWAj97L1rkQ1DrxW7jUER6k5S4IbiNgNtcRHqS5GQqEMxzhQZqRoYAzfHRkJuADXpaRgBR4gXccgXSLyJk/vkal35A1OsNHxzAWrOXgtqGkKOlGQKVOj/AgzSEIu9KgpFsHZE0e4cvTaEEalHQjYPbEMzygZ+MoEJ71DA/Sr+MnMDL9MLJ+JPMAb8B5GoIjaVDc/g8cO9ePWatbzwf9tO3YkBbBcSHTFTd4gPCKC4KbwIhdRBpOD6/njNZdyk5g33dvMPWmhAejh47tr7MTAKh51YnsTmJ4cY/pYdG1vLvAzp3/gDYgniWAf0ouWEehMOJa3t++UHdfE9jDGPBQY00c2PPIR1m/O3PFXo0Jj+DQbm91PWyrVCQOvOf4EyiebIgFL0Gx2OCrrD8BjTTHggcYnfqNr7J+5mJXbzMWngVmjwkfZRhpNe2FG66l3QS6ehah3H5km6JnxYIvx4Bz5HLdtO26mxYhuUBHXz31pRZCtoBW8H5vMxF8ZQQMEXCKUv0gHfm3SXDiC3T3LUb2A1IraGbsL2yyvARdQDpO+97bcT4wtkDx5HxypU5ka5CC2D+VyeErI2CQGmvj4N4Hn7rx0wI/ndiE7GekabFWWD/wlXmL9D3thf6P3fBxgcMn1mL2O1IuI/hyjEAtHCpcrnaxusCPR+dQV/sQqTFj+HJeUDu1iQPbXvz/QvWFbEpdfgLBA8wm/Dtf7UJ1AVnzBIJ/VyNorna6uoBp4YSCj/LFeBWazGQ+p/wLer+IBJVeJ8AAAAAASUVORK5CYII="
                 />
@@ -69,7 +91,7 @@ export default function Gift() {
               <div className="gift-nav-element-title">
                 <span
                   onClick={() => {
-                    navigate('/gift');
+                    navigate('/profile');
                   }}
                 >
                   My Profile

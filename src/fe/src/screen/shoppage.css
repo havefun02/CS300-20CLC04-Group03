@@ -141,7 +141,6 @@
   flex-wrap: wrap;
   flex-direction: column;
   overflow-y: auto;
-  justify-content: center;
 }
 
 .page-element-expand-child {
