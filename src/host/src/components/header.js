@@ -7,7 +7,6 @@ import shortid from 'shortid';
 export default function Header({ props }) {
   const navigate = useNavigate();
   const context = useContext(Context);
-  const [avar, setAvar] = [context.avar, context.setAvar];
   const [notify, setNotify] = [context.notify, context.setNotify];
   const [isLog, setIsLog] = [context.isLog, context.setIsLog];
   const [expandHeader, setExpandHeader] = useState(false);
@@ -105,7 +104,7 @@ export default function Header({ props }) {
                   <button
                     onClick={() => {
                       navigate('/');
-                      localStorage.setItem('isLog', false);
+                      localStorage.clear();
                       setIsLog((isLog) => !isLog);
                     }}
                   >

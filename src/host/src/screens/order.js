@@ -3,23 +3,7 @@ import './order.css';
 import Header from '../components/header';
 import axios from 'axios';
 import shortid from 'shortid';
-const tabs = [
-  {
-    title: 'All orders',
-    optional: 'button',
-    valueOpt: []
-  },
-  {
-    title: 'SortByDate',
-    optional: 'dropdown',
-    valueOpt: ['Inc', 'Dec']
-  },
-  {
-    title: 'GroupById',
-    optional: 'dropdown',
-    valueOpt: ['Inc', 'Dec']
-  }
-];
+
 const headerSize = [2, 4, 3, 3, 3, 3, 5, 4, 9];
 const header = [
   'No.',

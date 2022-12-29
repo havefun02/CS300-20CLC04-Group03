@@ -4,11 +4,10 @@ import { createContext } from 'react';
 import { io } from 'socket.io-client';
 const Context = createContext();
 const ContextProvider = ({ children }) => {
+  const [token, setToken] = useState(null);
   const [socket, setSocket] = useState(null);
   const [isLog, setIsLog] = useState(true);
-  const [loading, setLoading] = useState(true);
   const [currentRoute, setCurrentRoute] = useState('/');
-  const [avar, setAvar] = useState('');
   const [notify, setNotify] = useState([]);
   // establish socket connection
   React.useEffect(() => {
@@ -33,6 +32,8 @@ const ContextProvider = ({ children }) => {
   React.useEffect(() => {
     const getLocal = localStorage.getItem('isLog');
     if (getLocal !== null) setIsLog(() => getLocal);
+    const getTokenLocal = localStorage.getItem('token');
+    if (getTokenLocal !== null) setToken(() => getTokenLocal);
   }, [isLog]);
   React.useEffect(() => {
     if (isLog) {
@@ -45,23 +46,16 @@ const ContextProvider = ({ children }) => {
       const fetchData = async () => {};
     }
   }, [notify]);
-  React.useEffect(() => {
-    if (isLog) {
-      const fetchData = async () => {};
-    }
-  }, [avar]);
 
   return (
     <Context.Provider
       value={{
         isLog,
         setIsLog,
-        loading,
-        setLoading,
+        token,
+        setToken,
         currentRoute,
         setCurrentRoute,
-        avar,
-        setAvar,
         notify,
         setNotify,
         socket,

@@ -13,7 +13,7 @@ export default function Register() {
     event.preventDefault();
     if (password === cPassword) {
       const form = { username: id, password: password };
-      const res = await axios.post('http://localhost:3001/auth/register', form);
+      const res = await axios.post('http://localhost:3001/host/register', form);
       res
         .then((res) => {
           navigate('/');

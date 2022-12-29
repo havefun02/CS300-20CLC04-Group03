@@ -7,16 +7,20 @@ export default function Login() {
   const navigate = useNavigate();
   const context = useContext(Context);
   const [isLog, setIsLog] = [context.isLog, context.setIsLog];
+  const [token, setToken] = [context.token, context.setToken];
+
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   const handleSubmit = async (event) => {
     event.preventDefault();
     const form = { username: id, password: password };
     const res = await axios
-      .post('http://localhost:3001/auth/login', form)
+      .post('http://localhost:3001/host/login', form)
       .then((res) => {
-        localStorage.setItem('token', res.data);
+        setToken(res);
         localStorage.setItem('isLog', true);
+        localStorage.setItem('token', res);
+
         setIsLog(() => true);
       })
       .catch((err) => {
