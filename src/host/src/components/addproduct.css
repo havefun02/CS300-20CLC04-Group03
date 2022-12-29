@@ -12,19 +12,20 @@
 .addform-flex-box form {
   height: 100%;
   display: flex;
-  overflow: auto;
   justify-content: space-between;
   flex-direction: column;
 }
 .form-container {
   display: flex;
-  height: 100%;
+  flex: 350px;
   flex-direction: row;
+  padding-right: 5px;
 }
 .addform-picture {
   display: flex;
   flex: 0 0 40%;
   flex-wrap: wrap;
+  max-height: 350px;
   border: 1px solid rgb(109, 99, 99);
   flex-direction: row;
   position: relative;
@@ -92,6 +93,7 @@
 .addform-another-format {
   display: flex;
   flex-direction: column;
+  margin-right: 5px;
 }
 
 .addform-another-format > div:first-of-type {
@@ -100,7 +102,6 @@
   align-items: center;
   flex: 0 0 40px;
   border-top: 1px solid #000;
-  border-bottom: 1px solid #000;
 }
 
 .addform-another-format > div:last-child > div {
@@ -109,7 +110,15 @@
 }
 .del-obj:hover {
   color: red;
+  background-color: #ccc;
 }
 button:hover {
   opacity: 0.7;
+}
+.addform ::-webkit-scrollbar {
+  width: 5px;
+}
+
+.addform ::-webkit-scrollbar-thumb {
+  background: #000;
 }

@@ -43,15 +43,11 @@
   display: flex;
   flex-direction: column;
 }
-.static-data-manual > div:first-child {
+.static-data-manual > div {
   flex: 1;
   border: 1px solid #ccc;
 }
 
-.static-data-manual > div:last-child {
-  flex: 1;
-  border: 1px solid #ccc;
-}
 .static-data {
   display: flex;
   flex-direction: row;
@@ -64,8 +60,8 @@
   align-items: center;
   justify-content: center;
   flex: 15px;
-  border-right: 1px solid #ccc;
-  background-color: #ddd;
+  border-right: 2px solid #ccc;
+  background-color: #fff;
   color: #000;
 }
 .static-data > div:first-child span {

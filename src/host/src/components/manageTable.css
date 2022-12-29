@@ -31,7 +31,7 @@
   overflow: auto;
   flex-direction: column;
   position: relative;
-  background-color: #f2f2f2;
+  background-color: #fff;
 }
 
 .manage-table .row-data {

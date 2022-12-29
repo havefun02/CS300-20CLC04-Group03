@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import shortid from 'shortid';
 import data from '../assets/staticdata.json';
-import CheckList from './checklist';
 import './addproduct.css';
 import axios from 'axios';
 export default function AddForm({ props }) {
@@ -159,7 +158,8 @@ export default function AddForm({ props }) {
                         height: '30px',
                         border: 'none',
                         outline: 'none',
-                        width: '80px'
+                        width: '80px',
+                        textIndent: '5px'
                       }}
                       placeholder="0"
                     ></input>
@@ -185,7 +185,9 @@ export default function AddForm({ props }) {
                         height: '30px',
                         border: '1px solid #ccc',
                         borderRadius: '4px',
-                        marginLeft: '20px'
+                        marginLeft: '20px',
+                        backgroundColor: '#000',
+                        color: '#fff'
                       }}
                     >
                       Add
@@ -196,24 +198,23 @@ export default function AddForm({ props }) {
                 {listObj.length !== 0 && (
                   <div
                     style={{
-                      backgroundColor: '#fff',
+                      padding: '5px 0',
+                      paddingRight: '20px',
+                      backgroundColor: '#ddd',
                       position: 'relative',
                       overflow: 'auto',
-                      flex: '200px',
+                      maxHeight: '200px',
                       display: 'flex',
                       flexWrap: 'wrap',
                       flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      padding: '0 10px'
+                      justifyContent: 'space-between'
                     }}
                   >
                     {listObj.map((e, ind) => {
                       return (
                         <div
                           style={{
-                            padding: '0 5px',
-                            marginTop: '10px',
-                            marginRight: '10px',
+                            padding: '0 10px',
                             backgroundColor: '#f2f2f2',
                             display: 'flex',
                             flexDirection: 'row',
@@ -221,7 +222,8 @@ export default function AddForm({ props }) {
                             height: '30px',
                             justifyContent: 'space-between',
                             position: 'relative',
-                            fontSize: '13px'
+                            fontSize: '13px',
+                            marginBottom: '8px'
                           }}
                         >
                           <div>
@@ -243,16 +245,18 @@ export default function AddForm({ props }) {
                               cursor: 'pointer',
                               display: 'flex',
                               justifyContent: 'center',
-                              width: '30px',
-                              height: '15px',
+                              width: '10px',
+                              height: '10px',
                               position: 'absolute',
-                              top: '100%',
+                              top: '0',
                               right: '0',
                               fontSize: '10px',
-                              textDecoration: 'underline'
+                              backgroundColor: '#000',
+                              color: '#fff',
+                              lineHeight: '1'
                             }}
                           >
-                            delete
+                            x
                           </span>
                         </div>
                       );
