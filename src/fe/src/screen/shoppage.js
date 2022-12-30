@@ -12,7 +12,6 @@ export default function Page({ props }) {
   const id_user = context.id;
   const [fetchdata, setFetch] = useState(false);
   const [overlay, setOverlay] = useState(false);
-
   const [liked, setLike] = useState([1, 2, 4]);
   const [cateList, setCateList] = useState([1, 1, 1, 1, 1, 1, 1]);
   const [colorList, setColorList] = useState([1, 1, 1, 1, 1]);
@@ -107,7 +106,6 @@ export default function Page({ props }) {
       }
       case 1: {
         list.sort((a, b) => a.price - b.price);
-
         break;
       }
       case 2: {
