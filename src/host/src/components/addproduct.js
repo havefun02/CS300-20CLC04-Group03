@@ -19,16 +19,23 @@ export default function AddForm({ props }) {
 
     const url = 'http://localhost:3001/host/upload-new-product';
     const token = localStorage.getItem('token');
-
+    let size = [];
+    let color = [];
+    let quan = [];
+    listObj.forEach((e) => {
+      size.push(e.size);
+      color.push(e.color);
+      quan.push(e.quan);
+    });
     let formApi = new FormData();
     formApi.append('name', name);
     formApi.append('code', code);
     formApi.append('price', price);
     formApi.append('brand', brand);
     formApi.append('cate', cate);
-    // formApi.append('size', size);
-    // formApi.append('color', color);
-    // formApi.append('quantity', quantity);
+    formApi.append('size', size);
+    formApi.append('color', color);
+    formApi.append('quan', quan);
 
     avar.forEach((e) => {
       formApi.append('files', e);
@@ -91,6 +98,7 @@ export default function AddForm({ props }) {
                     setCate(e.target.value);
                   }}
                 >
+                  <option>Category(Default)</option>
                   {data.cate.map((e, ind) => {
                     return (
                       <option value={e} key={shortid.generate()}>
@@ -105,6 +113,7 @@ export default function AddForm({ props }) {
                     setBrand(e.target.value);
                   }}
                 >
+                  <option>Brand(Default)</option>
                   {data.color.map((e, ind) => {
                     return (
                       <option value={e} key={shortid.generate()}>
@@ -166,6 +175,7 @@ export default function AddForm({ props }) {
                   </div>
                   <div>
                     <button
+                      type="button"
                       onClick={() => {
                         //check
                         console.log(obj);

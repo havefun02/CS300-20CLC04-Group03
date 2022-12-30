@@ -55,6 +55,7 @@ export default function Transaction() {
     };
     fetchData();
   }, [fetch]);
+  
   const HeaderTable = () => {
     return (
       <div className="trans-table-header">

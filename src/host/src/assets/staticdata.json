@@ -1,8 +1,7 @@
 {
   "description": "data asset",
   "brand": ["adidas", "nike", "vans", "puma"],
-  "cate": ["adidas", "nike", "vans", "puma"],
-
+  "cate": ["football", "running", "basketball", "tennis"],
   "size": [
     "6 UK",
     "6.5 UK",

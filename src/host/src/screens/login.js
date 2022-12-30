@@ -20,7 +20,6 @@ export default function Login() {
         setToken(res);
         localStorage.setItem('isLog', true);
         localStorage.setItem('token', res);
-
         setIsLog(() => true);
       })
       .catch((err) => {
