@@ -3,23 +3,33 @@ import axios from 'axios';
 import { useState } from 'react';
 import { Context } from '../context/context';
 import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 export default function ChangePass() {
+  const navigate = useNavigate();
   const context = useContext(Context);
   const [isLog, setIsLog] = [context.isLog, context.setIsLog];
-  const [password, setPassword] = useState('');
+  const [pre, setPre] = useState('');
   const [confirm, setConfirm] = useState('');
   const [newPassword, setNewPassword] = useState('');
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (confirm === newPassword) {
-      const form = { password: newPassword };
+      const form = { pre: pre, password: newPassword };
+      const token = localStorage.getItem('token');
+      console.log(token);
+      const options = {
+        headers: {
+          Authorization: 'Bearer ' + token
+          // 'content-type': 'multipart/form-data'
+        }
+      };
       const res = await axios
-        .post('http://localhost:3001/host/change-pass', form)
+        .post('http://localhost:3001/host/change-pass', form, options)
         .then((res) => {
-          localStorage.setItem('token', res.data);
-          localStorage.setItem('isLog', true);
-          setIsLog(() => true);
+          localStorage.clear();
+          setIsLog(() => false);
+          navigate('/');
         })
         .catch((err) => {
           throw err;
@@ -35,7 +45,7 @@ export default function ChangePass() {
         justifyContent: 'center'
       }}
     >
-      <form onSubmit={() => handleSubmit}>
+      <form onSubmit={handleSubmit}>
         <div className="Changepass-container">
           <h1>Change Password</h1>
           <input
@@ -44,7 +54,7 @@ export default function ChangePass() {
             name="old-psw"
             id="old-psw"
             required
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(e) => setPre(e.target.value)}
           ></input>
 
           <input

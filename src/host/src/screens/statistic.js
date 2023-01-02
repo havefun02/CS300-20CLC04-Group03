@@ -2,17 +2,21 @@ import Header from '../components/header';
 import { useEffect, useState } from 'react';
 import Chart from 'react-apexcharts';
 import shortid from 'shortid';
+import axios from 'axios';
 import './statistic.css';
 const listYear = [2020, 2021, 2022].reverse();
 export default function Statistic() {
   const [year, setYear] = useState(listYear[0]);
-  const title = 'DashBoard';
+  const [fetch, setFetch] = useState(false);
 
+  const [list, setList] = useState([]);
+
+  const title = 'DashBoard';
   const [revenue, setRevenueData] = useState({
     series: [
       {
         name: 'Revenue',
-        data: [100, 150, 200, 101, 49, 36, 32, 233, 143, 84, 590, 200]
+        data: list
       }
     ],
     options: {
@@ -81,9 +85,12 @@ export default function Statistic() {
         axisBorder: {
           show: false
         },
+
         axisTicks: {
           show: false
         },
+        max: 5000,
+        min: 0,
         labels: {
           show: false,
           formatter: function (val) {
@@ -102,7 +109,24 @@ export default function Statistic() {
       }
     }
   });
-
+  useEffect(() => {
+    const fetchData = async () => {
+      const token = localStorage.getItem('token');
+      const options = {
+        headers: {
+          Authorization: 'Bearer ' + token
+          // 'content-type': 'multipart/form-data'
+        }
+      };
+      const url = `http://localhost:3001/host/get-revenue/${year}`;
+      const res = await axios.get(url, options).then((data) => {
+        revenue.series[0].data = data.data;
+        setRevenueData(revenue);
+        setList(Object.assign([], data.data));
+      });
+    };
+    fetchData();
+  }, [fetch]);
   const Comp = ({ props }) => {
     return (
       <Chart
@@ -110,7 +134,7 @@ export default function Statistic() {
         series={props.series}
         type="bar"
         height={400}
-        width={600}
+        width={800}
       />
     );
   };
@@ -130,6 +154,7 @@ export default function Statistic() {
                 clone.options.title.text = `Revenue ${e.target.value}`;
                 setRevenueData(Object.assign({}, clone));
                 setYear(e.target.value);
+                setFetch((fetch) => !fetch);
               }}
               style={{
                 width: '70px',
@@ -148,42 +173,6 @@ export default function Statistic() {
                 );
               })}
             </select>
-          </div>
-          <div className="static-data-manual">
-            <div className="static-data">
-              <div>
-                <span>Recent Order</span>
-              </div>
-              <div>
-                {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((e, ind) => {
-                  return (
-                    <div key={shortid.generate()}>
-                      <span>Product</span>
-                      <span>Email</span>
-                      <span>Address</span>
-                      <span>Date</span>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-            <div className="static-data">
-              <div>
-                <span>New Customer</span>
-              </div>
-              <div>
-                {[1, 2, 3].map((e, ind) => {
-                  return (
-                    <div key={shortid.generate()}>
-                      <span>Name</span>
-                      <span>Email</span>
-                      <span>Address</span>
-                      <span>Date</span>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
           </div>
         </div>
       </div>

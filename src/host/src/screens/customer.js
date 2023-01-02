@@ -5,188 +5,21 @@ import shortid from 'shortid';
 import axios from 'axios';
 import MesOverlay from '../components/message';
 import Overlay from '../components/overlay';
-const headerSize = [2, 3, 4, 4, 3, 3, 3, 3, 4];
+const headerSize = [2, 5, 4, 3, 3, 2, 2, 2];
 const header = [
   'Id',
-  'Name',
   'Email',
+  'Name',
   'Phone',
-  'DoB',
   'Address',
-  'Orders',
   'Point',
-  'Level'
+  'Level',
+  'Orders'
 ];
 
 const title = 'Customer';
 export default function Customer() {
-  const [list, setList] = useState([
-    [
-      'Id',
-      'Name',
-      'Email',
-      'Phone',
-      'DoB',
-      'Address',
-      'ordering',
-      'Point',
-      'Level'
-    ],
-    [
-      'Id',
-      'Name',
-      'Email',
-      'Phone',
-      'DoB',
-      'Address',
-      'ordering',
-      'Point',
-      'Level'
-    ],
-    [
-      'Id',
-      'Name',
-      'Email',
-      'Phone',
-      'DoB',
-      'Address',
-      'ordering',
-      'Point',
-      'Level'
-    ],
-    [
-      'Id',
-      'Name',
-      'Email',
-      'Phone',
-      'DoB',
-      'Address',
-      'ordering',
-      'Point',
-      'Level'
-    ],
-    [
-      'Id',
-      'Name',
-      'Email',
-      'Phone',
-      'DoB',
-      'Address',
-      'ordering',
-      'Point',
-      'Level'
-    ],
-    [
-      'Id',
-      'Name',
-      'Email',
-      'Phone',
-      'DoB',
-      'Address',
-      'ordering',
-      'Point',
-      'Level'
-    ],
-    [
-      'Id',
-      'Name',
-      'Email',
-      'Phone',
-      'DoB',
-      'Address',
-      'ordering',
-      'Point',
-      'Level'
-    ],
-    [
-      'Id',
-      'Name',
-      'Email',
-      'Phone',
-      'DoB',
-      'Address',
-      'ordering',
-      'Point',
-      'Level'
-    ],
-    [
-      'Id',
-      'Name',
-      'Email',
-      'Phone',
-      'DoB',
-      'Address',
-      'ordering',
-      'Point',
-      'Level'
-    ],
-    [
-      'Id',
-      'Name',
-      'Email',
-      'Phone',
-      'DoB',
-      'Address',
-      'ordering',
-      'Point',
-      'Level'
-    ],
-    [
-      'Id',
-      'Name',
-      'Email',
-      'Phone',
-      'DoB',
-      'Address',
-      'ordering',
-      'Point',
-      'Level'
-    ],
-    [
-      'Id',
-      'Name',
-      'Email',
-      'Phone',
-      'DoB',
-      'Address',
-      'ordering',
-      'Point',
-      'Level'
-    ],
-    [
-      'Id',
-      'Name',
-      'Email',
-      'Phone',
-      'DoB',
-      'Address',
-      'ordering',
-      'Point',
-      'Level'
-    ],
-    [
-      'Id',
-      'Name',
-      'Email',
-      'Phone',
-      'DoB',
-      'Address',
-      'ordering',
-      'Point',
-      'Level'
-    ],
-    [
-      'Id',
-      'Name',
-      'Email',
-      'Phone',
-      'DoB',
-      'Address',
-      'ordering',
-      'Point',
-      'Level'
-    ]
-  ]);
+  const [list, setList] = useState([]);
   const [check, setCheck] = useState(Array(list.length).fill(false));
   const [checkAll, setCheckAll] = useState(false);
   const [overlay, setOverlay] = useState(false);
@@ -194,10 +27,18 @@ export default function Customer() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const url = 'http://localhost:3001/host/get-customer/all';
       const token = localStorage.getItem('token');
-      const res = await axios.get(url);
-      console.log(res);
+
+      const options = {
+        headers: {
+          Authorization: 'Bearer ' + token
+          // 'content-type': 'multipart/form-data'
+        }
+      };
+      const url = 'http://localhost:3001/host/get-customer/all';
+      const res = await axios.get(url, options).then((data) => {
+        setList(data.data);
+      });
     };
     fetchData();
   }, [fetch]);

@@ -4,16 +4,15 @@ import Header from '../components/header';
 import axios from 'axios';
 import shortid from 'shortid';
 
-const headerSize = [2, 4, 3, 3, 3, 3, 5, 4, 9];
+const headerSize = [1, 4, 3, 3, 3, 3, 3, 9];
 const header = [
   'No.',
   'Email',
   'Address',
   'Date',
-  'Quantity',
   'Total pay',
-  'Brands',
   'Gift Apply',
+  'State',
   'Detail'
 ];
 
@@ -22,192 +21,24 @@ export default function Order() {
   const [sortPay, setSortPay] = useState('desc');
   const [sortEmail, setSortEmail] = useState('desc');
   const [sortDate, setSortDate] = useState('desc');
-  const [list, setList] = useState([
-    [
-      'No.',
-      'Email',
-      'Address',
-      'Date',
-      'Quantity',
-      'Total pay',
-      'Brands',
-      'Gift Apply',
-      'Detail'
-    ],
-    [
-      'No.',
-      'Email',
-      'Address',
-      'Date',
-      'Quantity',
-      'Total pay',
-      'Brands',
-      'Gift',
-      'Detail'
-    ],
-    [
-      'No.',
-      'Email',
-      'Address',
-      'Date',
-      'Quantity',
-      'Total pay',
-      'Brands',
-      'Gift',
-      'Detail'
-    ],
-    [
-      'No.',
-      'Email',
-      'Address',
-      'Date',
-      'Quantity',
-      'Total pay',
-      'Brands',
-      'Gift',
-      'Detail'
-    ],
-    [
-      'No.',
-      'Email',
-      'Address',
-      'Date',
-      'Quantity',
-      'Total pay',
-      'Brands',
-      'Gift',
-      'Detail'
-    ],
-    [
-      'No.',
-      'Email',
-      'Address',
-      'Date',
-      'Quantity',
-      'Total pay',
-      'Brands',
-      'Gift',
-      'Detail'
-    ],
-    [
-      'No.',
-      'Email',
-      'Address',
-      'Date',
-      'Quantity',
-      'Total pay',
-      'Brands',
-      'Gift',
-      'Detail'
-    ],
-    [
-      'No.',
-      'Email',
-      'Address',
-      'Date',
-      'Quantity',
-      'Total pay',
-      'Brands',
-      'Gift',
-      'Detail'
-    ],
-    [
-      'No.',
-      'Email',
-      'Address',
-      'Date',
-      'Quantity',
-      'Total pay',
-      'Brands',
-      'Gift',
-      'Detail'
-    ],
-    [
-      'No.',
-      'Email',
-      'Address',
-      'Date',
-      'Quantity',
-      'Total pay',
-      'Brands',
-      'Gift',
-      'Detail'
-    ],
-    [
-      'No.',
-      'Email',
-      'Address',
-      'Date',
-      'Quantity',
-      'Total pay',
-      'Brands',
-      'Gift',
-      'Detail'
-    ],
-    [
-      'No.',
-      'Email',
-      'Address',
-      'Date',
-      'Quantity',
-      'Total pay',
-      'Brands',
-      'Gift',
-      'Detail'
-    ],
-    [
-      'No.',
-      'Email',
-      'Address',
-      'Date',
-      'Quantity',
-      'Total pay',
-      'Brands',
-      'Gift',
-      'Detail'
-    ],
-    [
-      'No.',
-      'Email',
-      'Address',
-      'Date',
-      'Quantity',
-      'Total pay',
-      'Brands',
-      'Gift',
-      'Detail'
-    ],
-    [
-      'No.',
-      'Email',
-      'Address',
-      'Date',
-      'Quantity',
-      'Total pay',
-      'Brands',
-      'Gift',
-      'Detail'
-    ],
-    [
-      'No.',
-      'Email',
-      'Address',
-      'Date',
-      'Quantity',
-      'Total pay',
-      'Brands',
-      'Gift',
-      'Detail'
-    ]
-  ]);
+  const [list, setList] = useState([]);
   const [fetch, useFetch] = useState(false);
   //replace this object by
   useEffect(() => {
     const fetchData = async () => {
-      const url = 'http://localhost:3001/host/get-order/all';
       const token = localStorage.getItem('token');
-      const res = await axios.get(url);
-      console.log(res);
+      const options = {
+        headers: {
+          Authorization: 'Bearer ' + token
+          // 'content-type': 'multipart/form-data'
+        }
+      };
+      const url = 'http://localhost:3001/host/get-order/all';
+      const res = await axios.get(url, options).then((data) => {
+        setList(data.data);
+
+        console.log(data);
+      });
     };
     fetchData();
   }, [fetch]);
@@ -248,7 +79,9 @@ export default function Order() {
                 display: 'flex',
                 alignItems: 'center',
                 flexDirection: 'row',
-                justifyContent: 'center'
+                justifyContent: 'center',
+                overflowY: 'auto',
+                position: 'relative'
               }}
             >
               <span>{el}</span>

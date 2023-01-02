@@ -31,11 +31,10 @@
   overflow: auto;
   flex-direction: column;
   position: relative;
-  background-color: #fff;
 }
 
 .manage-table .row-data {
-  flex: 0 0 10%;
+  flex: 0 0 30px;
   display: flex;
   background-color: #f2f2f2;
   color: #000;
@@ -52,7 +51,6 @@
 }
 .manage-table .row-data:hover {
   background-color: #ddd;
-  color: #fff;
 }
 .manage-table-expand-row {
   flex: 0 0 90px;

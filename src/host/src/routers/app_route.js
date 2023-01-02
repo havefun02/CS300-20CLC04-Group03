@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Sidebar from '../components/side_bar';
 import './approute.css';
 import Order from '../screens/order';
-import Transaction from '../screens/transaction';
 import Manage from '../screens/manage';
 import Customer from '../screens/customer';
 import Login from '../screens/login';
@@ -26,7 +25,6 @@ export default function AppRoute() {
               <Routes>
                 <Route path="/" element={<Statistic />}></Route>
                 <Route path="/order" element={<Order />}></Route>
-                <Route path="/transaction" element={<Transaction />}></Route>
                 <Route path="/management" element={<Manage />}></Route>
                 <Route path="/customer" element={<Customer />}></Route>
                 <Route path="/changepass" element={<ChangePass />}></Route>

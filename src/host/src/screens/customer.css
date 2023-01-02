@@ -18,7 +18,7 @@
   display: flex;
   flex: 1;
   max-height: 450px;
-  width: 800px;
+  width: 900px;
   margin: 0 auto;
   margin-bottom: 20px;
   flex-direction: column;
@@ -72,6 +72,7 @@
 }
 
 .customer-row-data {
+  background-color: #f2f2f2;
   display: flex;
   width: 100%;
   flex: 0 0 30px;
@@ -80,6 +81,7 @@
   cursor: pointer;
   position: relative;
   padding-right: 5px;
+  font-size: 14px;
 }
 .customer-row-data:hover {
   background-color: #ddd;

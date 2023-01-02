@@ -17,9 +17,10 @@ export default function Login() {
     const res = await axios
       .post('http://localhost:3001/host/login', form)
       .then((res) => {
-        setToken(res);
+        console.log(res);
+        setToken(res.data);
         localStorage.setItem('isLog', true);
-        localStorage.setItem('token', res);
+        localStorage.setItem('token', res.data);
         setIsLog(() => true);
       })
       .catch((err) => {

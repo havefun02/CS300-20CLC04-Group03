@@ -3,19 +3,19 @@
   "brand": ["adidas", "nike", "vans", "puma"],
   "cate": ["football", "running", "basketball", "tennis"],
   "size": [
-    "6 UK",
-    "6.5 UK",
-    "7 UK",
-    "7.5 UK",
-    "8 UK",
-    "8.5 UK",
-    "9 UK",
-    "9.5 UK",
-    "10 UK",
-    "10.5 UK",
-    "11 UK",
-    "11.5 UK",
-    "12 UK"
+    "6",
+    "6.5",
+    "7",
+    "7.5",
+    "8",
+    "8.5",
+    "9",
+    "9.5",
+    "10",
+    "10.5",
+    "11",
+    "11.5",
+    "12"
   ],
   "color": ["red", "white", "dark-yellow", "orange", "black", "grey"]
 }

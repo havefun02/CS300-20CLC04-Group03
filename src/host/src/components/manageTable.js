@@ -21,15 +21,28 @@ export default function ManageTable({ props }) {
   const [sortEmail, setSortEmail] = useState('desc');
   const [sortDate, setSortDate] = useState('desc');
   const [fetch, setFetch] = useState(false);
-  const [list, setList] = useState([
-    ['1', '1', '1', '1', '1', '1', '1', '1', '1', '1']
-  ]);
+  const [list, setList] = useState([]);
+
   useEffect(() => {
     const url = 'http://localhost:3001/host/get-product/all';
     const fetchData = async () => {
       const token = localStorage.getItem('token');
-      const res = await axios.get(url);
-      console.log(res);
+      const options = {
+        headers: {
+          Authorization: 'Bearer ' + token
+          // 'content-type': 'multipart/form-data'
+        }
+      };
+      const res = await axios.get(url, options).then((res) => {
+        console.log(res.data);
+        let data = [];
+        res.data.forEach((e, ind) => {
+          let tmp = [ind, ...e];
+          data.push(tmp);
+        });
+        console.log(res.data);
+        setList(data);
+      });
     };
     fetchData();
   }, [fetch]);
@@ -54,9 +67,7 @@ export default function ManageTable({ props }) {
   const RowData = ({ props }) => {
     const [expand, setExpand] = useState(false);
     const [update, setUpdate] = useState(false);
-    const [updateState, setUpdateState] = useState(
-      Array(props.length).fill(null)
-    );
+
     return (
       <>
         <div className="row-data">
@@ -102,15 +113,26 @@ export default function ManageTable({ props }) {
                         textAlign: 'center'
                       }}
                     >
-                      {!update || index == 0 ? (
+                      {!update ||
+                      index == 0 ||
+                      index == 1 ||
+                      index == 3 ||
+                      index == 5 ||
+                      index == 6 ||
+                      index == 7 ||
+                      index == 8 ? (
                         <span style={{ color: 'red' }}>{e}</span>
                       ) : (
                         <input
                           style={{ width: '50%' }}
                           type="text"
+                          id={index}
                           onChange={(e) => {
-                            updateState[index] = e.target.value;
-                            setUpdateState(updateState);
+                            // if (index == 2) {
+                            //   setUpdateName(e.target.value);
+                            // } else if (index == 9) {
+                            //   setUpdateQuantity(e.target.value);
+                            // }
                           }}
                         ></input>
                       )}
@@ -122,20 +144,30 @@ export default function ManageTable({ props }) {
                 {update ? (
                   <button
                     onClick={async () => {
-                      const url = `http://localhost:3001/host/update-product:${props.ele[0]}`;
                       const token = localStorage.getItem('token');
-                      const formApi = { dataArr: updateState };
+
+                      const options = {
+                        headers: {
+                          Authorization: 'Bearer ' + token
+                          // 'content-type': 'multipart/form-data'
+                        }
+                      };
+                      const url = `http://localhost:3001/host/update-product${props.ele[1]}/${props.ele[7]}/${props.ele[8]}`;
+                      let name = document.getElementById('2').value;
+                      let quantity = document.getElementById('9').value;
+
+                      const formApi = {
+                        name: name,
+                        quantity: quantity
+                      };
                       const res = await axios
-                        .post(url, formApi, {
-                          headers: {
-                            // Authorization: `Basic ${token}`
-                          }
+                        .post(url, formApi, options)
+                        .then((res) => {
+                          setFetch((fetch) => !fetch);
                         })
-                        .then((res) => {})
                         .catch((e) => {
                           throw e;
                         });
-                      setFetch((fetch) => !fetch);
                       setUpdate(false);
                     }}
                   >
@@ -160,20 +192,22 @@ export default function ManageTable({ props }) {
                 </button>
                 <button
                   onClick={async () => {
-                    const url = `http://localhost:3001/host/delete-product:${props.ele[0]}`;
                     const token = localStorage.getItem('token');
-                    const formApi = { dataArr: props.ele };
+                    const options = {
+                      headers: {
+                        Authorization: 'Bearer ' + token
+                        // 'content-type': 'multipart/form-data'
+                      }
+                    };
+                    const url = `http://localhost:3001/host/delete-product${props.ele[1]}/${props.ele[7]}/${props.ele[8]}`;
                     const res = await axios
-                      .post(url, formApi, {
-                        headers: {
-                          // Authorization: `Basic ${token}`
-                        }
+                      .delete(url, options)
+                      .then((res) => {
+                        setFetch((fetch) => !fetch);
                       })
-                      .then((res) => {})
                       .catch((e) => {
                         throw e;
                       });
-                    setFetch((fetch) => !fetch);
                   }}
                 >
                   Delete

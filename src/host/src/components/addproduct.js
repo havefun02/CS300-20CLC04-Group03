@@ -4,12 +4,14 @@ import data from '../assets/staticdata.json';
 import './addproduct.css';
 import axios from 'axios';
 export default function AddForm({ props }) {
+  const [newIn, setNewIn] = useState(false);
   const [name, setName] = useState();
   const [cate, setCate] = useState();
   const [brand, setBrand] = useState();
   const [code, setCode] = useState(Array(data.size.length).fill(null));
   const [price, setPrice] = useState();
   const [avar, setAvar] = useState([]);
+  const [descript, setDecript] = useState('');
   const [obj, setObj] = useState({ size: '', color: '', quan: '' });
   const [listObj, setListObj] = useState([]);
   const [reRender, setReRender] = [props.reRender, props.setReRender];
@@ -19,6 +21,12 @@ export default function AddForm({ props }) {
 
     const url = 'http://localhost:3001/host/upload-new-product';
     const token = localStorage.getItem('token');
+    const options = {
+      headers: {
+        Authorization: 'Bearer ' + token
+        // 'content-type': 'multipart/form-data'
+      }
+    };
     let size = [];
     let color = [];
     let quan = [];
@@ -28,6 +36,7 @@ export default function AddForm({ props }) {
       quan.push(e.quan);
     });
     let formApi = new FormData();
+    formApi.append('new', newIn);
     formApi.append('name', name);
     formApi.append('code', code);
     formApi.append('price', price);
@@ -36,17 +45,14 @@ export default function AddForm({ props }) {
     formApi.append('size', size);
     formApi.append('color', color);
     formApi.append('quan', quan);
+    formApi.append('descript', descript);
 
     avar.forEach((e) => {
       formApi.append('files', e);
     });
 
     const res = await axios
-      .post(url, formApi, {
-        headers: {
-          // Authorization: `Basic ${token}`
-        }
-      })
+      .post(url, formApi, options)
       .then((res) => {
         setReRender((reRender) => !reRender);
       })
@@ -114,7 +120,7 @@ export default function AddForm({ props }) {
                   }}
                 >
                   <option>Brand(Default)</option>
-                  {data.color.map((e, ind) => {
+                  {data.brand.map((e, ind) => {
                     return (
                       <option value={e} key={shortid.generate()}>
                         {e}
@@ -122,6 +128,37 @@ export default function AddForm({ props }) {
                     );
                   })}
                 </select>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    width: '70px',
+                    justifyContent: 'space-between'
+                  }}
+                >
+                  <label>New In</label>
+                  <input
+                    onChange={() => {
+                      setNewIn((newIn) => !newIn);
+                    }}
+                    type="checkbox"
+                  ></input>
+                </div>
+              </div>
+              <div
+                style={{
+                  width: '100%',
+                  paddingRight: '5px',
+                  border: 'none'
+                }}
+              >
+                <textarea
+                  onChange={(e) => {
+                    setDecript(e.target.value);
+                  }}
+                  placeholder="Description"
+                  style={{ padding: '5px', width: '100%', outline: 'none' }}
+                ></textarea>
               </div>
               <div className="addform-another-format">
                 <div>
@@ -213,7 +250,7 @@ export default function AddForm({ props }) {
                       backgroundColor: '#ddd',
                       position: 'relative',
                       overflow: 'auto',
-                      maxHeight: '200px',
+                      maxHeight: '150px',
                       display: 'flex',
                       flexWrap: 'wrap',
                       flexDirection: 'row',
