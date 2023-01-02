@@ -17,5 +17,15 @@ export class LoginDto {
   public readonly username: string;
 
   @IsString()
+  @MinLength(8)
   public readonly password: string;
+}
+
+export class ChangeDto {
+  @IsString()
+  @MinLength(8)
+  public readonly password: string;
+  @IsString()
+  @MinLength(8)
+  public readonly pre: string;
 }

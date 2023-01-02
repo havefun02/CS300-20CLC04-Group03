@@ -28,7 +28,8 @@ export class AuthHelper {
 
   // Get User by User ID we get from decode()
   public async validateUser(decoded: any): Promise<User> {
-    return this.repository.findOne(decoded.id_user);
+    let id_user = decoded.id_user;
+    return await this.repository.findOne({ where: { id_user } });
   }
 
   // Generate JWT Token
@@ -44,7 +45,6 @@ export class AuthHelper {
   // Encode User's password
   public encodePassword(password: string): string {
     const salt: string = bcrypt.genSaltSync(10);
-
     return bcrypt.hashSync(password, salt);
   }
 
@@ -57,6 +57,7 @@ export class AuthHelper {
     }
 
     const user: User = await this.validateUser(decoded);
+    console.log(user);
 
     if (!user) {
       throw new UnauthorizedException();

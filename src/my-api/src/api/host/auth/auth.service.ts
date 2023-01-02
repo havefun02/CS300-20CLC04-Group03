@@ -2,9 +2,8 @@ import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { User } from '../host.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { RegisterDto, LoginDto } from './auth.dto';
+import { RegisterDto, LoginDto, ChangeDto } from './auth.dto';
 import { AuthHelper } from './auth.helper';
-import { UserModule } from '../../user/user.module';
 
 @Injectable()
 export class AuthService {
@@ -46,6 +45,31 @@ export class AuthService {
     }
 
     this.repository.update(user.id_user, { lastLoginAt: new Date() });
+    return this.helper.generateToken(user);
+  }
+
+  public async changePass(
+    body: ChangeDto,
+    user_: User,
+  ): Promise<string | never> {
+    console.log(user_);
+    const { pre, password }: ChangeDto = body;
+    const id_user: number = user_.id_user;
+    const user: User = await this.repository.findOne({ where: { id_user } });
+    console.log(user);
+
+    if (!user) {
+      throw new HttpException('No user found', HttpStatus.NOT_FOUND);
+    }
+    // const isPasswordValid: boolean = this.helper.isPasswordValid(password, user.password);
+    const isPasswordValid = this.helper.isPasswordValid(pre, user.password);
+    console.log(isPasswordValid);
+    if (!isPasswordValid) {
+      throw new HttpException('Invalid', HttpStatus.NOT_FOUND);
+    }
+    let enpassword = this.helper.encodePassword(password);
+
+    this.repository.update(user.id_user, { password: enpassword });
     return this.helper.generateToken(user);
   }
 

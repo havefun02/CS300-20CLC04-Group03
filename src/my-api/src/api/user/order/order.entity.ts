@@ -10,7 +10,6 @@ import {
   PrimaryColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { Cart } from '../cart/cart.entity';
 import { UserFromApi } from '../user.entity';
 import { DetailOrder } from './detailorder.entity';
 import { PaymentMethod } from './payment.entity';
@@ -19,20 +18,19 @@ export class Order extends BaseEntity {
   @PrimaryGeneratedColumn()
   public id_order: number;
   @Column({ type: 'int' })
-  public id_userFromApi: number;
-  @Column({ type: 'int' })
-  public total: number;
+  public id_api: number;
   @Column({ type: 'timestamp', nullable: false })
   public set_at: Date | null;
   @Column({ type: 'varchar' })
-  public id_method: number;
+  public method: number;
   @Column({ type: 'varchar' })
   public state: string;
+  @Column({ type: 'varchar', nullable: true })
+  public voucher: string;
 
-  @ManyToOne(() => PaymentMethod, (method) => method.orders)
-  @JoinColumn({ name: 'id_method' })
-  public method: PaymentMethod;
+  // @ManyToOne(() => PaymentMethod, (method) => method.orders)
+  // public method_: PaymentMethod;
 
-  @OneToMany(() => DetailOrder, (detail) => detail.order)
-  public detail: DetailOrder[];
+  // @OneToMany(() => DetailOrder, (detail) => detail.order)
+  // public detail_: DetailOrder[];
 }

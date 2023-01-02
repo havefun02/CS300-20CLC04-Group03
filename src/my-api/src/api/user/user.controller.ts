@@ -44,7 +44,7 @@ export class UserController {
     return this.service.setUser(body);
   }
   @Get('get-user')
-  private async getUser(): Promise<[UserFromApi[], number]> {
+  private async getUser(): Promise<UserFromApi[]> {
     return this.service.getUser();
   }
 }

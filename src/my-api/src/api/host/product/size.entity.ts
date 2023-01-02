@@ -3,6 +3,7 @@ import {
   Column,
   Entity,
   OneToMany,
+  PrimaryColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { ProductDetail } from './product.entity';
@@ -11,8 +12,8 @@ import { ProductDetail } from './product.entity';
 export class SizeTable extends BaseEntity {
   @PrimaryGeneratedColumn()
   public id_size: number;
-  @Column({ type: 'varchar' })
-  public title: string;
-  @OneToMany(() => ProductDetail, (productdetail) => productdetail.size)
-  public productsize: ProductDetail[];
+  @PrimaryColumn({ type: 'varchar' })
+  public name_size: string;
+  // @OneToMany(() => ProductDetail, (productdetail) => productdetail.size_)
+  // public productsize: ProductDetail[];
 }

@@ -24,7 +24,6 @@ export class Cart extends BaseEntity {
   public id_color: number;
   @Column({ type: 'int' })
   public quantity: number;
-  @OneToOne(() => UserFromApi, (user_Api) => user_Api.cart)
-  @JoinColumn({ name: 'trainer_trainer_id' })
-  cart!: UserFromApi;
+  // @OneToOne(() => UserFromApi, (user_Api) => user_Api.cart)
+  // cart!: UserFromApi;
 }

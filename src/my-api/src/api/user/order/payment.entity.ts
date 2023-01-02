@@ -14,6 +14,6 @@ export class PaymentMethod extends BaseEntity {
   @Column({ type: 'varchar' })
   public title: string;
 
-  @OneToMany(() => Order, (order) => order.method)
-  public orders: Order[];
+  // @OneToMany(() => Order, (order) => order.method)
+  // public orders: Order[];
 }

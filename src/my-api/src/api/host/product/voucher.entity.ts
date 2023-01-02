@@ -16,6 +16,6 @@ export class VoucherDefault extends BaseEntity {
   public title: string;
   @Column({ type: 'int' })
   public discount: number;
-  @ManyToMany(() => Voucher, (voucher) => voucher.default_voucher)
-  voucher_default?: Voucher[];
+  // @ManyToMany(() => Voucher, (voucher) => voucher.default_voucher)
+  // voucher_default?: Voucher[];
 }

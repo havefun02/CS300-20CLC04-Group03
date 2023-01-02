@@ -5,22 +5,27 @@ import {
   JoinColumn,
   ManyToOne,
   PrimaryColumn,
+  PrimaryGeneratedColumn,
 } from 'typeorm';
 import { Order } from './order.entity';
 
 @Entity()
 export class DetailOrder extends BaseEntity {
+  @PrimaryGeneratedColumn({ type: 'int' })
+  public id: number;
   @PrimaryColumn()
   public id_order: number;
-  @Column({ type: 'int' })
+  @PrimaryColumn({ type: 'int' })
   public id_product: number;
-  @Column({ type: 'int' })
-  public id_size: number;
-  @Column({ type: 'int' })
-  public id_color: number;
-  @Column({ type: 'int' })
+  @PrimaryColumn({ type: 'varchar' })
+  public size: string;
+  @PrimaryColumn({ type: 'varchar' })
+  public color: string;
+  @PrimaryColumn({ type: 'int' })
   public quantity: number;
-  @ManyToOne(() => Order, (order) => order.detail)
-  @JoinColumn({ name: 'id_order' })
-  public order: Order;
+  @Column({ type: 'int', nullable: false })
+  public price: number;
+  // @ManyToOne(() => Order, (order) => order.detail_)
+  // @JoinColumn({ name: 'id_product' })
+  // public order: Order;
 }
