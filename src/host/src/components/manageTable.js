@@ -113,14 +113,7 @@ export default function ManageTable({ props }) {
                         textAlign: 'center'
                       }}
                     >
-                      {!update ||
-                      index == 0 ||
-                      index == 1 ||
-                      index == 3 ||
-                      index == 5 ||
-                      index == 6 ||
-                      index == 7 ||
-                      index == 8 ? (
+                      {!update || index == 0 || index == 1 || index == 3 ? (
                         <span style={{ color: 'red' }}>{e}</span>
                       ) : (
                         <input
@@ -155,10 +148,20 @@ export default function ManageTable({ props }) {
                       const url = `http://localhost:3001/host/update-product${props.ele[1]}/${props.ele[7]}/${props.ele[8]}`;
                       let name = document.getElementById('2').value;
                       let quantity = document.getElementById('9').value;
+                      let price = document.getElementById('4').value;
+                      let brand = document.getElementById('5').value;
+                      let cate = document.getElementById('6').value;
+                      let size = document.getElementById('7').value;
+                      let color = document.getElementById('8').value;
 
                       const formApi = {
                         name: name,
-                        quantity: quantity
+                        quantity: quantity,
+                        price: price,
+                        cate: cate,
+                        brand: brand,
+                        color: color,
+                        size: size
                       };
                       const res = await axios
                         .post(url, formApi, options)
