@@ -5,15 +5,37 @@ import shortid from 'shortid';
 import { useContext } from 'react';
 import { Context } from '../context/context';
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import axios from 'axios';
 export default function Navbar({ props }) {
   const context = useContext(Context);
+  const id_user = context.id;
   const navigate = useNavigate();
-  const [listCart, setListCart] = useState(['1', 2, 3, 4, 5]);
+  const [trigger, setTrigger] = [context.trigger, context.setTrigger];
+  const [listCart, setListCart] = useState([]);
   const [search, setSearch] = useState(false);
   const [searchContent, setSearchContent] = useState('');
   const [overlay, setOverlay] = useState(false);
-  const [isLog, setIsLog] = [context.isLog, context.setIsLog];
+  const [token, setToken] = [context.token, context.setToken];
   const [name, setName] = [context.name, context.setName];
+  const toBase64 = (buffer) => {
+    let binary = '';
+    let bytes = new Uint8Array(buffer);
+    let len = bytes.byteLength;
+    for (var i = 0; i < len; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    return window.btoa(binary);
+  };
+  useEffect(() => {
+    const fetch = async () => {
+      const url = `http://localhost:3001/user:${id_user}/get-cart`;
+      const res = await axios.get(url).then((data) => {
+        setListCart(data.data);
+      });
+    };
+    fetch();
+  }, []);
   return (
     <div className="nav">
       <div className="nav-flex-box">
@@ -70,12 +92,12 @@ export default function Navbar({ props }) {
             <img
               onClick={() => {
                 setOverlay((overlay) => !overlay);
-                if (isLog) navigate('/profile');
+                if (token) navigate('/profile');
               }}
               src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAADT0lEQVRoge3ZzY8URRzG8Y+7LsLoAXlH8CUxRm6GoIiJ0aBevOmBQIR438S7N/UkJirGiAFC4j8gSIKrJ/XkRYWYqBcUo67rG7InQXZM2PFQvabtrd5UdfdMMO43qWSmu+b5PVVTXfWrapZZ5v/NdR3pjGMndmMHtmEzbiruX8LPOIez+AifYr6j+I25FS9hBoPM8iMOYuvIXWM9jqGfaHap0scRrBuV+acw24HxarmIfcM0PoHjQzBeLUeLWEmkPsQ9nMDjifX/xAc4X8S4E48VOim8jz2FTmsmCsGU3pvHK1gd0VmNQ0WdFK0pGf/EUqQOm3nsT9A7kNGII23N708MNBB6PpXXMnT3NjW/Xvpsc1l82NRxszC+U7R/x9omDTiWGGCA0w30pzL038wV3ypvkXq5QQNezdDv47aYyFiN+DNYkWGmq5yqjhWYTK08Lj+3GfYQGmBafYf/iwcyhZs8xGukP8TlsrMqFGvR7gwjC/TwXEb957GqQZxHUiqdlN8zA2FxOpCg/7T0haxa3k5pwFcNxRcacUiY56uswestzA/wRVU0NnvMFsHacAUf4pvi+114VLNhU+aisMD+Q6wBfXlT6CjpY2X5QtK0dC0Ta8ClkbtI54/qhVgDfhmBkaYs8hZrwNcjMNKUc9UL10cqfYYnM4Xn8DE+wedCT/2K34r7G7EJt2A77seDuCEzzpmUSrukZ4gn8YT0vW6ZXvHbd/BXYsz7UoTHhEOnOpGrwl7h9gam67hD2LpeXSLuDzJmzYM1IjN4qEPjVR5Wnwm/mCMU29DMCmeew2abxVvZOWyJVa77S2bwVuVaT/tUIIWexc/UcfyUK7ROyD3KPXFemFGGxSZ8W4l5QYvcbJ/FY/FLbGjrNMIG8Ux4T1vhoxHR73BPW+ES2/F9JM7hLsTHcSoifgUvyF+Mykzg2UKrqj8lvtA2oof3IkEGwpidlLeY3Vj8pjreF8q7mXpJTAhnlXULzWVhyzcprOabhdx9ZfF5V3HvRFG3TuewDns+xl7huK/ptrCuXNDBA5vKWuG4b64D43N4Q/ttbCO2CGnHdKLZcpkW0oPoCptKV0eCY7hXOLfZgbsFY+XXrDPCXuOM8Jr1rGvgNesyy/zX+RvmMDyiA9hxNwAAAABJRU5ErkJggg=="
             ></img>
 
-            {isLog == 'true' && (
+            {token ? (
               <div className="hover-profile">
                 <div
                   onClick={() => {
@@ -93,13 +115,15 @@ export default function Navbar({ props }) {
                 </div>
                 <div
                   onClick={() => {
-                    setIsLog(false);
-                    localStorage.clear();
+                    setTrigger((trigger) => !trigger);
+                    sessionStorage.clear();
                   }}
                 >
                   <span>Log out</span>
                 </div>
               </div>
+            ) : (
+              <></>
             )}
           </div>
           <div
@@ -108,20 +132,20 @@ export default function Navbar({ props }) {
               navigate('/cart');
             }}
           >
-            <span>5</span>
+            {token ? <span>{listCart.length}</span> : <></>}
             <img
               id="cart"
               onClick={() => {
                 setOverlay((overlay) => !overlay);
-                if (isLog === false) navigate('/cart');
+                if (token === false) navigate('/cart');
               }}
               src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAAhElEQVRIie2V3QqAIAxGT9HDVa8dvYj2HNVFeZH5NzGI7IMhDtzZnDioQSOggc0yDQwlAK7gxlQJgAmW6r+oLZFBSI21j2Ykjft4BV0sA6FuN/B4BSmAGZgEfjFgxd18nz+opLctOf+KHvyAjwGWc/X9/zGDY354NXAMkVyAAvqMQmvWDjXkPzRJsutpAAAAAElFTkSuQmCC"
             ></img>
 
-            {isLog == 'true' && (
+            {token ? (
               <div className="hover-cart">
                 {listCart.length === 0 && (
-                  <div>
+                  <div style={{ padding: '0 10px' }}>
                     <span>No product found</span>
                   </div>
                 )}
@@ -142,10 +166,14 @@ export default function Navbar({ props }) {
                               alignItems: 'center'
                             }}
                           >
-                            avar
+                            <img
+                              src={`data:image/png;base64,${toBase64(
+                                props.avar
+                              )}`}
+                            ></img>
                           </div>
                           <div style={{ flex: '3', padding: '3px 0' }}>
-                            <span>name</span>
+                            <span>{e.name}</span>
                           </div>
                           <div style={{ flex: '1', padding: '3px 0' }}>
                             <span
@@ -154,7 +182,7 @@ export default function Navbar({ props }) {
                                 color: 'red'
                               }}
                             >
-                              price
+                              {e.price}
                             </span>
                           </div>
                         </div>
@@ -183,9 +211,11 @@ export default function Navbar({ props }) {
                   </>
                 )}
               </div>
+            ) : (
+              <></>
             )}
           </div>
-          {isLog == 'true' && (
+          {token ? (
             <span
               style={{
                 display: 'flex',
@@ -197,10 +227,12 @@ export default function Navbar({ props }) {
             >
               {name}
             </span>
+          ) : (
+            <></>
           )}
         </div>
       </div>
-      {overlay && isLog !== 'true' && (
+      {overlay && id_user === undefined && (
         <LoginOverlay props={[overlay, setOverlay]} />
       )}
     </div>

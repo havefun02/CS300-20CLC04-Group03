@@ -24,14 +24,18 @@ export class UserFromApi extends BaseEntity {
   public email!: string;
   @Column({ type: 'varchar', nullable: false })
   public name: string;
-  @Column({ type: 'varchar', nullable: false })
-  public phonenumber: string;
-  @Column({ type: 'varchar', nullable: false })
+  @Column({ type: 'varchar', nullable: true })
+  public phone: string;
+  @Column({ type: 'varchar', nullable: true })
   public address: string;
+  @Column({ type: 'varchar', nullable: true })
+  public sex: string;
   @Column({ type: 'int', nullable: true })
   public point: number;
   @Column({ type: 'int', nullable: true })
   public level: number;
+  @Column({ type: 'varchar', nullable: true })
+  public token: string;
   // @OneToMany(() => Voucher, (user_voucher) => user_voucher.voucher, {
   //   cascade: true,
   //   nullable: true,

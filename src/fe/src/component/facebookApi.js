@@ -2,24 +2,23 @@ import FacebookLogin from 'react-facebook-login';
 import { Context } from '../context/context';
 import { useContext } from 'react';
 import axios from 'axios';
-const url = 'http://localhost:3000/user/login';
+const url = 'http://localhost:3001/user/login';
 export function FacebookApi({ props }) {
   const context = useContext(Context);
-  const [isLog, setIsLog] = [context.isLog, context.setIsLog];
   const [trigger, setTrigger] = [context.trigger, context.setTrigger];
   const responseFacebook = async (response) => {
-    let res = response.profileObj;
+    let res = response;
     console.log(response);
     const req = await axios
-      .post(url, { name: res.name, email: res.email })
-      .then((res) => {
-        setIsLog(true);
-        setTrigger((trigger) => !trigger);
-        sessionStorage.setItem('email', res.email);
-        sessionStorage.setItem('token', true);
-        sessionStorage.setItem('isLog', 'true');
-        sessionStorage.setItem('id', '1');
+      .post(url, {
+        name: res.name,
+        email: res.email,
+        token: res.accessToken
+      })
+      .then((data) => {
+        sessionStorage.setItem('token', data.data);
         props.setOverlay((overlay) => !overlay);
+        setTrigger((trigger) => !trigger);
       })
       .catch((e) => e);
   };

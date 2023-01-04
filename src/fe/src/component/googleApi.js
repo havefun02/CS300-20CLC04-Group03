@@ -4,24 +4,24 @@ import { useEffect } from 'react';
 import axios from 'axios';
 import { useState, useContext } from 'react';
 import { Context } from '../context/context';
-const url = 'http://localhost:3000/user/login';
+const url = 'http://localhost:3001/user/login';
 export function GoogleApi({ props }) {
   const context = useContext(Context);
-  const [isLog, setIsLog] = [context.isLog, context.setIsLog];
   const [trigger, setTrigger] = [context.trigger, context.setTrigger];
   const responseGoogle = async (response) => {
     let res = response.profileObj;
     console.log(response);
     const req = await axios
-      .post(url, { name: res.name, email: res.email })
-      .then((res) => {
-        setIsLog(true);
-        setTrigger((trigger) => !trigger);
-        sessionStorage.setItem('email', res.email);
-        sessionStorage.setItem('token', true);
-        sessionStorage.setItem('isLog', 'true');
-        sessionStorage.setItem('id', '1');
+      .post(url, {
+        name: res.name,
+        email: res.email,
+        token: response.accessToken
+      })
+      .then((data) => {
+        console.log(data);
+        sessionStorage.setItem('token', data.data);
         props.setOverlay((overlay) => !overlay);
+        setTrigger((trigger) => !trigger);
       })
       .catch((e) => e);
   };

@@ -68,13 +68,6 @@ export default function Footer() {
             })}
           </ul>
         </div>
-        <div>
-          <img
-            className="footer_logo"
-            src="https://scontent.fsgn13-2.fna.fbcdn.net/v/t1.15752-9/312819814_5673393872730012_3667559306220642071_n.png?_nc_cat=109&ccb=1-7&_nc_sid=ae9488&_nc_ohc=l8JT7UMdisUAX-8mHM0&tn=XOenXXIIXWMyMeT4&_nc_ht=scontent.fsgn13-2.fna&oh=03_AdQvWC0h5vHHuz4cqTTzVnkY0NK755860ou8_RVnpfaJpg&oe=63A27E15"
-            alt="Logo shop"
-          ></img>
-        </div>
       </div>
       <h4
         style={{

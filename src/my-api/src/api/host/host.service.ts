@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Any, Repository } from 'typeorm';
-import { Request } from 'express';
+import e, { Request } from 'express';
 import { User } from './host.entity';
 import { GroupImg, Product, ProductDetail } from './product/product.entity';
 import { Color } from './product/color.entity';
@@ -10,6 +10,8 @@ import { Brand } from './product/brand.entity';
 import { Category } from './product/category.entity';
 import { close } from 'fs';
 import { UserService } from '../user/user.service';
+import { forwardRef } from '@nestjs/common/utils';
+import { UserFromApi } from '../user/user.entity';
 @Injectable()
 export class HostService {
   constructor(
@@ -29,7 +31,7 @@ export class HostService {
     private readonly repositoryProDe: Repository<ProductDetail>,
     @InjectRepository(GroupImg)
     private readonly repositoryImg: Repository<GroupImg>,
-    @Inject(UserService)
+    @Inject(forwardRef(() => UserService))
     private readonly userService: UserService,
   ) {}
 
@@ -183,7 +185,104 @@ export class HostService {
   }
 
   public async updateProduct(constrain: any, body: any) {
-    await this.repositoryProDe.update(constrain, body);
-    return await this.repositoryProDe.update(constrain, body);
+    let code = constrain.code;
+    let size = constrain.size;
+    let color = constrain.color;
+    let quantity = body.quantity;
+    let name_cate = body.cate;
+    let name_brand = body.brand;
+    let check_cate = await this.repositoryCate.findOne({
+      where: { name_cate },
+    });
+    let check_brand = await this.repositoryBrand.findOne({
+      where: { name_brand },
+    });
+    if (!check_cate) {
+      let Cate = new Category();
+      Cate.name_cate = name_cate;
+      this.repositoryCate.save(Cate);
+    }
+    if (!check_brand) {
+      let Brand_ = new Brand();
+      Brand_.name_brand = name_brand;
+      this.repositoryBrand.save(Brand_);
+    }
+    let product = await this.repositoryPro.findOne({ where: { code } });
+    let id_product = product.id_product;
+    await this.repositoryPro.update(
+      { id_product, code },
+      {
+        name: body.name,
+        price: body.price,
+        cate: body.cate,
+        brand: body.brand,
+      },
+    );
+    return await this.repositoryProDe.update(constrain, {
+      size: size,
+      color: color,
+      quantity: quantity,
+    });
+  }
+
+  public async getBrand() {
+    return await this.repositoryBrand.find();
+  }
+  public async getCate() {
+    return await this.repositoryCate.find();
+  }
+  public async getColor() {
+    return await this.repositoryColor.find();
+  }
+  public async getSize() {
+    return await this.repositorySize.find();
+  }
+  public async getProductByFilter(id_page: string) {
+    let res = [];
+    let toArr = id_page.split(',');
+    let constrProduct = Object();
+    let constrDetail = Object();
+    toArr.forEach((e) => {
+      let tmp = e.split(':');
+      if (tmp[0] === 'brand') {
+        constrProduct.brand = tmp[1];
+      } else if (tmp[0] === 'cate') {
+        constrProduct.cate = tmp[1];
+      } else if (tmp[0] === 'size') {
+        constrDetail.size = tmp[1];
+      } else if (tmp[0] === 'color') {
+        constrDetail.color = tmp[1];
+      }
+    });
+    const findProduct = await this.repositoryPro.find({ where: constrProduct });
+    console.log(findProduct);
+    const findDetail = await this.repositoryProDe.find({ where: constrDetail });
+    for (let e of findProduct)
+      for (let i of findDetail) {
+        if (i.code === e.code) {
+          res.push(e);
+        }
+      }
+    return res;
+  }
+
+  public async getProductById(id_page: any) {
+    if (id_page === 'all') return await this.repositoryPro.find();
+    else if (id_page === 'new')
+      return await this.repositoryPro.query(
+        'select * from product where product.new=true',
+      );
+    else if (id_page === 'men')
+      return await this.repositoryPro.query(
+        `select * from product where product.kind='men'`,
+      );
+    else if (id_page === 'women')
+      return await this.repositoryPro.query(
+        `select * from product where product.kind='women'`,
+      );
+    else if (id_page === 'sale')
+      return await this.repositoryPro.query(
+        'select * from product where product.sale=true',
+      );
   }
 }

@@ -32,5 +32,6 @@ import { UserModule } from '../user/user.module';
   ],
   controllers: [HostController],
   providers: [HostService],
+  exports: [HostService],
 })
 export class HostModule {}

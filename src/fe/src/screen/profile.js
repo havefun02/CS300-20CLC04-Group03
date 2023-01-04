@@ -8,30 +8,47 @@ export default function Profile() {
   const navigate = useNavigate();
   const context = useContext(Context);
   const [trigger, setTrigger] = [context.trigger, context.setTrigger];
-  const [name, email, sex, phone, date] = [
+  const [token, name, email, sex, phone, address] = [
+    context.token,
     context.name,
     context.email,
     context.sex,
     context.phone,
-    context.date
+    context.address
   ];
-  const id = context.id;
   const [editSex, setEditSex] = useState(false);
   const [editName, setEditName] = useState(false);
   const [editPhone, setEditPhone] = useState(false);
+  const [editAddress, setEditAddress] = useState(false);
+
   const [newName, setNewName] = useState(null);
   const [newPhone, setNewPhone] = useState(null);
-  const [newSex, setNewSex] = useState(null);
+  const [newAddr, setNewAddr] = useState(null);
+  const [newSex, setNewSex] = useState('men');
   const [render, setRender] = useState(false);
+  const [list, setList] = useState([]);
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const token = localStorage.getItem('token');
+  //     const options = {
+  //       headers: {
+  //         Authorization: 'Bearer ' + token
+  //         // 'content-type': 'multipart/form-data'
+  //       }
+  //     };
+  //     const url = `http://localhost:3001/user:${token}/profile`;
+  //     const res = await axios.get(url, options).then((data) => {
+  //       setList(data.data);
+  //       console.log(data);
+  //     });
+  //   };
+  //   fetchData();
+  // }, [fetch]);
 
-  const handleSubmit = async () => {
-    const url = `http://localhost:3000/user/update-profile:${id}`;
-    const form = {
-      name: newName,
-      phone: newPhone,
-      sex: newSex
-    };
-    const res = await axios.post(url, form).then((data) => {
+  const handleSubmit = async (data) => {
+    const url = `http://localhost:3001/user/update-profile${email}`;
+    const res = await axios.post(url, data).then((data) => {
+      console.log(data);
       setTrigger((trigger) => !trigger);
     });
   };
@@ -183,7 +200,7 @@ export default function Profile() {
                 height: '100%'
               }}
             >
-              <form
+              <div
                 style={{
                   height: '100%',
                   width: '90%',
@@ -192,7 +209,6 @@ export default function Profile() {
                   display: 'flex',
                   flexDirection: 'column'
                 }}
-                onSubmit={() => {}}
               >
                 <div className="profile-input">
                   <div className="profile-edit-label">
@@ -230,9 +246,19 @@ export default function Profile() {
                         <input
                           onChange={(e) => setNewName(e.target.value)}
                           type="text"
+                          autoFocus
                           placeholder="New name"
                         ></input>
-                        <button>Save</button>
+                        <button
+                          onClick={() =>
+                            handleSubmit(
+                              { name: newName },
+                              setEditName((editName) => !editName)
+                            )
+                          }
+                        >
+                          Save
+                        </button>
                         <button
                           onClick={() => {
                             setEditName(false);
@@ -297,11 +323,75 @@ export default function Profile() {
                           onChange={(e) => setNewPhone(e.target.value)}
                           type="text"
                           placeholder="New phone number"
+                          autoFocus
                         ></input>
-                        <button>Save</button>
+                        <button
+                          onClick={() => {
+                            handleSubmit({ phone: newPhone });
+                            setEditPhone((editPhone) => !editPhone);
+                          }}
+                        >
+                          Save
+                        </button>
                         <button
                           onClick={() => {
                             setEditPhone(false);
+                          }}
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+                <div className="profile-input">
+                  <div className="profile-edit-label">
+                    <span>Address</span>
+                  </div>
+                  <div className="profile-input-tag">
+                    {!editAddress ? (
+                      <div>
+                        <span
+                          style={{
+                            fontWeight: '300',
+                            fontSize: '14px',
+                            marginRight: '10px'
+                          }}
+                        >
+                          {address}
+                        </span>
+                        <span
+                          onClick={() => setEditAddress(true)}
+                          style={{
+                            fontWeight: '300',
+                            fontSize: '14px',
+                            color: 'blue',
+                            textDecoration: 'underline',
+                            cursor: 'pointer'
+                          }}
+                        >
+                          Change
+                        </span>
+                      </div>
+                    ) : (
+                      <div>
+                        <input
+                          onChange={(e) => setNewAddr(e.target.value)}
+                          type="text"
+                          placeholder="New address"
+                          autoFocus
+                        ></input>
+                        <button
+                          onClick={() => {
+                            handleSubmit({ address: newAddr });
+                            setEditAddress((editAddress) => !editAddress);
+                          }}
+                        >
+                          Save
+                        </button>
+                        <button
+                          onClick={() => {
+                            setEditAddress(false);
                           }}
                         >
                           Cancel
@@ -347,6 +437,7 @@ export default function Profile() {
                           style={{ width: '15px', height: '20px' }}
                           name="sex"
                           type="radio"
+                          defaultChecked
                         ></input>
                         <label htmlFor="men" style={{ fontSize: '14px' }}>
                           Men
@@ -361,7 +452,15 @@ export default function Profile() {
                         <label htmlFor="women" style={{ fontSize: '14px' }}>
                           Women
                         </label>
-                        <button>Save</button>
+                        <button
+                          onClick={() => {
+                            console.log(newSex);
+                            handleSubmit({ sex: newSex });
+                            setEditSex((editSex) => !editSex);
+                          }}
+                        >
+                          Save
+                        </button>
                         <button
                           onClick={() => {
                             setEditSex(false);
@@ -373,23 +472,7 @@ export default function Profile() {
                     )}
                   </div>
                 </div>
-                <div className="profile-input-1">
-                  <div>
-                    <button onClick={() => handleSubmit()}>
-                      <span>Save</span>
-                    </button>
-                  </div>
-                  <div>
-                    <button
-                      onClick={() => {
-                        setRender((render) => !render);
-                      }}
-                    >
-                      <span>Cancel</span>
-                    </button>
-                  </div>
-                </div>
-              </form>
+              </div>
             </div>
             <div style={{ flex: '1', borderLeft: '1px solid #b3b1b1' }}>
               <div

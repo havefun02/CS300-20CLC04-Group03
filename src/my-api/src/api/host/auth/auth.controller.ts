@@ -13,7 +13,7 @@ import { JwtAuthGuard } from './auth.guard';
 import { AuthService } from './auth.service';
 import { Request } from 'express';
 import { User } from '../host.entity';
-@Controller('host')
+@Controller('auth')
 export class AuthController {
   @Inject(AuthService)
   private readonly service: AuthService;

@@ -29,7 +29,7 @@ export class Product extends BaseEntity {
   @Column({ type: 'int', nullable: true })
   public priceSale: number;
   @Column({ type: 'bool', nullable: true })
-  public onSale: boolean;
+  public sale: boolean;
   @Column({ type: 'bool', nullable: true })
   public new: boolean;
   @Column({ type: 'int', nullable: true })

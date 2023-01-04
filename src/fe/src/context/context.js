@@ -1,54 +1,61 @@
 import axios from 'axios';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { createContext } from 'react';
 const Context = createContext();
 const ContextProvider = ({ children }) => {
-  const [isLog, setIsLog] = useState(false);
-  const [id, setId] = useState(null);
+  const [id, setId] = useState();
   const [trigger, setTrigger] = useState(false);
-  const [access, setAccess] = useState(false);
-  const [name, setName] = useState(null);
-  const [email, setEmail] = useState(null);
-  const [phone, setPhone] = useState(null);
-  const [sex, setSex] = useState(null);
-  const [date, setDate] = useState({ day: 1, month: 2, year: 3 });
-
+  const [token, setToken] = useState();
+  const [name, setName] = useState();
+  const [email, setEmail] = useState();
+  const [phone, setPhone] = useState();
+  const [address, setAdress] = useState();
+  const [sex, setSex] = useState();
   React.useEffect(() => {
-    let getLocal = sessionStorage.getItem('isLog');
-    if (getLocal !== null) setIsLog(() => getLocal);
+    let token = sessionStorage.getItem('token');
+    if (token) setToken(token);
+    else setToken();
+  }, [trigger]);
 
-    let tokenLocal = sessionStorage.getItem('token');
-    if (tokenLocal !== null) setAccess(() => tokenLocal);
-
-    let emailLocal = sessionStorage.getItem('email');
-    if (emailLocal !== null) setEmail(() => emailLocal);
-  }, [isLog, trigger]);
-  React.useEffect(() => {
-    const fetchData = async () => {
-      const url = `http://localhost:3001/auth/set-data:${email}`;
-      //token
-      const res = await axios.get(url).then((res) => {
-        // setId(res.data);
-      });
+  useEffect(() => {
+    const options = {
+      headers: {
+        Authorization: 'Bearer ' + token
+        // 'content-type': 'multipart/form-data'
+      }
     };
+    const fetch = async () => {
+      const url = `http://localhost:3001/user/get-user`;
+      let token1 = sessionStorage.getItem('token');
+      const res = await axios
+        .post(url, { token: token1 }, options)
+        .then((data) => {
+          console.log(data);
+          setId(data.data.id_api);
+          setName(data.data.name);
+          setEmail(data.data.email);
+          setSex(data.data.sex);
+          setPhone(data.data.phone);
+          setAdress(data.data.address);
+        });
+    };
+    fetch();
   }, [trigger]);
 
   return (
     <Context.Provider
       value={{
-        isLog,
-        setIsLog,
         name,
         email,
-        access,
-        setAccess,
+        token,
         id,
         trigger,
         setTrigger,
         sex,
         phone,
-        date
+        address,
+        setAdress
       }}
     >
       {children}

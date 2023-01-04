@@ -12,70 +12,86 @@ export default function Page({ props }) {
   const id_user = context.id;
   const [fetchdata, setFetch] = useState(false);
   const [overlay, setOverlay] = useState(false);
-  const [liked, setLike] = useState([1, 2, 4]);
-  const [cateList, setCateList] = useState([1, 1, 1, 1, 1, 1, 1]);
-  const [colorList, setColorList] = useState([1, 1, 1, 1, 1]);
-  const [sizeList, setSizeList] = useState([1, 1, 1, 1, 1, 1, 1, 1]);
-  const [brandList, setBrandList] = useState([1, 2, 3, 4, 5, 6, 7, 8]);
+  const [liked, setLike] = useState([]);
+  const [cateList, setCateList] = useState([]);
+  const [cartList, setCartList] = useState([]);
+  const [colorList, setColorList] = useState([]);
+  const [sizeList, setSizeList] = useState([]);
+  const [brandList, setBrandList] = useState([]);
   const [eventCate, setEventCate] = useState(false);
   const [eventSize, setEventSize] = useState(false);
   const [eventBrand, setEventBrand] = useState(false);
   const [eventColor, setEventColor] = useState(false);
-  const [list, setList] = useState([
-    { id: 1, avar: '', name: 1, price: '', sale: '' },
-    { id: 2, avar: '', name: 1, price: '', sale: '' },
-    { id: 3, avar: '', name: 1, price: '', sale: '' },
-    { id: 4, avar: '', name: 1, price: '', sale: '' }
-  ]);
+  const [list, setList] = useState([]);
   const [view1, setView1] = useState({ opacity: '1' });
   const [view2, setView2] = useState({});
   const [viewType, setViewType] = useState('');
   const [titleFeature, setTitleFeature] = useState('Default');
   const [expandFeature, setExpandFeature] = useState(false);
-  const [filter, setFilter] = useState(['123123123', '3123123123123', 3, 4]);
+  const [filter, setFilter] = useState([]);
 
   useEffect(() => {
     const fetchCate = async () => {
-      const url = `http://localhost:3001/get-cate`;
+      const url = `http://localhost:3001/user/get-cate`;
       const res = await axios.get(url).then((data) => {
-        setCateList(data);
+        setCateList(data.data);
       });
     };
+    fetchCate();
     const fetchBrand = async () => {
-      const url = `http://localhost:3001/get-brand`;
+      const url = `http://localhost:3001/user/get-brand`;
       const res = await axios.get(url).then((data) => {
-        setBrandList(data);
+        setBrandList(data.data);
       });
     };
+    fetchBrand();
     const fetchColor = async () => {
-      const url = `http://localhost:3001/get-color`;
+      const url = `http://localhost:3001/user/get-color`;
       const res = await axios.get(url).then((data) => {
-        setColorList(data);
+        setColorList(data.data);
       });
     };
+    fetchColor();
     const fetchSize = async () => {
-      const url = `http://localhost:3001/get-size`;
+      const url = `http://localhost:3001/user/get-size`;
       const res = await axios.get(url).then((data) => {
-        setSizeList(data);
+        setSizeList(data.data);
       });
     };
-  }, []);
-  useEffect(() => {
+    fetchSize();
     const fetch = async () => {
-      const url = `http://localhost:3001/user:${id_user}/get-cart`;
+      const url = `http://localhost:3001/user/get-product/${props.id_page}`;
       const res = await axios.get(url).then((data) => {
-        setLike();
+        setList(data.data);
       });
     };
-  }, []);
+    fetch();
+  }, [fetchdata]);
 
   useEffect(() => {
-    const fetch = async () => {
-      const url = `http://localhost:3001/get-product/:${props.id_page}`;
+    const token = localStorage.getItem('token');
+    const options = {
+      headers: {
+        Authorization: 'Bearer ' + token
+        // 'content-type': 'multipart/form-data'
+      }
+    };
+
+    const fetchCart = async () => {
+      const url = `http://localhost:3001/user:${id_user}/get-cart`;
       const res = await axios.get(url).then((data) => {
-        setList();
+        setCartList(data.data);
       });
     };
+    if (id_user !== null) fetchCart();
+
+    const fetchLike = async () => {
+      const url = `http://localhost:3001/user:${id_user}/get-liked`;
+      const res = await axios.get(url).then((data) => {
+        setLike(data.data);
+      });
+    };
+    if (id_user !== null) fetchLike();
   }, [fetchdata]);
 
   const handleLike = async (mode, id_product) => {
@@ -92,11 +108,21 @@ export default function Page({ props }) {
       });
     }
   };
-
+  const toBase64 = (buffer) => {
+    let binary = '';
+    let bytes = new Uint8Array(buffer);
+    let len = bytes.byteLength;
+    for (var i = 0; i < len; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    return window.btoa(binary);
+  };
   const handleApply = async () => {
-    const url = `http://localhost:3001/get-product/apply:${filter}`;
+    if (filter.length === 0) setFetch((fetchdata) => !fetchdata);
+    const url = `http://localhost:3001/user/get-product/apply/${filter}`;
     const res = await axios.get(url).then((data) => {
-      setList();
+      console.log(data);
+      setList(data.data);
     });
   };
   const handleGroupBy = async (title) => {
@@ -134,7 +160,7 @@ export default function Page({ props }) {
               onClick={() => {
                 navigate(`/product/${props.code}`);
               }}
-              src={require('../assets/overlay.jpg')}
+              src={`data:image/png;base64,${toBase64(props.avar)}`}
             ></img>
           </div>
           <div className={'product-name' + viewType}>
@@ -145,7 +171,7 @@ export default function Page({ props }) {
                 padding: '3px 0'
               }}
             >
-              Name
+              {props.name}
             </span>
             <span
               style={{
@@ -154,7 +180,7 @@ export default function Page({ props }) {
                 padding: '3px 0'
               }}
             >
-              500$
+              {(Number(props.price) * Number(props.priceSale)) / 100}
             </span>
             {viewType === '1' && <span>Description</span>}
           </div>
@@ -212,7 +238,7 @@ export default function Page({ props }) {
             />
           </div>
           <div className="page-product">
-            <span>500 products</span>
+            <span>{list.length} products</span>
           </div>
           <div className="page-filter">
             <span>{titleFeature}</span>
@@ -312,10 +338,19 @@ export default function Page({ props }) {
                       return (
                         <div
                           key={shortid.generate()}
-                          onClick={() => {}}
+                          onClick={() => {
+                            if (!filter.includes('cate:' + e.name_cate)) {
+                              let newFilter = filter.filter(
+                                (e) => e.substr(0, e.indexOf(':')) !== 'cate'
+                              );
+                              newFilter.push('cate:' + e.name_cate);
+                              setFilter(Object.assign([], newFilter));
+                            }
+                            setEventCate((eventCate) => !eventCate);
+                          }}
                           className="page-element-expand-child"
                         >
-                          <span>1</span>
+                          <span>{e.name_cate}</span>
                         </div>
                       );
                     })}
@@ -350,10 +385,20 @@ export default function Page({ props }) {
                     {colorList.map((e, ind) => {
                       return (
                         <div
+                          onClick={() => {
+                            if (!filter.includes('color:' + e.name_color)) {
+                              let Newfilter = filter.filter(
+                                (e) => e.substr(0, e.indexOf(':')) !== 'color'
+                              );
+                              Newfilter.push('color:' + e.name_color);
+                              setFilter(Object.assign([], Newfilter));
+                            }
+                            setEventColor((eventColor) => !eventColor);
+                          }}
                           key={shortid.generate()}
                           className="page-element-expand-size"
                         >
-                          <span>1</span>
+                          <span>{e.name_color}</span>
                         </div>
                       );
                     })}
@@ -388,10 +433,20 @@ export default function Page({ props }) {
                     {sizeList.map((e, ind) => {
                       return (
                         <div
+                          onClick={() => {
+                            if (!filter.includes('size:' + e.name_size)) {
+                              let Newfilter = filter.filter(
+                                (e) => e.substr(0, e.indexOf(':')) !== 'size'
+                              );
+                              Newfilter.push('size:' + e.name_size);
+                              setFilter(Object.assign([], Newfilter));
+                            }
+                            setEventSize((eventSize) => !eventSize);
+                          }}
                           key={shortid.generate()}
                           className="page-element-expand-size"
                         >
-                          <span>{e}</span>
+                          <span>{e.name_size}</span>
                         </div>
                       );
                     })}
@@ -422,10 +477,20 @@ export default function Page({ props }) {
                     {brandList.map((e, ind) => {
                       return (
                         <div
+                          onClick={() => {
+                            if (!filter.includes('brand:' + e.name_brand)) {
+                              let Newfilter = filter.filter(
+                                (e) => e.substr(0, e.indexOf(':')) !== 'brand'
+                              );
+                              Newfilter.push('brand:' + e.name_brand);
+                              setFilter(Object.assign([], Newfilter));
+                            }
+                            setEventBrand((eventBrand) => !eventBrand);
+                          }}
                           key={shortid.generate()}
                           className="page-element-expand-child"
                         >
-                          <span>{e}</span>
+                          <span>{e.name_brand}</span>
                         </div>
                       );
                     })}
@@ -475,7 +540,7 @@ export default function Page({ props }) {
                   }}
                 >
                   <button
-                    onClick={() => handleApply}
+                    onClick={() => handleApply()}
                     style={{
                       cursor: 'pointer',
                       width: '70px',

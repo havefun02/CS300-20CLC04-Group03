@@ -9,11 +9,14 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../host.entity';
 import * as bcrypt from 'bcryptjs';
+import { UserFromApi } from '@/api/user/user.entity';
 
 @Injectable()
 export class AuthHelper {
   @InjectRepository(User)
   private readonly repository: Repository<User>;
+  @InjectRepository(UserFromApi)
+  private readonly repositoryApi: Repository<UserFromApi>;
 
   private readonly jwt: JwtService;
 
@@ -31,10 +34,17 @@ export class AuthHelper {
     let id_user = decoded.id_user;
     return await this.repository.findOne({ where: { id_user } });
   }
+  public async validateUser1(decoded: any): Promise<UserFromApi> {
+    let id_api = decoded.id_user;
+    return await this.repositoryApi.findOne({ where: { id_api } });
+  }
 
   // Generate JWT Token
   public generateToken(user: User): string {
     return this.jwt.sign({ id: user.id_user, email: user.username });
+  }
+  public generateToken1(user: UserFromApi): string {
+    return this.jwt.sign({ id: user.id_api, email: user.email });
   }
 
   // Validate User's password

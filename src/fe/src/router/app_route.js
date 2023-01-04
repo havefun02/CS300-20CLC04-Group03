@@ -14,14 +14,13 @@ import Notification from '../screen/notification';
 import DetailProduct from '../screen/detailProduct';
 export default function AppRoute() {
   const context = useContext(Context);
-  const [isLog, setIsLog] = [context.isLog, context.setIsLog];
-  const [access, setAccess] = [context.access, context.setAccess];
-
+  const [token, setToken] = [context.token, context.setToken];
+  const [trigger, setTrigger] = [context.trigger, context.setTrigger];
   return (
     <BrowserRouter>
       <div className="route-main">
         <div className="route-grid">
-          {access === false && <ImgOverlay props={[access, setAccess]} />}
+          {token === '' && <ImgOverlay />}
           <div className="route-flex-box">
             <Header></Header>
             <Routes>
@@ -76,27 +75,28 @@ export default function AppRoute() {
 
               <Route
                 path="/gift"
-                element={isLog ? <Gift /> : <div></div>}
+                element={token ? <Gift /> : <div></div>}
               ></Route>
               <Route
                 path="/notification"
-                element={isLog ? <Notification /> : <div></div>}
+                element={token ? <Notification /> : <div></div>}
               ></Route>
               <Route
                 path="/cart"
-                element={isLog ? <Cart /> : <div></div>}
+                element={token ? <Cart /> : <div></div>}
               ></Route>
               <Route
                 path="/order"
-                element={isLog ? <Order /> : <div></div>}
+                element={token ? <Order /> : <div></div>}
               ></Route>
               <Route
                 path="/buy"
-                element={isLog ? <Page /> : <div></div>}
+                element={token ? <Page /> : <div></div>}
               ></Route>
               <Route
+                key={trigger}
                 path="/profile"
-                element={isLog ? <Profile /> : <div></div>}
+                element={token ? <Profile /> : <div></div>}
               ></Route>
             </Routes>
             <Footer />

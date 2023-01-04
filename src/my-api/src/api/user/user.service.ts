@@ -6,6 +6,9 @@ import { Inject, Res } from '@nestjs/common/decorators';
 import { UserFromApi } from './user.entity';
 import { Order } from './order/order.entity';
 import { DetailOrder } from './order/detailorder.entity';
+import { Brand } from '../host/product/brand.entity';
+import { HostService } from '../host/host.service';
+import { forwardRef } from '@nestjs/common/utils';
 
 @Injectable()
 export class UserService {
@@ -15,6 +18,8 @@ export class UserService {
   private readonly repositoryOrder: Repository<Order>;
   @InjectRepository(DetailOrder)
   private readonly repositoryOrderDetail: Repository<DetailOrder>;
+  @Inject(forwardRef(() => HostService))
+  private readonly hostService: HostService;
   public setUser(body: any) {
     const user = new UserFromApi();
     return this.repository.save(user);
@@ -86,16 +91,53 @@ export class UserService {
     return res;
   }
 
-  public getMainPage() {
-    return;
+  public async getMainPage(id_page: string): Promise<any> {
+    return await this.hostService.getProductById(id_page);
   }
-  public getCatebyId() {
-    return;
+  public async getMainPageApply(id_page: string): Promise<any> {
+    return await this.hostService.getProductByFilter(id_page);
+  }
+  public async getBrand(): Promise<any> {
+    return await this.hostService.getBrand();
+  }
+  public async getCate(): Promise<any> {
+    return await this.hostService.getCate();
+  }
+  public async getColor(): Promise<any> {
+    return await this.hostService.getColor();
+  }
+  public async getSize(): Promise<any> {
+    return await this.hostService.getSize();
   }
   public getbySex() {
     return;
   }
   public getbySaleOff() {
     return;
+  }
+  public async getUserbyToken(req: any) {
+    let token = req;
+    console.log(token);
+    let res = await this.repository.findOne({ where: token });
+    return res;
+  }
+  public async loginCustomer(body: any) {
+    console.log(body);
+    let email = body.email;
+    let name = body.name;
+    let newUser = new UserFromApi();
+    const user = await this.repository.findOne({ where: { email: email } });
+    if (!user) {
+      newUser.email = email;
+      newUser.name = name;
+      newUser.token = body.token;
+      await this.repository.save(newUser);
+    }
+    return body.token;
+  }
+
+  public async updateProfile(email: any, update: any): Promise<any> {
+    let user = await this.repository.update(email, update);
+    return user;
   }
 }

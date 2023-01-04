@@ -142,6 +142,10 @@
   flex-direction: column;
   overflow-y: auto;
 }
+.page-element-expand::-webkit-scrollbar {
+  background-color: #000;
+  width: 3px;
+}
 
 .page-element-expand-child {
   flex: 0 0 40px;
