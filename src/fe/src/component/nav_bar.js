@@ -16,7 +16,6 @@ export default function Navbar({ props }) {
   const [search, setSearch] = useState(false);
   const [searchContent, setSearchContent] = useState('');
   const [overlay, setOverlay] = useState(false);
-  const [token, setToken] = [context.token, context.setToken];
   const [name, setName] = [context.name, context.setName];
   const toBase64 = (buffer) => {
     let binary = '';
@@ -28,14 +27,29 @@ export default function Navbar({ props }) {
     return window.btoa(binary);
   };
   useEffect(() => {
-    const fetch = async () => {
-      const url = `http://localhost:3001/user:${id_user}/get-cart`;
-      const res = await axios.get(url).then((data) => {
-        setListCart(data.data);
-      });
+    const token = sessionStorage.getItem('token');
+    const email = sessionStorage.getItem('email');
+
+    const options = {
+      headers: {
+        Authorization: 'Basic ' + token + ':' + email
+        // 'content-type': 'multipart/form-data'
+      }
     };
-    fetch();
-  }, []);
+    const fetch = async () => {
+      const url = `http://localhost:3001/user/cart-list/${id_user}`;
+      const res = await axios.get(url, options).then(
+        (data) => {
+          console.log(data);
+          setListCart(data.data);
+        },
+        (rej) => {
+          setListCart([]);
+        }
+      );
+    };
+    if (id_user !== null) fetch();
+  }, [trigger]);
   return (
     <div className="nav">
       <div className="nav-flex-box">
@@ -43,6 +57,7 @@ export default function Navbar({ props }) {
           <div
             onClick={() => {
               navigate('/newin');
+              setTrigger((trigger) => !trigger);
             }}
             className="nav-info-search"
           >
@@ -51,6 +66,7 @@ export default function Navbar({ props }) {
           <div
             onClick={() => {
               navigate('/women');
+              setTrigger((trigger) => !trigger);
             }}
             className="nav-info-search"
           >
@@ -59,6 +75,7 @@ export default function Navbar({ props }) {
           <div
             onClick={() => {
               navigate('/men');
+              setTrigger((trigger) => !trigger);
             }}
             className="nav-info-search"
           >
@@ -67,6 +84,7 @@ export default function Navbar({ props }) {
           <div
             onClick={() => {
               navigate('/sale');
+              setTrigger((trigger) => !trigger);
             }}
             className="nav-info-search"
           >
@@ -92,12 +110,12 @@ export default function Navbar({ props }) {
             <img
               onClick={() => {
                 setOverlay((overlay) => !overlay);
-                if (token) navigate('/profile');
+                if (id_user !== null) navigate('/profile');
               }}
               src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAADT0lEQVRoge3ZzY8URRzG8Y+7LsLoAXlH8CUxRm6GoIiJ0aBevOmBQIR438S7N/UkJirGiAFC4j8gSIKrJ/XkRYWYqBcUo67rG7InQXZM2PFQvabtrd5UdfdMMO43qWSmu+b5PVVTXfWrapZZ5v/NdR3pjGMndmMHtmEzbiruX8LPOIez+AifYr6j+I25FS9hBoPM8iMOYuvIXWM9jqGfaHap0scRrBuV+acw24HxarmIfcM0PoHjQzBeLUeLWEmkPsQ9nMDjifX/xAc4X8S4E48VOim8jz2FTmsmCsGU3pvHK1gd0VmNQ0WdFK0pGf/EUqQOm3nsT9A7kNGII23N708MNBB6PpXXMnT3NjW/Xvpsc1l82NRxszC+U7R/x9omDTiWGGCA0w30pzL038wV3ypvkXq5QQNezdDv47aYyFiN+DNYkWGmq5yqjhWYTK08Lj+3GfYQGmBafYf/iwcyhZs8xGukP8TlsrMqFGvR7gwjC/TwXEb957GqQZxHUiqdlN8zA2FxOpCg/7T0haxa3k5pwFcNxRcacUiY56uswestzA/wRVU0NnvMFsHacAUf4pvi+114VLNhU+aisMD+Q6wBfXlT6CjpY2X5QtK0dC0Ta8ClkbtI54/qhVgDfhmBkaYs8hZrwNcjMNKUc9UL10cqfYYnM4Xn8DE+wedCT/2K34r7G7EJt2A77seDuCEzzpmUSrukZ4gn8YT0vW6ZXvHbd/BXYsz7UoTHhEOnOpGrwl7h9gam67hD2LpeXSLuDzJmzYM1IjN4qEPjVR5Wnwm/mCMU29DMCmeew2abxVvZOWyJVa77S2bwVuVaT/tUIIWexc/UcfyUK7ROyD3KPXFemFGGxSZ8W4l5QYvcbJ/FY/FLbGjrNMIG8Ux4T1vhoxHR73BPW+ES2/F9JM7hLsTHcSoifgUvyF+Mykzg2UKrqj8lvtA2oof3IkEGwpidlLeY3Vj8pjreF8q7mXpJTAhnlXULzWVhyzcprOabhdx9ZfF5V3HvRFG3TuewDns+xl7huK/ptrCuXNDBA5vKWuG4b64D43N4Q/ttbCO2CGnHdKLZcpkW0oPoCptKV0eCY7hXOLfZgbsFY+XXrDPCXuOM8Jr1rGvgNesyy/zX+RvmMDyiA9hxNwAAAABJRU5ErkJggg=="
             ></img>
 
-            {token ? (
+            {id_user !== null ? (
               <div className="hover-profile">
                 <div
                   onClick={() => {
@@ -132,25 +150,35 @@ export default function Navbar({ props }) {
               navigate('/cart');
             }}
           >
-            {token ? <span>{listCart.length}</span> : <></>}
+            {id_user !== null ? <span>{listCart.length}</span> : <></>}
             <img
               id="cart"
               onClick={() => {
-                setOverlay((overlay) => !overlay);
-                if (token === false) navigate('/cart');
+                setOverlay(true);
+                if (id_user !== null) navigate('/cart');
               }}
               src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAAAhElEQVRIie2V3QqAIAxGT9HDVa8dvYj2HNVFeZH5NzGI7IMhDtzZnDioQSOggc0yDQwlAK7gxlQJgAmW6r+oLZFBSI21j2Ykjft4BV0sA6FuN/B4BSmAGZgEfjFgxd18nz+opLctOf+KHvyAjwGWc/X9/zGDY354NXAMkVyAAvqMQmvWDjXkPzRJsutpAAAAAElFTkSuQmCC"
             ></img>
 
-            {token ? (
+            {id_user !== null ? (
               <div className="hover-cart">
                 {listCart.length === 0 && (
-                  <div style={{ padding: '0 10px' }}>
+                  <div style={{ padding: '0 10px', height: '250px' }}>
                     <span>No product found</span>
                   </div>
                 )}
                 {listCart.length !== 0 && (
-                  <>
+                  <div
+                    className="item-container"
+                    style={{
+                      height: '250px',
+                      minHeight: '250px',
+                      position: 'relative',
+                      overflow: 'auto',
+                      display: 'flex',
+                      flexDirection: 'column'
+                    }}
+                  >
                     {listCart.map((e) => {
                       return (
                         <div
@@ -161,15 +189,16 @@ export default function Navbar({ props }) {
                         >
                           <div
                             style={{
-                              flex: '1',
+                              flex: '0 0 30px',
                               display: 'flex',
                               alignItems: 'center'
                             }}
                           >
                             <img
-                              src={`data:image/png;base64,${toBase64(
-                                props.avar
-                              )}`}
+                              src={`data:image/png;base64,${
+                                toBase64()
+                                // props.avar
+                              }`}
                             ></img>
                           </div>
                           <div style={{ flex: '3', padding: '3px 0' }}>
@@ -188,34 +217,39 @@ export default function Navbar({ props }) {
                         </div>
                       );
                     })}
-                    <div>
-                      <span>More...</span>
-                      <button
-                        style={{
-                          height: '30px',
-                          width: '80px',
-                          position: 'absolute',
-                          right: '10%',
-                          border: 'none',
-                          backgroundColor: '#000',
-                          color: '#fff',
-                          cursor: 'pointer'
-                        }}
-                        onClick={() => {
-                          navigate('/cart');
-                        }}
-                      >
-                        To cart
-                      </button>
-                    </div>
-                  </>
+                  </div>
                 )}
+                <div
+                  style={{
+                    padding: '0 8px',
+                    height: '50px',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'space-between'
+                  }}
+                >
+                  <span>More...</span>
+                  <button
+                    style={{
+                      height: '30px',
+                      width: '80px',
+                      backgroundColor: '#000',
+                      color: '#fff',
+                      cursor: 'pointer'
+                    }}
+                    onClick={() => {
+                      navigate('/cart');
+                    }}
+                  >
+                    To cart
+                  </button>
+                </div>
               </div>
             ) : (
               <></>
             )}
           </div>
-          {token ? (
+          {id_user !== null ? (
             <span
               style={{
                 display: 'flex',
@@ -225,14 +259,14 @@ export default function Navbar({ props }) {
                 width: '60px'
               }}
             >
-              {name}
+              {name.length > 9 ? name.substr(name.lastIndexOf(' ')) : name}
             </span>
           ) : (
             <></>
           )}
         </div>
       </div>
-      {overlay && id_user === undefined && (
+      {overlay && id_user === null && (
         <LoginOverlay props={[overlay, setOverlay]} />
       )}
     </div>

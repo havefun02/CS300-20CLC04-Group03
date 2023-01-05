@@ -1,23 +1,60 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
 import './detailProduct.css';
 import shortid from 'shortid';
-
+import { useEffect } from 'react';
+import LoginOverlay from '../component/loginOverlay';
+import axios from 'axios';
+import { useContext } from 'react';
+import { useLocation } from 'react-router-dom';
+import { Context } from '../context/context';
 export default function DetailProduct({ props }) {
   const navigate = useNavigate();
+  const location = useLocation();
+  const context = useContext(Context);
+  const id_user = context.id;
+  const [fetchdata, setFetch] = [context.trigger, context.setTrigger];
+  const [product, setProduct] = useState({});
+  const [overlay, setOverlay] = useState(false);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      let path = location.pathname;
+      let id_pro = path.split('/');
+      console.log(id_pro);
+      const url = `http://localhost:3001/user/get-detail-product/${
+        id_pro[id_pro.length - 1]
+      }`;
+      const res = await axios.get(url).then((data) => {
+        setProduct(data.data);
+      });
+    };
+    fetchProduct();
+  }, [fetchdata]);
+
   return (
     <div className="detail-container">
       <div className="detail-grid">
         <div className="detail-main">
           <div className="detail-product">
             <div className="detail-group-photo">
-              <div className="main-photo"></div>
-              <div className="list-photo">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
+              <div className="main-photo">
+                <div
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    marginTop: '35px',
+                    background: '#f2f2f2'
+                  }}
+                >
+                  <img
+                    src={require('../assets/th.jpg')}
+                    style={{ height: '300px', width: '300px' }}
+                  ></img>
+                </div>
               </div>
               <div className="product-desc">
                 <div>
@@ -100,91 +137,127 @@ export default function DetailProduct({ props }) {
                   >
                     <span
                       style={{
-                        color: 'red',
-                        borderBottom: '1px solid red',
-                        marginRight: '5px'
+                        color: '#000',
+                        borderBottom: '1px solid #000',
+                        marginRight: '5px',
+                        fontSize: '13px'
                       }}
                     >
-                      4.6
+                      Sold: {product.rate}
                     </span>
-                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                      <img
-                        onClick={() => {}}
-                        style={{ width: '17px', height: '17px' }}
-                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABmJLR0QA/wD/AP+gvaeTAAADF0lEQVRoge2ZTUgVURiGn1EQDanoh6ilIf1R9If9Z0QQ5CLBiKLASKNNLSKIpEVErayVuzYFQUTRqk2g0MIgSEgiSQ2pXUqWCRbZj/a2mLl1vd47njMzzrmLXvh2M9/3PufMOXPmG/ivmSW4I3gjmO/aS2QJ9goUxDnXfiJJUCp4lQUyIChx7ctagqYsiEzsd+3LSoJKwWAekEeuvVlJcCUPhASTgirX/owkWCb4WgBEguuuPRpJcCsEQoIRwRzXPkMlWB88PmEgEjS79hoqwRMDCAleF+1WLKg3hMjEIdeepyl4+fVagrwUeK69T5HgmCVEJg669v5XwWz0RQTpLppZERyPCJH4rBiNiKAUqAX2ATXAcmABMDchH6PAF2AsiHdAH9AP9AIDHkyGJQgFEWwBjgKHgaUJGI6qMeBZEE+B5x6MZ1/gAQjKgHnAImAFsBk4gj/yxahxfKB2oN2DHk/QCexy6yu2OktI7jl3qRIE2wQTMXcfVzEhaBWUAyA4XQSmbOOtYPe0uRFcLQJzJvFb0KawzwHBWZkdxV3FkKDOaNXIf1v/LALTufFAsNBqCxBsFfQXgXkJvgsarQByYCrkNxLGHUJ8FOyMDJEDVCV4KH+RpQkxLFiTCEQOUI2gMyWIUcGmxCGyYDxBcwogDbberJoAHgj4YFskgqxnI0o340CEe2x1SlAxa9kF5YJPKa2TptkEOZHirtU1WxAl8ptraW7B60z92ayRBmC1/RDEUvQ3ej4F2253yrMh+f9ZkmsZCeocQGRipYlH00erJcY4xNUek4tmBJHfz9oRwcA3oA3/vHQSv5UTRbUR75sqwX3LR2FUcE2wOE+utYK7susRDCYBsUTww7DgkOCCDLoygmrBPZmfqKvjgrQYFHkvOKNMJ8Mu/3ZBl0GN+rggYZ32YcF5xTwTyX/RNgYDUqjWxTgFNhRI+llwSVAZByBPvUrBjQLr53acxK05yX4JbuZbxElK/k/VFzm1o+54IL8Blkn0WLAqQb8z1S4TXNa/bs5InGQdgh6l8/1RyMNG+UejDlceUtcfvKNQTwLAJA4AAAAASUVORK5CYII="
-                      />
-
-                      <img
-                        onClick={() => {}}
-                        style={{ width: '17px', height: '17px' }}
-                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAABr0lEQVRIidXUTYhNYRgH8N/BgilhLMZMQxYKKQukbCyUkljc7cSUlZ1SSik7WShl4SsLKzsLwoZZSNkwtyyUlVkoZkX5yueYx8JzdbqdO/fcurc49faep/f/9Z7nfQ//0hOcCYpBie8K5oN9gxAvgidBBFODMJhI8dbY1k/xpcGrFH6e891+GhxJ0WfBmuBT1jv7ZfA0BQ9nfTbr+3X4RZJWYC22Yjd2YD1WYRHeYbzgWzCMGaxMjY/4kOMNptHEdMFsK+WNtia2j2ttuzrRBf8+mCwTlgcPS4AHwbr4k77bJxwKTpa4U8F4FXBZcCGYS+BMsL+GwbG8gPPB6a43PdgeNEuJbmWPqrCTifkVHOoWpkxcHBwvmQxXYEaCz7l+tLZ4SWBjkl93WF8SvE3M5k46CzXxYM6PSqJDrfeCOdzJslE/ur8/txeZrhFsCq4H34OX2czR4EBimr0a7Enij+B2NrH9rH8NrgQ/8wSN9WJws0LscrAh2BvcqzCdqCs+lskj+BKcD0YqcFvyQrYMrtY1OJXbvhSM1sA3gtngcV2Dcwsduw6c1cHFXjj/z/Mb0TwjJ2HCa5EAAAAASUVORK5CYII="
-                      ></img>
-
-                      <img
-                        onClick={() => {}}
-                        style={{ width: '17px', height: '17px' }}
-                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAABr0lEQVRIidXUTYhNYRgH8N/BgilhLMZMQxYKKQukbCyUkljc7cSUlZ1SSik7WShl4SsLKzsLwoZZSNkwtyyUlVkoZkX5yueYx8JzdbqdO/fcurc49faep/f/9Z7nfQ//0hOcCYpBie8K5oN9gxAvgidBBFODMJhI8dbY1k/xpcGrFH6e891+GhxJ0WfBmuBT1jv7ZfA0BQ9nfTbr+3X4RZJWYC22Yjd2YD1WYRHeYbzgWzCMGaxMjY/4kOMNptHEdMFsK+WNtia2j2ttuzrRBf8+mCwTlgcPS4AHwbr4k77bJxwKTpa4U8F4FXBZcCGYS+BMsL+GwbG8gPPB6a43PdgeNEuJbmWPqrCTifkVHOoWpkxcHBwvmQxXYEaCz7l+tLZ4SWBjkl93WF8SvE3M5k46CzXxYM6PSqJDrfeCOdzJslE/ur8/txeZrhFsCq4H34OX2czR4EBimr0a7Enij+B2NrH9rH8NrgQ/8wSN9WJws0LscrAh2BvcqzCdqCs+lskj+BKcD0YqcFvyQrYMrtY1OJXbvhSM1sA3gtngcV2Dcwsduw6c1cHFXjj/z/Mb0TwjJ2HCa5EAAAAASUVORK5CYII="
-                      ></img>
-
-                      <img
-                        onClick={() => {}}
-                        style={{ width: '17px', height: '17px' }}
-                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAABr0lEQVRIidXUTYhNYRgH8N/BgilhLMZMQxYKKQukbCyUkljc7cSUlZ1SSik7WShl4SsLKzsLwoZZSNkwtyyUlVkoZkX5yueYx8JzdbqdO/fcurc49faep/f/9Z7nfQ//0hOcCYpBie8K5oN9gxAvgidBBFODMJhI8dbY1k/xpcGrFH6e891+GhxJ0WfBmuBT1jv7ZfA0BQ9nfTbr+3X4RZJWYC22Yjd2YD1WYRHeYbzgWzCMGaxMjY/4kOMNptHEdMFsK+WNtia2j2ttuzrRBf8+mCwTlgcPS4AHwbr4k77bJxwKTpa4U8F4FXBZcCGYS+BMsL+GwbG8gPPB6a43PdgeNEuJbmWPqrCTifkVHOoWpkxcHBwvmQxXYEaCz7l+tLZ4SWBjkl93WF8SvE3M5k46CzXxYM6PSqJDrfeCOdzJslE/ur8/txeZrhFsCq4H34OX2czR4EBimr0a7Enij+B2NrH9rH8NrgQ/8wSN9WJws0LscrAh2BvcqzCdqCs+lskj+BKcD0YqcFvyQrYMrtY1OJXbvhSM1sA3gtngcV2Dcwsduw6c1cHFXjj/z/Mb0TwjJ2HCa5EAAAAASUVORK5CYII="
-                      ></img>
-
-                      <img
-                        onClick={() => {}}
-                        style={{ width: '17px', height: '17px' }}
-                        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAABr0lEQVRIidXUTYhNYRgH8N/BgilhLMZMQxYKKQukbCyUkljc7cSUlZ1SSik7WShl4SsLKzsLwoZZSNkwtyyUlVkoZkX5yueYx8JzdbqdO/fcurc49faep/f/9Z7nfQ//0hOcCYpBie8K5oN9gxAvgidBBFODMJhI8dbY1k/xpcGrFH6e891+GhxJ0WfBmuBT1jv7ZfA0BQ9nfTbr+3X4RZJWYC22Yjd2YD1WYRHeYbzgWzCMGaxMjY/4kOMNptHEdMFsK+WNtia2j2ttuzrRBf8+mCwTlgcPS4AHwbr4k77bJxwKTpa4U8F4FXBZcCGYS+BMsL+GwbG8gPPB6a43PdgeNEuJbmWPqrCTifkVHOoWpkxcHBwvmQxXYEaCz7l+tLZ4SWBjkl93WF8SvE3M5k46CzXxYM6PSqJDrfeCOdzJslE/ur8/txeZrhFsCq4H34OX2czR4EBimr0a7Enij+B2NrH9rH8NrgQ/8wSN9WJws0LscrAh2BvcqzCdqCs+lskj+BKcD0YqcFvyQrYMrtY1OJXbvhSM1sA3gtngcV2Dcwsduw6c1cHFXjj/z/Mb0TwjJ2HCa5EAAAAASUVORK5CYII="
-                      ></img>
-                    </div>
                   </div>
                 </div>
                 <div>
                   <div className="info-product-cate">
-                    <span>Nữ • Originals</span>
+                    <span>
+                      {product.kind} • {product.cate} • {product.brand}
+                    </span>
                   </div>
                   <div className="info-product-name">
-                    <span>GIÀY FORUM LOW CLASSIC</span>
+                    <span>{product.name}</span>
                   </div>
                   <div className="info-product-price">
-                    <span style={{ fontWeight: '700' }}>100$</span>
+                    <span style={{ fontWeight: '700' }}>
+                      <b>Price:</b> {product.price}$
+                    </span>
                   </div>
                   <div className="info-product-color">
-                    <span>Cloud White / Silver Dawn / Off White</span>
-                  </div>
-                  <div className="info-product-size">
-                    <span>size</span>
-                  </div>
-                  <div className="info-product-quantity">
-                    <select
-                      style={{
-                        width: '70px',
-                        height: '30px',
-                        verticalAlign: 'middle'
-                      }}
-                      name="quantity"
-                    >
-                      {Array(5)
-                        .fill(0)
-                        .map((e, index) => {
+                    <span>Color</span>
+                    <select id="select-color">
+                      {product.color ? (
+                        product.color.map((e) => {
                           return (
-                            <option key={shortid.generate()}>
-                              {index + 7}
+                            <option key={shortid.generate()} value={e}>
+                              {e}
                             </option>
                           );
-                        })}
+                        })
+                      ) : (
+                        <></>
+                      )}
                     </select>
+                  </div>
+                  <div className="info-product-color">
+                    <span>Size</span>
+                    <select id="select-size">
+                      {product.size ? (
+                        product.size.map((e) => {
+                          return (
+                            <option key={shortid.generate()} value={e}>
+                              {e}
+                            </option>
+                          );
+                        })
+                      ) : (
+                        <></>
+                      )}
+                    </select>
+                  </div>
+                  <div className="info-product-color">
+                    <span>Quantity</span>
+                    <input id="select-quantity" placeholder=""></input>
+                    <span style={{ position: 'absolute', right: '-100%' }}>
+                      In stock: {product.quantity}
+                    </span>
                   </div>
                   <div className="info-product-cart">
                     <div>
-                      <button>Add to cart</button>
+                      <button
+                        onClick={async () => {
+                          if (id_user !== null) {
+                            let color =
+                              document.getElementById('select-color').value;
+                            let size =
+                              document.getElementById('select-size').value;
+                            let quantity =
+                              document.getElementById('select-quantity').value;
+                            const token = sessionStorage.getItem('token');
+                            const email = sessionStorage.getItem('email');
+
+                            const options = {
+                              headers: {
+                                Authorization: 'Basic ' + token + ':' + email
+                                // 'content-type': 'multipart/form-data'
+                              }
+                            };
+
+                            const url = `http://localhost:3001/user/add-cart/${id_user}`;
+
+                            if (color && size && quantity) {
+                              const res = await axios
+                                .post(
+                                  url,
+                                  {
+                                    id_product: product.id_product,
+                                    size: size,
+                                    color: color,
+                                    quantity: quantity
+                                  },
+                                  options
+                                )
+                                .then(
+                                  (data) => {
+                                    navigate('/cart');
+                                  },
+                                  (rej) => alert(rej)
+                                );
+                            }
+                          } else {
+                            setOverlay(true);
+                          }
+                        }}
+                      >
+                        Add to cart
+                      </button>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          {overlay && id_user === null && (
+            <LoginOverlay props={[overlay, setOverlay]} />
+          )}
         </div>
       </div>
     </div>

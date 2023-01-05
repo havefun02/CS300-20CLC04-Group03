@@ -11,6 +11,8 @@ export default function Page({ props }) {
   const context = useContext(Context);
   const id_user = context.id;
   const [fetchdata, setFetch] = useState(false);
+  const [trigger, setTrigger] = [context.trigger, context.setTrigger];
+
   const [overlay, setOverlay] = useState(false);
   const [liked, setLike] = useState([]);
   const [cateList, setCateList] = useState([]);
@@ -59,6 +61,9 @@ export default function Page({ props }) {
       });
     };
     fetchSize();
+  }, [fetchdata]);
+
+  useEffect(() => {
     const fetch = async () => {
       const url = `http://localhost:3001/user/get-product/${props.id_page}`;
       const res = await axios.get(url).then((data) => {
@@ -66,45 +71,44 @@ export default function Page({ props }) {
       });
     };
     fetch();
-  }, [fetchdata]);
+  }, [trigger]);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
+    const email = sessionStorage.getItem('email');
+
     const options = {
       headers: {
-        Authorization: 'Bearer ' + token
+        Authorization: 'Basic ' + token + ':' + email
         // 'content-type': 'multipart/form-data'
       }
     };
 
-    const fetchCart = async () => {
-      const url = `http://localhost:3001/user:${id_user}/get-cart`;
-      const res = await axios.get(url).then((data) => {
-        setCartList(data.data);
-      });
-    };
-    if (id_user !== null) fetchCart();
-
     const fetchLike = async () => {
-      const url = `http://localhost:3001/user:${id_user}/get-liked`;
-      const res = await axios.get(url).then((data) => {
+      const url = `http://localhost:3001/user/${id_user}/get-liked`;
+      const res = await axios.get(url, options).then((data) => {
         setLike(data.data);
       });
     };
     if (id_user !== null) fetchLike();
-  }, [fetchdata]);
+  }, [trigger]);
 
   const handleLike = async (mode, id_product) => {
+    const token = sessionStorage.getItem('token');
+    const email = sessionStorage.getItem('email');
+
+    const options = {
+      headers: {
+        Authorization: 'Basic ' + token + ':' + email
+        // 'content-type': 'multipart/form-data'
+      }
+    };
     if (mode === 1) {
-      const url = `http://localhost:3001/user:${id_user}/add-cart:${id_product}`;
-      const res = await axios.post(url).then((data) => {
-        setLike(liked.push(id_product));
-      });
+      navigate(`/product/${id_product}`);
     } else if (mode === 0) {
-      const url = `http://localhost:3001/user:${id_user}/del-cart:${id_product}`;
-      const res = await axios.post(url).then((data) => {
-        let clone = liked.splice(liked.indexOf(id_product), 1);
-        setLike(clone);
+      const url = `http://localhost:3001/user/${id_user}/del-cart:${id_product}`;
+      const res = await axios.get(url, options).then((data) => {
+        setTrigger((trigger) => !trigger);
       });
     }
   };
@@ -118,12 +122,23 @@ export default function Page({ props }) {
     return window.btoa(binary);
   };
   const handleApply = async () => {
+    const token = sessionStorage.getItem('token');
+    const email = sessionStorage.getItem('email');
+
+    const options = {
+      headers: {
+        Authorization: 'Basic ' + token + ':' + email
+        // 'content-type': 'multipart/form-data'
+      }
+    };
     if (filter.length === 0) setFetch((fetchdata) => !fetchdata);
-    const url = `http://localhost:3001/user/get-product/apply/${filter}`;
-    const res = await axios.get(url).then((data) => {
-      console.log(data);
-      setList(data.data);
-    });
+    else {
+      const url = `http://localhost:3001/user/get-product/apply/${filter}`;
+      const res = await axios.get(url).then((data) => {
+        console.log(data);
+        setList(data.data);
+      });
+    }
   };
   const handleGroupBy = async (title) => {
     switch (title) {
@@ -158,7 +173,7 @@ export default function Page({ props }) {
           <div>
             <img
               onClick={() => {
-                navigate(`/product/${props.code}`);
+                navigate(`/product/${props.id_product}`);
               }}
               src={`data:image/png;base64,${toBase64(props.avar)}`}
             ></img>
@@ -186,11 +201,11 @@ export default function Page({ props }) {
           </div>
         </div>
         <div className={'product-add-like' + viewType}>
-          {!liked.includes(props.id) ? (
+          {!liked.includes(props.id_product) ? (
             <img
               onClick={() => {
                 if (id_user === null) setOverlay(true);
-                else handleLike(1, props.id);
+                else handleLike(1, props.id_product);
               }}
               src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAABK0lEQVRYhe2VP05CQRCHPymwsSOcgMRwBi2k4S4cAQ+gyB3suQM2qLEzXoEGsLBSaCjkUcy8ZPmTPPb3lFDsl2wmb3f2ze/Nzs6DRCJxgrwBmY8foHtsAa+BgAxYAY1ji8gZuIjOfwWoFKw/u71xO2YzO7HjMVbAyG0LOAueVZ6UTVNMfVMMWgXmwC9Q314sygDAi9uWKOAauAA+gC9FwHYdxNJ2OxT308SO4BOrg1jefb+aQUCvgxp29gvgfJ/DIUcAeh20PcYIWJYRoNZBfv7S9QtpYC1ZaT4r4LKsALCf0ndk8Dlw+xfBwRpKH5hhRdnzuVgfmQd2v/Be8JHJr+IV1t0yn4v12eDQWxASNqOshE80PXbTeyf4yFQ9wBSY+Iv3FWGRTyJxWqwBUZF8jqhPfG0AAAAASUVORK5CYII="
             ></img>
@@ -198,7 +213,7 @@ export default function Page({ props }) {
             <img
               onClick={() => {
                 if (id_user === null) setOverlay(true);
-                else handleLike(0, props.id);
+                else handleLike(0, props.id_product);
               }}
               src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAABX0lEQVR4nO2VTU4CQRCFy1A1cwDjCUiMZ5CNnkKPQAJVbHHlSkbuoHHJBbyBcaV3cAO6BqweNjKmmcb4H7ubIIv5kt5MqrpeV7+uAaioqNg0VOjWCBV2KdPECHbXK4DpZilgIUJonnNaX6uIJco4KEVgE/4DFWyWV4EDJ+jhfXd8lzJeeAmYtZM9l/xUAGyp4FWMANOhI+8uGMGRTbZivJMBoDiFRIWmyvQyYdhZuw9yrh26DtytxAe+qFDPPekzCGH2yQe++Ubo3ubnndpBkIAYH4xbsG3vXpmeC4YUQtFAHxihY9e96+DiMT5QwUsnvAMx5JzW7UgOGj5C81kr2YVYjGBXhcaexaeG8QRWQWEHClPfMD1aUypTZr/5xgSjQuffnLDnGxP9FA3jvmljoyyAI9+YeAFtbLxtzjj0jQlGmbKvv9eP4/UvMcEUpcGyxSkZh3bjH0z4a0xFxcbxCgc3uO99qxdYAAAAAElFTkSuQmCC"
             ></img>
@@ -478,6 +493,7 @@ export default function Page({ props }) {
                       return (
                         <div
                           onClick={() => {
+                            console.log('clcik');
                             if (!filter.includes('brand:' + e.name_brand)) {
                               let Newfilter = filter.filter(
                                 (e) => e.substr(0, e.indexOf(':')) !== 'brand'

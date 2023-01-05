@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 function Header({ props }) {
   const [fixed, setFixed] = useState({ position: '', zIndex: '' });
   const navigate = useNavigate();
-  const display = ['Uy tin', 'Chat luong', 'Giao hang nhanh'];
+  const display = ['EASY RETURNS', 'FREE SHIPPING'];
   const [scrollPosition, setScrollPosition] = useState(0);
   const [show, setShow] = useState({ top: 'unset' });
   const handleScroll = () => {

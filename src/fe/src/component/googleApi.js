@@ -10,7 +10,6 @@ export function GoogleApi({ props }) {
   const [trigger, setTrigger] = [context.trigger, context.setTrigger];
   const responseGoogle = async (response) => {
     let res = response.profileObj;
-    console.log(response);
     const req = await axios
       .post(url, {
         name: res.name,
@@ -19,7 +18,8 @@ export function GoogleApi({ props }) {
       })
       .then((data) => {
         console.log(data);
-        sessionStorage.setItem('token', data.data);
+        sessionStorage.setItem('token', data.data.token);
+        sessionStorage.setItem('email', data.data.email);
         props.setOverlay((overlay) => !overlay);
         setTrigger((trigger) => !trigger);
       })
@@ -27,7 +27,6 @@ export function GoogleApi({ props }) {
   };
   useEffect(() => {
     function start() {
-      console.log('ok');
       gapi.client.init({
         clientId:
           '539433372016-4e1ka9oubi38hjh5ncb1domfolsuvcim.apps.googleusercontent.com',

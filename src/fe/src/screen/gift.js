@@ -7,23 +7,30 @@ import axios from 'axios';
 export default function Gift() {
   const navigate = useNavigate();
   const context = useContext(Context);
-  const id = context.id;
+  const id_user = context.id;
+  const currentDay = new Date();
   const name = context.name;
-  const [gift, setGift] = useState([
-    { title: 'ok', discount: '10%', date: '10/2/2020' },
-    { title: 'ok', discount: '10%', date: '10/2/2020' },
-    { title: 'ok', discount: '10%', date: '10/2/2020' },
-    { title: 'ok', discount: '10%', date: '10/2/2020' },
-    { title: 'ok', discount: '10%', date: '10/2/2020' }
-  ]);
+  const [gift, setGift] = useState([]);
   useEffect(() => {
-    const fetch = async () => {
-      const url = `http://localhost:3001/user/get-gift:${id}`;
-      const res = await axios.get(url).then((data) => {
-        setGift();
+    const token = sessionStorage.getItem('token');
+    const email = sessionStorage.getItem('email');
+
+    const options = {
+      headers: {
+        Authorization: 'Basic ' + token + ':' + email
+        // 'content-type': 'multipart/form-data'
+      }
+    };
+
+    const fetchGift = async () => {
+      const url = `http://localhost:3001/user/voucher-list/${id_user}`;
+      const res = await axios.get(url, options).then((data) => {
+        console.log(data);
+        setGift(data.data);
       });
     };
-  }, []);
+    fetchGift();
+  }, [fetch]);
   return (
     <div className="gift-container">
       <div className="gift-grid">
@@ -117,25 +124,7 @@ export default function Gift() {
                 </span>
               </div>
             </div>
-            <div className="gift-nav-element">
-              <div className="gift-nav-element-icon">
-                <img
-                  onClick={() => {
-                    navigate('/notification');
-                  }}
-                  src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAABmJLR0QA/wD/AP+gvaeTAAACiUlEQVRoge2Zy2sTURSHv5OW2ib4whYftQiKj64s7qxVqWtL3VjRv0Go1LUQFCGCdePOfyA26kJ3LuJCpG6Eroq2mlVtfaAVWzIN2Jnjoi5i08CZRzJa5oO7uXPOPb8f98xMbgYSNiE6TZtb4o5XYsH7wLxbIqfTtMWty4w7S86bRauHO0uuEbWkEYvqWxaAveumP0tvzVxoWqNeEAB3Q6F7GlEqMgNaoKWyi1OuMFxZBPXWBoCk1oZT5K4oT9sXmZQR3Cjqhm4hnaSjvMKoCGNAlzHtq8J4pp370s9KmPqhDDgvGFG4B3QHXGJOhLH0II+DakgFSVJFykWyCg8JLh6gR5WCUySn2WBafO+AZkmVz5AXGAlSsO66MJF5yRXJ4vnJ8+165Sy3oxYPIHDJOc3NAHl2/vT8hN8iPlCBi+lzPLEmmA3oJB1OhRmgJ5A0O/PpMkdkCMcSbG6hcoVrNF48QHc5w1VrsGkHtECL08kn7M/5sHxJf6Pb8rIz7UClkwGaJx5gd6WLk5ZAkwEXhsPp8Y8aa5oMCPSHk+MfVVtN6018MISWoByyBFkNbA8hJCg7LEFWA3EcB7dYggL9gPqXSAzETWIgbhIDcZMYiJvEQNz89wbq/jeqc3Twi/OqjDZTUDVeiTeiPGCVvBxjeaOYmjOxvme/p9wQuAxsbbhKG8sK+ZRwSw7zsfpCrYF3TKH0NU+bL6aklxPVE7UttMqBpsnxT422WgMe11HGgZ3NUOSDH8DY+snIPzHNP2OJOveOCD/3DdmOilYi/8S0LUNRhAt1Lj+Pul7kO1B5xdEW5TXrW1D53urSJ4N/P0XCEvmLrH2AmVaP48AjYAlYUig0QnxCQsIm4De/e7SILky8rQAAAABJRU5ErkJggg=="
-                />
-              </div>
-              <div className="gift-nav-element-title">
-                <span
-                  onClick={() => {
-                    navigate('/notification');
-                  }}
-                >
-                  Notification
-                </span>
-              </div>
-            </div>
+
             <div className="gift-nav-element">
               <div className="gift-nav-element-icon">
                 <img
@@ -170,17 +159,23 @@ export default function Gift() {
                     </div>
                     <div>
                       <div>
-                        <span>Free</span>
+                        <span>{e.title}</span>
                       </div>
                       <div>
                         <span style={{ color: 'red', fontSize: '12px' }}>
-                          Discount: {'10%'}
+                          Discount: {e.discount}%
                         </span>
                       </div>
                       <div>
-                        <span style={{ fontSize: '11px' }}>
-                          Valid till: {'12/12/2022'}
-                        </span>
+                        {new Date(e.date).getTime() > currentDay.getTime() ? (
+                          <span style={{ fontSize: '11px' }}>
+                            Valid till: {e.date}
+                          </span>
+                        ) : (
+                          <span style={{ fontSize: '11px', color: 'red' }}>
+                            Valid till: {e.date}
+                          </span>
+                        )}
                       </div>
                     </div>
                   </div>

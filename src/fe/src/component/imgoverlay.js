@@ -1,5 +1,6 @@
 import './imgoverlay.css';
 export default function ImgOverlay({ props }) {
+  console.log(props);
   const [access, setAccess] = props;
   return (
     <div

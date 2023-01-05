@@ -7,63 +7,115 @@ import './cart.css';
 export default function Cart() {
   const context = useContext(Context);
   const id_user = context.id;
-  const [list, setList] = useState([
-    { id: 1, avar: '', name: '', color: '', size: '', price: '', quantity: 1 },
-    { id: 2, avar: '', name: '', color: '', size: '', price: '', quantity: 1 }
-  ]);
+  const [list, setList] = useState([{}, {}]);
   const [check, setCheck] = useState(Array(list.length).fill(false));
-  const [gift, setGift] = useState([
-    { id: '', discount: '' },
-    { id: '', discount: '' },
-    { id: '', discount: '' }
-  ]);
+  const [gift, setGift] = useState([]);
   const [giftSelect, setSelect] = useState(null);
+  const [sum, setSum] = useState(0);
+  const [discount, setDiscount] = useState(0);
+
   const [expandGift, setExpandGift] = useState(false);
-  const [fetch, setFetch] = useState(false);
+  const [fetch, setFetch] = [context.trigger, context.setTrigger];
   const onDelete = async (id) => {
-    const url = `http://localhost:3001/user:${id_user}/cart/del-product:${id}`;
-    const res = await axios.post(url).then((data) => {
+    const token = sessionStorage.getItem('token');
+    const email = sessionStorage.getItem('email');
+
+    const options = {
+      headers: {
+        Authorization: 'Basic ' + token + ':' + email
+        // 'content-type': 'multipart/form-data'
+      }
+    };
+    const url = `http://localhost:3001/user/delete-cart/${id_user}/${id}`;
+    const res = await axios.get(url, options).then((data) => {
       setFetch((fetch) => !fetch);
     });
   };
   const handleBuy = async (ids) => {
-    const url = `http://localhost:3001/user:${id_user}/cart/buy-product:`;
+    const token = sessionStorage.getItem('token');
+    const email = sessionStorage.getItem('email');
+
+    const options = {
+      headers: {
+        Authorization: 'Basic ' + token + ':' + email
+        // 'content-type': 'multipart/form-data'
+      }
+    };
+    const url = `http://localhost:3001/user/cart/buy-product/${ids}`;
     const res = await axios
-      .post(url, { id_products: ids, code: giftSelect })
+      .post(url, { code: giftSelect }, options)
       .then((data) => {
         setFetch((fetch) => !fetch);
       });
   };
-  const onChangeQuan = async (id, quantity) => {
-    const url = `http://localhost:3001/user:${id_user}/cart/update-quantity-product:${id}`;
-    const res = await axios.post(url, { quantity: quantity }).then((data) => {
-      setFetch((fetch) => !fetch);
-    });
-  };
-  const onUpdateSizeColor = async (id, color, size) => {
-    const url = `http://localhost:3001/user:${id_user}/cart/update-size-color-product:${id}`;
+
+  const onUpdate = async (id_item, color, size, quan) => {
+    console.log(id_item);
+    const token = sessionStorage.getItem('token');
+    const email = sessionStorage.getItem('email');
+
+    const options = {
+      headers: {
+        Authorization: 'Basic ' + token + ':' + email
+        // 'content-type': 'multipart/form-data'
+      }
+    };
+    const url = `http://localhost:3001/user/cart/update-cart/${id_user}/${id_item}`;
     const res = await axios
-      .post(url, { color: color, size: size })
+      .post(url, { color: color, size: size, quantity: quan }, options)
       .then((data) => {
         setFetch((fetch) => !fetch);
       });
   };
+
+  useEffect(
+    (e) => {
+      let sum = 0;
+      check.forEach((e, ind) => {
+        if (e === true) {
+          sum += Number(list[ind].price) * Number(list[ind].quantity);
+        }
+      });
+      setSum(sum);
+    },
+    [check]
+  );
   useEffect(() => {
+    const token = sessionStorage.getItem('token');
+    const email = sessionStorage.getItem('email');
+
+    const options = {
+      headers: {
+        Authorization: 'Basic ' + token + ':' + email
+        // 'content-type': 'multipart/form-data'
+      }
+    };
     const fetch = async () => {
-      const url = `http://localhost:3001/user:${id_user}/cart/get_product`;
-      const res = await axios.get(url).then((data) => {
-        setList();
+      const url = `http://localhost:3001/user/cart-list/${id_user}`;
+      const res = await axios.get(url, options).then((data) => {
+        setList(data.data);
       });
     };
+    fetch();
     const fetchGift = async () => {
-      const url = `http://localhost:3001/user:${id_user}/get-gift`;
-      const res = await axios.get(url).then((data) => {
-        setGift();
+      const url = `http://localhost:3001/user/voucher-list/${id_user}`;
+      const res = await axios.get(url, options).then((data) => {
+        let t = data.data.filter(
+          (e) => new Date(e.date).getTime() > new Date().getTime()
+        );
+        setGift(t);
       });
     };
+    fetchGift();
   }, [fetch]);
   const AProduct = ({ props }) => {
     const [vari, setVari] = useState(false);
+    const [newSize, setNewSize] = useState(null);
+    const [newColor, setNewColor] = useState(null);
+    const [changeColor, setChangeColor] = useState(null);
+    const [changeSize, setChangeSize] = useState(null);
+
+    const id_item = props.e.id_item;
     return (
       <div className="cart-product">
         <div className="cart-check-all">
@@ -111,7 +163,7 @@ export default function Cart() {
                   alignItems: 'flex-start'
                 }}
               >
-                <span>name</span>
+                <span>{props.e.name}</span>
               </div>
               <div
                 style={{
@@ -146,7 +198,7 @@ export default function Cart() {
                     padding: '5px 0'
                   }}
                 >
-                  {'Color:red, size:10uk'}
+                  Color: {props.e.color},Size: {props.e.size}
                 </span>
                 {vari && (
                   <div className="fix-console">
@@ -163,8 +215,35 @@ export default function Cart() {
                         <span>Color</span>
                       </div>
                       <div className="list-fix">
-                        <span>Color</span>
-                        <span>Color</span>
+                        {props.e.color_list.map((e, ind) => {
+                          if (changeColor !== ind)
+                            return (
+                              <span
+                                id={e}
+                                onClick={() => {
+                                  setChangeColor(ind);
+                                  setNewColor(e);
+                                }}
+                                key={shortid.generate()}
+                              >
+                                {e}
+                              </span>
+                            );
+                          else
+                            return (
+                              <span
+                                id={e}
+                                style={{ backgroundColor: '#ccc' }}
+                                onClick={() => {
+                                  setChangeColor(ind);
+                                  setNewColor(e);
+                                }}
+                                key={shortid.generate()}
+                              >
+                                {e}
+                              </span>
+                            );
+                        })}
                       </div>
                     </div>
                     <div className="fix-item">
@@ -180,26 +259,54 @@ export default function Cart() {
                         <span>Size</span>
                       </div>
                       <div className="list-fix">
-                        <span>Color</span>
-                        <span>Color</span>
-                        <span>Color</span>
-                        <span>Color</span>
-                        <span>Color</span>
-                        <span>Color</span>
-                        <span>Color</span>
-                        <span>Color</span>
+                        {props.e.size_list.map((e, ind) => {
+                          if (changeSize !== ind)
+                            return (
+                              <span
+                                id={e}
+                                onClick={() => {
+                                  setChangeSize(ind);
+                                  setNewSize(e);
+                                }}
+                                key={shortid.generate()}
+                              >
+                                {e}
+                              </span>
+                            );
+                          else
+                            return (
+                              <span
+                                id={e}
+                                style={{ backgroundColor: '#ccc' }}
+                                onClick={() => {
+                                  setChangeSize(ind);
+                                  setNewSize(e);
+                                }}
+                                key={shortid.generate()}
+                              >
+                                {e}
+                              </span>
+                            );
+                        })}
                       </div>
                     </div>
                     <div className="fix-gr-button">
-                      <button onClick={() => setVari((vari) => !vari)}>
+                      <button
+                        onClick={() => {
+                          setVari((vari) => !vari);
+                          setNewColor(null);
+                          setNewSize(null);
+                        }}
+                      >
                         Cancel
                       </button>
                       <button
                         onClick={() =>
-                          onUpdateSizeColor(
-                            props.e.id,
-                            props.e.color,
-                            props.e.size
+                          onUpdate(
+                            props.e.id_item,
+                            newColor,
+                            newSize,
+                            props.e.quantity
                           )
                         }
                       >
@@ -214,31 +321,45 @@ export default function Cart() {
         </div>
         <div style={{ fontSize: '15px' }}>
           <div className="cart-price">
-            <span>Price</span>
+            <span>{props.e.price}</span>
           </div>
           <div className="cart-quantity">
             <div>
               <span
                 onClick={() => {
                   if (props.e.quantity > 0)
-                    onChangeQuan(props.e.id, props.e.quantity - 1);
+                    onUpdate(
+                      props.e.id_item,
+                      props.e.color,
+                      props.e.size,
+                      props.e.quantity - 1
+                    );
                 }}
               >
                 -
               </span>
-              <span>0</span>
+              <span>{props.e.quantity}</span>
               <span
-                onClick={() => onChangeQuan(props.e.id, props.e.quantity + 1)}
+                onClick={() =>
+                  onUpdate(
+                    props.e.id_item,
+                    props.e.color,
+                    props.e.size,
+                    props.e.quantity + 1
+                  )
+                }
               >
                 +
               </span>
             </div>
           </div>
           <div className="cart-price-total">
-            <span>Total</span>
+            <span>
+              {(Number(props.e.price) * Number(props.e.quantity)).toString()}
+            </span>
           </div>
           <div className="cart-delete">
-            <span onClick={() => {}}>Delete</span>
+            <span onClick={() => onDelete(props.e.id_item)}>Delete</span>
           </div>
         </div>
       </div>
@@ -288,6 +409,7 @@ export default function Cart() {
             </div>
           </div>
           {list.map((e, ind) => {
+            console.log(e);
             return (
               <AProduct
                 key={shortid.generate() + list[ind]}
@@ -304,7 +426,8 @@ export default function Cart() {
                 <div>
                   <span
                     onClick={() => {
-                      setExpandGift((expandGift) => !expandGift);
+                      if (check.filter((e) => e === true).length > 0)
+                        setExpandGift((expandGift) => !expandGift);
                     }}
                     style={{
                       fontSize: '15px',
@@ -318,19 +441,29 @@ export default function Cart() {
                   {expandGift && check.includes(true) && (
                     <div className="cart-expand-gift">
                       <div>
-                        {gift.map((e, ind) => {
-                          return (
-                            <div
-                              onClick={() => {
-                                setSelect(ind);
-                              }}
-                              key={shortid.generate()}
-                            >
-                              <span>code</span>
-                              <span>discount</span>
-                            </div>
-                          );
-                        })}
+                        {gift.length > 0 ? (
+                          gift.map((e, ind) => {
+                            return (
+                              <div
+                                onClick={() => {
+                                  setSelect(ind);
+                                  setDiscount(e.discount);
+                                  setExpandGift(false);
+                                }}
+                                key={shortid.generate()}
+                              >
+                                <span>
+                                  Use for saving {e.discount}% per order
+                                </span>
+                                <span>{e.num}</span>
+                              </div>
+                            );
+                          })
+                        ) : (
+                          <div>
+                            <span>You have no gift</span>
+                          </div>
+                        )}
                       </div>
                     </div>
                   )}
@@ -340,10 +473,17 @@ export default function Cart() {
             <div className="cart-bottom-display">
               <div>
                 <div>
-                  <span>Your discount on {gift.length} products</span>
+                  {discount > 0 ? (
+                    <span>
+                      You get {discount}% discount on{' '}
+                      {check.filter((e) => e === true).length} products
+                    </span>
+                  ) : (
+                    <span>You have no voucher</span>
+                  )}
                 </div>
                 <div>
-                  <span>-{'10.000'}</span>
+                  <span>{(sum * discount) / 100}</span>
                 </div>
               </div>
             </div>
@@ -381,8 +521,14 @@ export default function Cart() {
                 >
                   <div className="cart-total">
                     <span>
-                      Total ({check.filter((e) => e === true).length}):
-                      {'123.000'}
+                      Total ({check.filter((e) => e === true).length}):{' '}
+                      {discount > 0 ? (
+                        <b style={{ color: 'blue' }}>
+                          {sum - (discount * sum) / 100}
+                        </b>
+                      ) : (
+                        sum
+                      )}
                     </span>
                   </div>
                   <div className="cart-buy">

@@ -4,41 +4,45 @@ import { useState } from 'react';
 import { createContext } from 'react';
 const Context = createContext();
 const ContextProvider = ({ children }) => {
-  const [id, setId] = useState();
+  const [id, setId] = useState(null);
   const [trigger, setTrigger] = useState(false);
   const [token, setToken] = useState();
-  const [name, setName] = useState();
-  const [email, setEmail] = useState();
-  const [phone, setPhone] = useState();
-  const [address, setAdress] = useState();
-  const [sex, setSex] = useState();
-  React.useEffect(() => {
-    let token = sessionStorage.getItem('token');
-    if (token) setToken(token);
-    else setToken();
-  }, [trigger]);
+  const [name, setName] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [phone, setPhone] = useState(null);
+  const [address, setAdress] = useState(null);
+  const [sex, setSex] = useState(null);
+  const [currentRoute, setCurrentRoute] = useState('/');
 
   useEffect(() => {
+    let token = sessionStorage.getItem('token');
+    let email = sessionStorage.getItem('email');
     const options = {
       headers: {
-        Authorization: 'Bearer ' + token
+        Authorization: 'Basic ' + token + ':' + email
         // 'content-type': 'multipart/form-data'
       }
     };
     const fetch = async () => {
-      const url = `http://localhost:3001/user/get-user`;
-      let token1 = sessionStorage.getItem('token');
-      const res = await axios
-        .post(url, { token: token1 }, options)
-        .then((data) => {
-          console.log(data);
+      const url = `http://localhost:3001/user/get-customer`;
+      const res = await axios.get(url, options).then(
+        (data) => {
           setId(data.data.id_api);
           setName(data.data.name);
           setEmail(data.data.email);
           setSex(data.data.sex);
           setPhone(data.data.phone);
           setAdress(data.data.address);
-        });
+        },
+        (rej) => {
+          setId(null);
+          setName(null);
+          setEmail(null);
+          setSex(null);
+          setPhone(null);
+          setAdress(null);
+        }
+      );
     };
     fetch();
   }, [trigger]);

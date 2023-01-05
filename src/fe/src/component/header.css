@@ -15,7 +15,7 @@
   flex-direction: column;
 }
 .header-slide {
-  flex: 0 0 25px;
+  flex: 0 0 30px;
   display: block;
   color: #f2f2f2;
   background-color: rgb(56, 54, 54);

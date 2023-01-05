@@ -16,7 +16,8 @@ export function FacebookApi({ props }) {
         token: res.accessToken
       })
       .then((data) => {
-        sessionStorage.setItem('token', data.data);
+        sessionStorage.setItem('token', data.data.token);
+        sessionStorage.setItem('email', data.data.email);
         props.setOverlay((overlay) => !overlay);
         setTrigger((trigger) => !trigger);
       })

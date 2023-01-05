@@ -7,22 +7,28 @@ import axios from 'axios';
 export default function Notification() {
   const navigate = useNavigate();
   const context = useContext(Context);
-  const id = context.id;
-  const [notification, setnotification] = useState([
-    { title: '', price: '', date: '10/10/2020' },
-    {},
-    {},
-    {},
-    {}
-  ]);
+  const id_user = context.id;
+  const [notification, setnotification] = useState([]);
   useEffect(() => {
-    const fetch = async () => {
-      const url = `http://localhost:3001/user/get-message:${id}`;
-      const res = await axios.get(url).then((data) => {
-        setnotification();
+    const token = sessionStorage.getItem('token');
+    const email = sessionStorage.getItem('email');
+
+    const options = {
+      headers: {
+        Authorization: 'Basic ' + token + ':' + email
+        // 'content-type': 'multipart/form-data'
+      }
+    };
+
+    const fetchNotif = async () => {
+      const url = `http://localhost:3001/user/notification-list/${id_user}`;
+      const res = await axios.get(url, options).then((data) => {
+        console.log(data);
+        setnotification(data.data);
       });
     };
-  }, []);
+    fetchNotif();
+  }, [fetch]);
   return (
     <div className="notification-container">
       <div className="notification-grid">

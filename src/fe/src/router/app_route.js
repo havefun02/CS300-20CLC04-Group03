@@ -12,15 +12,17 @@ import Profile from '../screen/profile';
 import Gift from '../screen/gift';
 import Notification from '../screen/notification';
 import DetailProduct from '../screen/detailProduct';
+import { useState } from 'react';
 export default function AppRoute() {
   const context = useContext(Context);
-  const [token, setToken] = [context.token, context.setToken];
+  const id_user = context.id;
+  const [off, setOff] = useState(false);
   const [trigger, setTrigger] = [context.trigger, context.setTrigger];
   return (
     <BrowserRouter>
       <div className="route-main">
         <div className="route-grid">
-          {token === '' && <ImgOverlay />}
+          {off && <ImgOverlay props={[off, setOff]} />}
           <div className="route-flex-box">
             <Header></Header>
             <Routes>
@@ -75,28 +77,25 @@ export default function AppRoute() {
 
               <Route
                 path="/gift"
-                element={token ? <Gift /> : <div></div>}
+                element={id_user !== null ? <Gift /> : <></>}
               ></Route>
-              <Route
-                path="/notification"
-                element={token ? <Notification /> : <div></div>}
-              ></Route>
+
               <Route
                 path="/cart"
-                element={token ? <Cart /> : <div></div>}
+                element={id_user !== null ? <Cart /> : <></>}
               ></Route>
               <Route
                 path="/order"
-                element={token ? <Order /> : <div></div>}
+                element={id_user !== null ? <Order /> : <></>}
               ></Route>
               <Route
                 path="/buy"
-                element={token ? <Page /> : <div></div>}
+                element={id_user !== null ? <Page /> : <></>}
               ></Route>
               <Route
                 key={trigger}
                 path="/profile"
-                element={token ? <Profile /> : <div></div>}
+                element={id_user !== null ? <Profile /> : <></>}
               ></Route>
             </Routes>
             <Footer />

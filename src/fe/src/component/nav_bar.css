@@ -75,14 +75,13 @@
   right: 0;
 }
 .hover-cart {
-  overflow: hidden;
   display: none;
   height: 300px;
   width: 250px;
   position: absolute;
   background-color: #fff;
   border: 1px solid #ddd;
-  top: 95%;
+  top: 90%;
   right: 0;
 }
 
@@ -97,6 +96,17 @@
   display: flex;
   justify-content: flex-start;
 }
+.item-container::-webkit-scrollbar {
+  width: 5px;
+}
+.item-container::-webkit-scrollbar-thumb {
+  background-color: #000;
+}
+.item-container > div:hover {
+  background-color: #ccc;
+  cursor: pointer;
+}
+
 .hover-cart > div:last-child {
   height: 50px;
   display: flex;
@@ -120,10 +130,10 @@
   background-color: #ddd;
 }
 
-.hover-cart div:hover {
+/* .hover-cart div:hover {
   cursor: pointer;
   background-color: #ddd;
-}
+} */
 
 .nav-shopping-profile img:hover + .hover-profile {
   display: block;
