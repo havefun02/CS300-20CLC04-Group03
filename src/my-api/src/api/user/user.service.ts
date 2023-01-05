@@ -1,29 +1,33 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Request } from 'express';
 import { Inject, Res } from '@nestjs/common/decorators';
-import { UserFromApi } from './user.entity';
+import { UserFromApi, Voucher } from './user.entity';
 import { Order } from './order/order.entity';
 import { DetailOrder } from './order/detailorder.entity';
 import { Brand } from '../host/product/brand.entity';
 import { HostService } from '../host/host.service';
 import { forwardRef } from '@nestjs/common/utils';
-
+import { Cart } from './order/cart.entity';
+import { Notif } from './order/notification.entiry';
 @Injectable()
 export class UserService {
   @InjectRepository(UserFromApi)
   private readonly repository: Repository<UserFromApi>;
-  @InjectRepository(UserFromApi)
+  @InjectRepository(Order)
   private readonly repositoryOrder: Repository<Order>;
   @InjectRepository(DetailOrder)
   private readonly repositoryOrderDetail: Repository<DetailOrder>;
+  @InjectRepository(Cart)
+  private readonly repositoryCart: Repository<Cart>;
+  @InjectRepository(Notif)
+  private readonly repositoryNotif: Repository<Notif>;
+  @InjectRepository(Voucher)
+  private readonly repositoryVoucher: Repository<Voucher>;
   @Inject(forwardRef(() => HostService))
   private readonly hostService: HostService;
-  public setUser(body: any) {
-    const user = new UserFromApi();
-    return this.repository.save(user);
-  }
+
   public async getUser(): Promise<UserFromApi[]> {
     return await this.repository.find();
   }
@@ -75,7 +79,6 @@ export class UserService {
           }-01 12:00:00')`,
         );
       }
-      console.log(orders);
       let sum = 0;
 
       for (let e of orders) {
@@ -87,7 +90,6 @@ export class UserService {
       }
       res.push(sum);
     }
-    console.log(res);
     return res;
   }
 
@@ -109,35 +111,190 @@ export class UserService {
   public async getSize(): Promise<any> {
     return await this.hostService.getSize();
   }
-  public getbySex() {
-    return;
+  public async getDetailProduct(id: number): Promise<any> {
+    return await this.hostService.getDetailProductById(id);
   }
-  public getbySaleOff() {
-    return;
-  }
+
   public async getUserbyToken(req: any) {
-    let token = req;
-    console.log(token);
-    let res = await this.repository.findOne({ where: token });
-    return res;
+    if (req === null) throw new HttpException('Invalid', HttpStatus.NOT_FOUND);
+    let arr = req.split(':');
+    let res = await this.repository.findOne({
+      where: { token: arr[0], email: arr[1] },
+    });
+    if (res) return res;
+    else throw new HttpException('Invalid', HttpStatus.NOT_FOUND);
   }
   public async loginCustomer(body: any) {
-    console.log(body);
     let email = body.email;
     let name = body.name;
     let newUser = new UserFromApi();
-    const user = await this.repository.findOne({ where: { email: email } });
+    let user = await this.repository.findOne({ where: { email: email } });
     if (!user) {
       newUser.email = email;
       newUser.name = name;
       newUser.token = body.token;
       await this.repository.save(newUser);
+    } else {
+      let res = await this.repository.update(
+        { email: email },
+        { token: body.token },
+      );
     }
-    return body.token;
+    return { email: body.email, token: body.token };
   }
 
-  public async updateProfile(email: any, update: any): Promise<any> {
+  public async updateProfile(email: any, update: any, auth: any): Promise<any> {
+    if (auth === null) throw new HttpException('Invalid', HttpStatus.NOT_FOUND);
+    let arr = auth.split(':');
+    let res = await this.repository.findOne({
+      where: { token: arr[0], email: arr[1] },
+    });
+    if (!res) throw new HttpException('Invalid', HttpStatus.NOT_FOUND);
+
     let user = await this.repository.update(email, update);
     return user;
+  }
+
+  public async getCart(id: number, auth: any): Promise<any> {
+    if (auth === null) throw new HttpException('Invalid', HttpStatus.NOT_FOUND);
+    let arr = auth.split(':');
+    let verif = await this.repository.findOne({
+      where: { token: arr[0], email: arr[1] },
+    });
+    if (!verif) throw new HttpException('Invalid', HttpStatus.NOT_FOUND);
+
+    let res = await this.repositoryCart.query(
+      `select p.id_product, p.name, p.price,c.size, c.color, c.quantity, c.id_item from product p, cart c where p.id_product = c.id_product and c.id_api = ${id}`,
+    );
+    for (let i = 0; i < res.length; i++) {
+      let property = await this.hostService.getDetailProductById(
+        res[i].id_product,
+      );
+      res[i].size_list = property.size;
+      res[i].color_list = property.color;
+    }
+    return res;
+  }
+
+  public async deleteCart(constr: any, auth: any): Promise<any> {
+    if (auth === null) throw new HttpException('Invalid', HttpStatus.NOT_FOUND);
+    let arr = auth.split(':');
+    let verif = await this.repository.findOne({
+      where: { token: arr[0], email: arr[1] },
+    });
+    if (!verif) throw new HttpException('Invalid', HttpStatus.NOT_FOUND);
+
+    return await this.repositoryCart.query(
+      `delete from cart where id_item = ${constr.id_item} and id_api = ${constr.id_api}`,
+    );
+  }
+
+  public async updateCart(
+    id: number,
+    id_item: number,
+    body: any,
+    auth: any,
+  ): Promise<any> {
+    if (auth === null) throw new HttpException('Invalid', HttpStatus.NOT_FOUND);
+    let arr = auth.split(':');
+    let verif = await this.repository.findOne({
+      where: { token: arr[0], email: arr[1] },
+    });
+    if (!verif) throw new HttpException('Invalid', HttpStatus.NOT_FOUND);
+
+    let { size, color, quantity } = body;
+
+    return await this.repositoryCart.update(
+      { id_api: id, id_item: id_item },
+      { size: size, color: color, quantity: quantity },
+    );
+  }
+  public async addToCart(id: number, body: any, auth: any): Promise<any> {
+    if (auth === null) throw new HttpException('Invalid', HttpStatus.NOT_FOUND);
+    let arr = auth.split(':');
+    let verif = await this.repository.findOne({
+      where: { token: arr[0], email: arr[1] },
+    });
+    if (!verif) throw new HttpException('Invalid', HttpStatus.NOT_FOUND);
+
+    let { size, color, quantity, id_product } = body;
+    let item = new Cart();
+    item.color = color;
+    item.quantity = quantity;
+    item.size = size;
+    item.id_api = id;
+    item.id_product = id_product;
+    console.log(item);
+    return this.repositoryCart.save(item);
+  }
+
+  public async getVoucher(id: number, auth: any): Promise<any> {
+    if (auth === null) throw new HttpException('Invalid', HttpStatus.NOT_FOUND);
+    let arr = auth.split(':');
+    let verif = await this.repository.findOne({
+      where: { token: arr[0], email: arr[1] },
+    });
+    if (!verif) throw new HttpException('Invalid', HttpStatus.NOT_FOUND);
+
+    return await this.repositoryVoucher.query(
+      `select vd.title, vd.discount, v.num,v.date from voucher_default vd, voucher v where vd.id_voucher = v.id_voucher and v.id_api = ${id}`,
+    );
+  }
+  public async getNotif(id: number, auth: any): Promise<any> {
+    if (auth === null) throw new HttpException('Invalid', HttpStatus.NOT_FOUND);
+    let arr = auth.split(':');
+    let verif = await this.repository.findOne({
+      where: { token: arr[0], email: arr[1] },
+    });
+    if (!verif) throw new HttpException('Invalid', HttpStatus.NOT_FOUND);
+
+    let order_ = await this.repositoryOrder.query(
+      `select*from "order" where "order".id_api=${id} and "order".state!='completed' `,
+    );
+    for (let e of order_) {
+      let newNote = new Notif();
+      newNote.id_order = e.id_order;
+      newNote.id_api = id;
+      if (e.state === 'prepare') {
+        newNote.title = 'Your order is on handle,..';
+      } else if (e.state === 'shipping') {
+        newNote.title = 'You will receive your order soon!';
+      }
+      await this.repositoryNotif.save(newNote);
+    }
+    return await this.repositoryNotif.find({ where: { id_api: id } });
+  }
+
+  public async getOrder(id: number, auth: any): Promise<any> {
+    if (auth === null) throw new HttpException('Invalid', HttpStatus.NOT_FOUND);
+    let arr = auth.split(':');
+    let verif = await this.repository.findOne({
+      where: { token: arr[0], email: arr[1] },
+    });
+    if (!verif) throw new HttpException('Invalid', HttpStatus.NOT_FOUND);
+
+    let order = await this.repositoryOrder.find({ where: { id_api: id } });
+    let res = [];
+    for (let e of order) {
+      let subRes = await this.repositoryOrderDetail.query(
+        `select p.name,dp.quantity,dp.size,dp.color,dp.price from detail_order dp join product p on dp.id_product=p.id_product where dp.id_order=${e.id_order}`,
+      );
+      res.push(Object.assign({}, e, { detail: subRes }));
+      console.log(res);
+    }
+    return res;
+  }
+
+  public async buyProduct(list_id: any, body: any, auth: any): Promise<any> {
+    if (auth === null) throw new HttpException('Invalid', HttpStatus.NOT_FOUND);
+    let arr = auth.split(':');
+    let verif = await this.repository.findOne({
+      where: { token: arr[0], email: arr[1] },
+    });
+    if (!verif) throw new HttpException('Invalid', HttpStatus.NOT_FOUND);
+
+    let arr1 = list_id.split(',');
+    let code = body.code;
+    return;
   }
 }

@@ -15,30 +15,34 @@ import { UserFromApi } from './user.entity';
 import { UserService } from './user.service';
 import { Post } from '@nestjs/common/decorators';
 import { Request } from 'express';
-import { JwtAuthGuard } from '../host/auth/auth.guard';
 import { AuthGuard } from '@nestjs/passport';
-import { request } from 'http';
-import { REQUEST } from '@nestjs/core';
+import { auth } from 'google-auth-library';
 
+@UseInterceptors(ClassSerializerInterceptor)
 @Controller('user')
 export class UserController {
   @Inject(UserService)
   private readonly service: UserService;
 
   @Post('login')
-  private loginCustomer(@Body() body): Promise<string | never> {
-    return this.service.loginCustomer(body);
+  private async loginCustomer(@Body() body, @Req() req: Request): Promise<any> {
+    return await this.service.loginCustomer(body);
+  }
+  @Get('get-customer')
+  private async getCustomer(@Req() req: Request) {
+    return await this.service.getUserbyToken(
+      req.headers.authorization.toString().substring(6),
+    );
   }
 
-  @Post('get-user')
-  private async getUserbyToken(@Body() body) {
-    return await this.service.getUserbyToken(body);
-  }
-
-  @Post('update-profile:email')
-  private async updateProfile(@Param() param, @Body() body) {
-    console.log(body);
-    return await this.service.updateProfile(param, body);
+  @Post('update-profile/:email')
+  private async updateProfile(
+    @Param() param,
+    @Body() body,
+    @Req() req: Request,
+  ) {
+    let auth = req.headers.authorization.toString().substring(6);
+    return await this.service.updateProfile(param, body, auth);
   }
 
   @Get('get-cate')
@@ -57,10 +61,16 @@ export class UserController {
   private async getSize() {
     return await this.service.getSize();
   }
+  @Get('get-detail-product/:id')
+  private async getDetailProduct(
+    @Param() id_product: any,
+    @Req() req: Request,
+  ) {
+    return await this.service.getDetailProduct(id_product.id);
+  }
 
   @Get('get-product/:id')
   private async getMainPage(@Param() id_page: any) {
-    console.log(id_page);
     return this.service.getMainPage(id_page.id);
   }
   @Get('get-product/apply/:id')
@@ -68,25 +78,79 @@ export class UserController {
     console.log(id_page);
     return this.service.getMainPageApply(id_page.id);
   }
-  @Get('men')
-  private async getbyMen() {
-    return this.service.getbySex();
-  }
-  @Get('women')
-  private async getbyWomen() {
-    return this.service.getbySex();
-  }
-  @Get('sale')
-  private async getBySale() {
-    return this.service.getbySaleOff();
-  }
 
-  @Post('set-user')
-  private async setUser(@Body() body: any) {
-    return this.service.setUser(body);
-  }
   @Get('get-user')
   private async getUser(): Promise<UserFromApi[]> {
-    return this.service.getUser();
+    return await this.service.getUser();
+  }
+
+  @Get('cart-list/:id_api')
+  // @UseGuards()
+  private async getCart(@Param() id, @Req() req: Request): Promise<any> {
+    let auth = req.headers.authorization.toString().substring(6);
+    return await this.service.getCart(id.id_api, auth);
+  }
+
+  @Get('delete-cart/:id_api/:id_item')
+  // @UseGuards()
+  private async deleteCart(@Param() constr, @Req() req: Request): Promise<any> {
+    let authen = req.headers.authorization.toString().substring(6);
+    return await this.service.deleteCart(constr, authen);
+  }
+
+  @Post('cart/update-cart/:id_api/:id_item')
+  // @UseGuards()
+  private async updateCart(
+    @Param() constr,
+    @Body() body: any,
+    @Req() req: Request,
+  ): Promise<any> {
+    let auth = req.headers.authorization.toString().substring(6);
+    return await this.service.updateCart(
+      constr.id_api,
+      constr.id_item,
+      body,
+      auth,
+    );
+  }
+
+  @Post('add-cart/:id_api')
+  // @UseGuards()
+  private async addToCart(
+    @Param() constr,
+    @Body() body: any,
+    @Req() req: Request,
+  ): Promise<any> {
+    let auth = req.headers.authorization.toString().substring(6);
+    return await this.service.addToCart(constr.id_api, body, auth);
+  }
+
+  @Post('cart/buy-product/:list_id')
+  private async buyProduct(
+    @Param() list_id,
+    @Body() body,
+    @Req() req: Request,
+  ) {
+    let auth = req.headers.authorization.toString().substring(6);
+    return await this.service.buyProduct(list_id.list, body, auth);
+  }
+
+  @Get('voucher-list/:id_api')
+  // @UseGuards()
+  private async getVoucher(@Param() id, @Req() req: Request): Promise<any> {
+    let auth = req.headers.authorization.toString().substring(6);
+    return await this.service.getVoucher(id.id_api, auth);
+  }
+  @Get('notification-list/:id_api')
+  // @UseGuards()
+  private async getNotif(@Param() id, @Req() req: Request): Promise<any> {
+    let auth = req.headers.authorization.toString().substring(6);
+    return await this.service.getNotif(id.id_api, auth);
+  }
+  @Get('get-order/:id_api')
+  // @UseGuards()
+  private async getOrder(@Param() id, @Req() req: Request): Promise<any> {
+    let auth = req.headers.authorization.toString().substring(6);
+    return await this.service.getOrder(id.id_api, auth);
   }
 }

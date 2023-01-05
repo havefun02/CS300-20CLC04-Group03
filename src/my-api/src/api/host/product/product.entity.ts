@@ -54,20 +54,9 @@ export class Product extends BaseEntity {
 }
 
 @Entity()
-export class GroupImg extends BaseEntity {
-  @PrimaryColumn({ type: 'varchar' })
-  public code: string;
-  @PrimaryGeneratedColumn({ type: 'int' })
-  public id_picture: number;
-  @Column({ type: 'bytea', nullable: false })
-  public source: Uint8Array;
-  // @ManyToOne(() => Product, (img_product) => img_product.imgs)
-  // @JoinColumn({ name: 'id_product' })
-  // public img_product: Product; //is belong to product
-}
-
-@Entity()
 export class ProductDetail extends BaseEntity {
+  @PrimaryColumn({ type: 'int', nullable: false })
+  public id_product!: number;
   @PrimaryColumn({ type: 'varchar', nullable: false })
   public code: string;
   @PrimaryColumn({ type: 'varchar' })

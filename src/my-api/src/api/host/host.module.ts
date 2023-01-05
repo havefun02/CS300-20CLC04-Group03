@@ -8,7 +8,7 @@ import { User } from './host.entity';
 import { Category } from './product/category.entity';
 import { SizeTable } from './product/size.entity';
 import { Color } from './product/color.entity';
-import { GroupImg, Product, ProductDetail } from './product/product.entity';
+import { Product, ProductDetail } from './product/product.entity';
 import { Brand } from './product/brand.entity';
 import { UserService } from '../user/user.service';
 import { UserModule } from '../user/user.module';
@@ -22,7 +22,6 @@ import { UserModule } from '../user/user.module';
       Color,
       Product,
       ProductDetail,
-      GroupImg,
     ]),
     MulterModule.register({
       dest: './uploads',

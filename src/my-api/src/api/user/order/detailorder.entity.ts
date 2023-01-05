@@ -25,7 +25,4 @@ export class DetailOrder extends BaseEntity {
   public quantity: number;
   @Column({ type: 'int', nullable: false })
   public price: number;
-  // @ManyToOne(() => Order, (order) => order.detail_)
-  // @JoinColumn({ name: 'id_product' })
-  // public order: Order;
 }

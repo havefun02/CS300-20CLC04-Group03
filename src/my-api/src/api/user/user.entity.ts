@@ -12,9 +12,6 @@ import {
   PrimaryColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { User } from '../host/host.entity';
-import { VoucherDefault } from '../host/product/voucher.entity';
-import { Cart } from './order/cart.entity';
 
 @Entity()
 export class UserFromApi extends BaseEntity {
@@ -49,7 +46,7 @@ export class Voucher extends BaseEntity {
   @PrimaryColumn()
   public id_voucher: number;
   @PrimaryColumn({ type: 'int' })
-  public id_user: number;
+  public id_api: number;
   @Column({ type: 'int' })
   public num: number;
   // @ManyToMany(

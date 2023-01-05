@@ -10,9 +10,6 @@ import {
   PrimaryColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { UserFromApi } from '../user.entity';
-import { DetailOrder } from './detailorder.entity';
-import { PaymentMethod } from './payment.entity';
 @Entity()
 export class Order extends BaseEntity {
   @PrimaryGeneratedColumn()
@@ -27,10 +24,4 @@ export class Order extends BaseEntity {
   public state: string;
   @Column({ type: 'varchar', nullable: true })
   public voucher: string;
-
-  // @ManyToOne(() => PaymentMethod, (method) => method.orders)
-  // public method_: PaymentMethod;
-
-  // @OneToMany(() => DetailOrder, (detail) => detail.order)
-  // public detail_: DetailOrder[];
 }

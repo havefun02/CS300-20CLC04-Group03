@@ -1,4 +1,3 @@
-import { Product } from '@/api/host/product/product.entity';
 import {
   BaseEntity,
   Column,
@@ -10,17 +9,15 @@ import {
   PrimaryColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { UserFromApi } from '../user.entity';
 
 @Entity()
-export class Notification extends BaseEntity {
+export class Notif extends BaseEntity {
+  @PrimaryGeneratedColumn({ type: 'int' })
+  public id_item_notif: number;
   @PrimaryColumn({ type: 'int' })
   public id_api: number;
-  @PrimaryGeneratedColumn({ type: 'int' })
-  public id_item: number;
   @PrimaryColumn({ type: 'int' })
   public id_order: number;
-
-  // @OneToOne(() => UserFromApi, (user_Api) => user_Api.cart)
-  // cart!: UserFromApi;
+  @Column({ type: 'varchar' })
+  public title: string;
 }

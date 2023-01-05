@@ -6,7 +6,6 @@ import {
   PrimaryColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { ProductDetail } from './product.entity';
 
 @Entity()
 export class SizeTable extends BaseEntity {

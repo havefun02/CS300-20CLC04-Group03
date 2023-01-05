@@ -3,7 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Any, Repository } from 'typeorm';
 import e, { Request } from 'express';
 import { User } from './host.entity';
-import { GroupImg, Product, ProductDetail } from './product/product.entity';
+import { Product, ProductDetail } from './product/product.entity';
 import { Color } from './product/color.entity';
 import { SizeTable } from './product/size.entity';
 import { Brand } from './product/brand.entity';
@@ -29,8 +29,6 @@ export class HostService {
     private readonly repositoryPro: Repository<Product>,
     @InjectRepository(ProductDetail)
     private readonly repositoryProDe: Repository<ProductDetail>,
-    @InjectRepository(GroupImg)
-    private readonly repositoryImg: Repository<GroupImg>,
     @Inject(forwardRef(() => UserService))
     private readonly userService: UserService,
   ) {}
@@ -46,16 +44,13 @@ export class HostService {
     Aproduct.description = body.decript;
     Aproduct.avar = data[0].buffer;
     data.splice(0, 1);
-    for (let i of data) {
-      let Img = new GroupImg();
-      Img.source = i.buffer;
-      Img.code = code;
-      await this.repositoryImg.save(Img);
-    }
+
     let brand = new Brand();
     brand.name_brand = body.brand;
     let name_brand: string = body.brand;
-    const t = await this.repositoryBrand.findOne({ where: { name_brand } });
+    const t = await this.repositoryBrand.findOne({
+      where: { name_brand: name_brand },
+    });
     if (!t) {
       await this.repositoryBrand.save(brand);
     }
@@ -71,13 +66,6 @@ export class HostService {
     Aproduct.brand = body.brand;
     Aproduct.cate = body.cate;
     if (check) {
-      await this.repositoryImg.delete({ code });
-      for (let e of data) {
-        let img = new GroupImg();
-        img.source = e.buffer;
-        img.code = code;
-        await this.repositoryImg.save(img);
-      }
       let id_product = check.id_product;
       await this.repositoryPro.update(
         { id_product, code },
@@ -147,6 +135,28 @@ export class HostService {
     });
     return res;
   }
+  public async getDetailProductById(id: number): Promise<any> {
+    let product = await this.repositoryPro.query(
+      `select *  from product p  where p.id_product=${id}`,
+    );
+
+    let property = await this.repositoryProDe.query(
+      `select size,color,quantity from product_detail where product_detail.id_product=${id}`,
+    );
+    let size = [];
+    let color = [];
+    let quantity = [];
+    property.forEach((e) => {
+      size.push(e.size);
+      color.push(e.color);
+      quantity.push(e.quantity);
+    });
+    product[0].size = size;
+    product[0].color = color;
+    product[0].quantity = quantity;
+    return product[0];
+  }
+
   public async getCustomer(): Promise<any> {
     const data = await this.userService.getUser();
     let res = [];
