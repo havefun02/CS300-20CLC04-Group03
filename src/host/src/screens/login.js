@@ -15,14 +15,17 @@ export default function Login() {
     event.preventDefault();
     const form = { username: id, password: password };
     const res = await axios
-      .post('http://localhost:3001/host/login', form)
-      .then((res) => {
-        console.log(res);
-        setToken(res.data);
-        localStorage.setItem('isLog', true);
-        localStorage.setItem('token', res.data);
-        setIsLog(() => true);
-      })
+      .post('http://localhost:3001/auth/login', form)
+      .then(
+        (res) => {
+          console.log(res);
+          setToken(res.data);
+          localStorage.setItem('isLog', true);
+          localStorage.setItem('token', res.data);
+          setIsLog(() => true);
+        },
+        (rej) => alert('Please input again!')
+      )
       .catch((err) => {
         throw err;
       });

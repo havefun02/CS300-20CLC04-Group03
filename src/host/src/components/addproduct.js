@@ -5,13 +5,13 @@ import './addproduct.css';
 import axios from 'axios';
 export default function AddForm({ props }) {
   const [newIn, setNewIn] = useState(false);
-  const [name, setName] = useState();
-  const [cate, setCate] = useState();
-  const [brand, setBrand] = useState();
+  const [name, setName] = useState(null);
+  const [cate, setCate] = useState(null);
+  const [brand, setBrand] = useState(null);
   const [code, setCode] = useState(Array(data.size.length).fill(null));
-  const [price, setPrice] = useState();
+  const [price, setPrice] = useState(null);
   const [avar, setAvar] = useState([]);
-  const [descript, setDecript] = useState('');
+  const [descript, setDecript] = useState(null);
   const [obj, setObj] = useState({ size: '', color: '', quan: '' });
   const [listObj, setListObj] = useState([]);
   const [reRender, setReRender] = [props.reRender, props.setReRender];
@@ -35,30 +35,41 @@ export default function AddForm({ props }) {
       color.push(e.color);
       quan.push(e.quan);
     });
-    let formApi = new FormData();
-    formApi.append('new', newIn);
-    formApi.append('name', name);
-    formApi.append('code', code);
-    formApi.append('price', price);
-    formApi.append('brand', brand);
-    formApi.append('cate', cate);
-    formApi.append('size', size);
-    formApi.append('color', color);
-    formApi.append('quan', quan);
-    formApi.append('descript', descript);
+    if (
+      size.length > 0 &&
+      color.length > 0 &&
+      price !== null &&
+      code !== null &&
+      price > 0 &&
+      avar.length > 0
+    ) {
+      let formApi = new FormData();
+      formApi.append('new', newIn);
+      formApi.append('id_product', shortid.generate());
+      formApi.append('name', name);
+      formApi.append('code', code);
+      formApi.append('price', price);
+      formApi.append('brand', brand);
+      formApi.append('cate', cate);
+      formApi.append('size', size);
+      formApi.append('color', color);
+      formApi.append('quan', quan);
+      formApi.append('descript', descript);
+      formApi.append('sex', document.getElementById('gender').value);
 
-    avar.forEach((e) => {
-      formApi.append('files', e);
-    });
-
-    const res = await axios
-      .post(url, formApi, options)
-      .then((res) => {
-        setReRender((reRender) => !reRender);
-      })
-      .catch((e) => {
-        throw e;
+      avar.forEach((e) => {
+        formApi.append('files', e);
       });
+
+      const res = await axios
+        .post(url, formApi, options)
+        .then((res) => {
+          setReRender((reRender) => !reRender);
+        })
+        .catch((e) => {
+          throw e;
+        });
+    } else alert('invalid input');
   };
   return (
     <div className="addform">
@@ -128,6 +139,10 @@ export default function AddForm({ props }) {
                     );
                   })}
                 </select>
+                <select style={{ width: '70px' }} id="gender">
+                  <option key={shortid.generate()}>Men</option>
+                  <option key={shortid.generate()}>Women</option>
+                </select>
                 <div
                   style={{
                     display: 'flex',
@@ -172,7 +187,11 @@ export default function AddForm({ props }) {
                     >
                       <option value={'Size'}>Size</option>
                       {data.size.map((e, ind) => {
-                        return <option value={e}>{e}</option>;
+                        return (
+                          <option key={shortid.generate()} value={e}>
+                            {e}
+                          </option>
+                        );
                       })}
                     </select>
                   </div>

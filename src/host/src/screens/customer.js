@@ -168,35 +168,9 @@ export default function Customer() {
                   Send Gift
                 </button>
               </div>
-              <div
-                style={{
-                  width: '150px',
-                  height: '100%',
-                  display: 'flex',
-                  alignItems: 'center'
-                }}
-              >
-                <button
-                  onClick={() => {
-                    if (check.filter((e, ind) => e === true).length !== 0)
-                      setMesOverlay((mesOverlay) => !mesOverlay);
-                  }}
-                  style={{
-                    width: '100%',
-                    height: '25px',
-                    borderRadius: '5px',
-                    backgroundColor: '#000',
-                    color: '#fff',
-                    cursor: 'pointer'
-                  }}
-                >
-                  Send Message
-                </button>
-              </div>
             </div>
           </div>
         </div>
-        {mesOverlay && <MesOverlay props={[[mesOverlay, setMesOverlay]]} />}
         {overlay && <Overlay props={[[overlay, setOverlay]]} />}
       </div>
     </div>

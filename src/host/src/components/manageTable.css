@@ -43,6 +43,7 @@
   position: relative;
   padding-right: 22px;
   text-align: center;
+  font-size: 14px;
 }
 .manage-table .expand-row {
   position: absolute;

@@ -7,22 +7,24 @@ export default function Register() {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
   const [cPassword, setcPassword] = useState('');
-  const [err, setErr] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (password === cPassword) {
       const form = { username: id, password: password };
       const res = await axios
-        .post('http://localhost:3001/host/register', form)
-        .then((res) => {
-          navigate('/');
-        })
+        .post('http://localhost:3001/auth/register', form)
+        .then(
+          (res) => {
+            navigate('/');
+          },
+          (ref) => alert('Please fill all registration fields')
+        )
         .catch((err) => {
           throw err;
         });
     } else {
-      setErr((err) => !err);
+      alert('Please fill all registration fields');
     }
   };
   return (
@@ -44,7 +46,6 @@ export default function Register() {
               <input
                 onChange={(event) => {
                   setId(event.target.value);
-                  setErr(false);
                 }}
                 placeholder="Email"
                 type="email"
@@ -54,7 +55,6 @@ export default function Register() {
               <input
                 onChange={(event) => {
                   setPassword(event.target.value);
-                  setErr(false);
                 }}
                 placeholder="Password"
                 type="password"
@@ -63,7 +63,6 @@ export default function Register() {
             <div className="register-input">
               <input
                 onChange={(event) => {
-                  setErr(false);
                   setcPassword(event.target.value);
                 }}
                 placeholder="Confirm password"
@@ -73,32 +72,6 @@ export default function Register() {
             <div className="register-button">
               <button type="submit">Submit</button>
             </div>
-            {err && (
-              <span
-                style={{
-                  position: 'absolute',
-                  bottom: '10%',
-                  color: 'red',
-                  fontSize: '15px',
-                  fontWeight: '700'
-                }}
-              >
-                Invalid
-              </span>
-            )}
-            {err && (
-              <span
-                style={{
-                  position: 'absolute',
-                  bottom: '10%',
-                  color: 'red',
-                  fontSize: '15px',
-                  fontWeight: '700'
-                }}
-              >
-                Invalid
-              </span>
-            )}
           </form>
           <div className="to-signup">
             <img

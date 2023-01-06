@@ -4,7 +4,7 @@ import Chart from 'react-apexcharts';
 import shortid from 'shortid';
 import axios from 'axios';
 import './statistic.css';
-const listYear = [2020, 2021, 2022].reverse();
+const listYear = [2022, 2023].reverse();
 export default function Statistic() {
   const [year, setYear] = useState(listYear[0]);
   const [fetch, setFetch] = useState(false);
@@ -120,6 +120,7 @@ export default function Statistic() {
       };
       const url = `http://localhost:3001/host/get-revenue/${year}`;
       const res = await axios.get(url, options).then((data) => {
+        console.log(data);
         revenue.series[0].data = data.data;
         setRevenueData(revenue);
         setList(Object.assign([], data.data));

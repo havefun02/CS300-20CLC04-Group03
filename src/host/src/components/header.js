@@ -4,6 +4,7 @@ import { useContext } from 'react';
 import { Context } from '../context/context';
 import { NavLink, useNavigate } from 'react-router-dom';
 import shortid from 'shortid';
+import axios from 'axios';
 export default function Header({ props }) {
   const navigate = useNavigate();
   const context = useContext(Context);
@@ -11,9 +12,6 @@ export default function Header({ props }) {
   const [isLog, setIsLog] = [context.isLog, context.setIsLog];
   const [expandHeader, setExpandHeader] = useState(false);
   const [expandNotify, setExpandNotify] = useState(false);
-  useEffect(() => {
-    //emit
-  }, []);
 
   const handleClick = () => {
     setExpandNotify((expandNotify) => !expandNotify);

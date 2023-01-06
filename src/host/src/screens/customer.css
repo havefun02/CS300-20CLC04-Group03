@@ -31,7 +31,7 @@
   flex-direction: row;
 }
 .customer-footer > div {
-  max-width: 600px;
+  max-width: 400px;
   display: flex;
   flex: 1;
   padding-left: 40px;

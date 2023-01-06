@@ -1,34 +1,32 @@
 import React from 'react';
 import { useState } from 'react';
 import { createContext } from 'react';
-import { io } from 'socket.io-client';
+import axios from 'axios';
 const Context = createContext();
 const ContextProvider = ({ children }) => {
   const [token, setToken] = useState(null);
   const [socket, setSocket] = useState(null);
-  const [isLog, setIsLog] = useState(true);
+  const [isLog, setIsLog] = useState(false);
   const [currentRoute, setCurrentRoute] = useState('/');
   const [notify, setNotify] = useState([]);
-  // establish socket connection
+
   React.useEffect(() => {
-    // setSocket(io('http://localhost:3001'));
-  }, []);
-
-  // subscribe to the socket event
-  React.useEffect(() => {
-    if (!socket) return;
-
-    socket.on('connect', () => {
-      console.log('Connected');
-
-      socket.emit('join', { email: 'test' });
-    });
-
-    socket.on('disconnect', function () {
-      console.log('Disconnected');
-    });
-  }, [socket]);
-
+    const fetchData = async () => {
+      const token = localStorage.getItem('token');
+      const options = {
+        headers: {
+          Authorization: 'Bearer ' + token
+          // 'content-type': 'multipart/form-data'
+        }
+      };
+      const url = 'http://localhost:3001/host/get-notify';
+      const res = await axios.get(url, options).then((data) => {
+        setNotify(data.data);
+        console.log(data);
+      });
+    };
+    fetchData();
+  }, [fetch]);
   React.useEffect(() => {
     const getLocal = localStorage.getItem('isLog');
     if (getLocal !== null) setIsLog(() => getLocal);
