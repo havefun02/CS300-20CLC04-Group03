@@ -114,8 +114,8 @@
   justify-content: flex-start;
 }
 .hover-cart > div:last-child:hover {
-  background-color: #fff;
-  cursor: default;
+  /* background-color: #fff;
+  cursor: default; */
 }
 
 .hover-profile:hover {

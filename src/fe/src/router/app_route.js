@@ -32,9 +32,8 @@ export default function AppRoute() {
                   <Page props={{ title: 'All product', id_page: 'all' }} />
                 }
               ></Route>
-              <Route path={'/product'} element={<DetailProduct />}>
-                <Route path={':id'} element={<DetailProduct />}></Route>
-              </Route>
+              <Route path={'/product/:id'} element={<DetailProduct />}></Route>
+
               <Route
                 path="*"
                 element={

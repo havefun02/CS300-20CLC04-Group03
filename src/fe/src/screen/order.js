@@ -235,7 +235,7 @@ export default function Order() {
               }
             >
               <div>
-                <span>Complete</span>
+                <span>Completed</span>
               </div>
             </div>
             <div
@@ -252,7 +252,7 @@ export default function Order() {
               }
             >
               <div>
-                <span>Returned</span>
+                <span>Cancelled</span>
               </div>
             </div>
           </div>

@@ -104,9 +104,10 @@ export default function Page({ props }) {
       }
     };
     if (mode === 1) {
+      setTrigger((trigger) => !trigger);
       navigate(`/product/${id_product}`);
     } else if (mode === 0) {
-      const url = `http://localhost:3001/user/${id_user}/del-cart:${id_product}`;
+      const url = `http://localhost:3001/user/${id_user}/del-cart/:${id_product}`;
       const res = await axios.get(url, options).then((data) => {
         setTrigger((trigger) => !trigger);
       });
@@ -131,11 +132,10 @@ export default function Page({ props }) {
         // 'content-type': 'multipart/form-data'
       }
     };
-    if (filter.length === 0) setFetch((fetchdata) => !fetchdata);
+    if (filter.length === 0) setTrigger((trigger) => !trigger);
     else {
       const url = `http://localhost:3001/user/get-product/apply/${filter}`;
       const res = await axios.get(url).then((data) => {
-        console.log(data);
         setList(data.data);
       });
     }
@@ -154,14 +154,7 @@ export default function Page({ props }) {
 
         break;
       }
-      case 3: {
-        list.sort((a, b) => a.name - b.name);
-        break;
-      }
-      case 4: {
-        list.sort((a, b) => b.name - a.name);
-        break;
-      }
+
       default:
         break;
     }
@@ -175,7 +168,7 @@ export default function Page({ props }) {
               onClick={() => {
                 navigate(`/product/${props.id_product}`);
               }}
-              src={`data:image/png;base64,${toBase64(props.avar)}`}
+              src={`data:image/png;base64,${toBase64(props.avar.data)}`}
             ></img>
           </div>
           <div className={'product-name' + viewType}>
@@ -195,7 +188,8 @@ export default function Page({ props }) {
                 padding: '3px 0'
               }}
             >
-              {(Number(props.price) * Number(props.priceSale)) / 100}
+              {Number(props.price) -
+                (Number(props.price) * Number(props.priceSale)) / 100}
             </span>
             {viewType === '1' && <span>Description</span>}
           </div>
@@ -300,26 +294,6 @@ export default function Page({ props }) {
                   className="page-expand-feature-elements"
                 >
                   <span>Price descending</span>
-                </div>
-                <div
-                  onClick={() => {
-                    setExpandFeature(false);
-                    setTitleFeature('Title ascending');
-                    handleGroupBy(3);
-                  }}
-                  className="page-expand-feature-elements"
-                >
-                  <span> Title ascending</span>
-                </div>
-                <div
-                  onClick={() => {
-                    setExpandFeature(false);
-                    setTitleFeature('Title descending');
-                    handleGroupBy(4);
-                  }}
-                  className="page-expand-feature-elements"
-                >
-                  <span> Title descending</span>
                 </div>
               </div>
             )}

@@ -230,6 +230,7 @@ export default function Navbar({ props }) {
                 >
                   <span>More...</span>
                   <button
+                    className="button-cart"
                     style={{
                       height: '30px',
                       width: '80px',

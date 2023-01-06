@@ -13,21 +13,34 @@ export default function DetailProduct({ props }) {
   const location = useLocation();
   const context = useContext(Context);
   const id_user = context.id;
+  const [avar, setAvar] = useState('');
   const [fetchdata, setFetch] = [context.trigger, context.setTrigger];
-  const [product, setProduct] = useState({});
+  const [product, setProduct] = useState([]);
   const [overlay, setOverlay] = useState(false);
-
+  const toBase64 = (buffer) => {
+    let binary = '';
+    let bytes = new Uint8Array(buffer);
+    let len = bytes.byteLength;
+    for (var i = 0; i < len; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    return window.btoa(binary);
+  };
   useEffect(() => {
     const fetchProduct = async () => {
       let path = location.pathname;
       let id_pro = path.split('/');
-      console.log(id_pro);
       const url = `http://localhost:3001/user/get-detail-product/${
         id_pro[id_pro.length - 1]
       }`;
-      const res = await axios.get(url).then((data) => {
-        setProduct(data.data);
-      });
+      const res = await axios.get(url).then(
+        (data) => {
+          console.log(data);
+          setAvar(data.data.avar.data);
+          setProduct(data.data);
+        },
+        (rej) => alert(rej)
+      );
     };
     fetchProduct();
   }, [fetchdata]);
@@ -51,7 +64,7 @@ export default function DetailProduct({ props }) {
                   }}
                 >
                   <img
-                    src={require('../assets/th.jpg')}
+                    src={`data:image/png;base64,${toBase64(avar)}`}
                     style={{ height: '300px', width: '300px' }}
                   ></img>
                 </div>
@@ -68,18 +81,10 @@ export default function DetailProduct({ props }) {
                   </span>
                 </div>
                 <div>
-                  <p>
-                    ĐÔI GIÀY BÓNG RỔ MANG PHONG CÁCH BIỂU TƯỢNG CỦA THẬP NIÊN
-                    80. Suốt gần 40 năm, Forum đã trở thành một phần không thể
-                    thiếu của adidas. Đôi giày biểu tượng này vẫn giữ nguyên
-                    thiết kế ban đầu với 3 Sọc huyền thoại và lớp phủ ngoài kinh
-                    điển. Các điểm nhấn sặc sỡ và bằng nylon bổ sung hài hòa
-                    trên thân giày gọn ghẽ bằng da cho vẻ ngoài đa năng, đơn
-                    giản mà thanh lịch, nhưng cũng táo bạo và cá tính.
-                  </p>
+                  <p>{product.description}</p>
                 </div>
               </div>
-              <div className="product-detail">
+              {/* <div className="product-detail">
                 <div>
                   <span style={{ fontSize: '20px', fontWeight: '700' }}>
                     Detail Product
@@ -113,7 +118,7 @@ export default function DetailProduct({ props }) {
                     <li>Mã sản phẩm: FZ6531</li>
                   </ul>
                 </div>
-              </div>
+              </div> */}
             </div>
             <div style={{ top: 0, position: 'relative', flex: 1 }}>
               <div className="detail-group-info">

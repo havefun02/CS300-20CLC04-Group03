@@ -422,7 +422,7 @@ export default function Profile() {
                     ) : (
                       <div>
                         <input
-                          onChange={() => setNewSex('men')}
+                          onChange={() => setNewSex('Men')}
                           id="men"
                           style={{ width: '15px', height: '20px' }}
                           name="sex"
@@ -433,7 +433,7 @@ export default function Profile() {
                           Men
                         </label>
                         <input
-                          onChange={() => setNewSex('women')}
+                          onChange={() => setNewSex('Women')}
                           id="women"
                           style={{ width: '15px', height: '20px' }}
                           name="sex"

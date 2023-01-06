@@ -52,6 +52,7 @@ export default function Cart() {
 
   const onUpdate = async (id_item, color, size, quan) => {
     console.log(id_item);
+    console.log(quan);
     const token = sessionStorage.getItem('token');
     const email = sessionStorage.getItem('email');
 
@@ -143,7 +144,7 @@ export default function Cart() {
           >
             <div style={{ flex: '0 0 100px', height: '100%' }}>
               <img
-                src={require('../assets/overlay.jpg')}
+                // src={require('../assets/overlay.jpg')}
                 style={{ width: '80px', height: '80px' }}
               ></img>
             </div>
