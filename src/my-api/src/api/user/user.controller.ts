@@ -71,6 +71,7 @@ export class UserController {
 
   @Get('get-product/:id')
   private async getMainPage(@Param() id_page: any) {
+    console.log(id_page);
     return this.service.getMainPage(id_page.id);
   }
   @Get('get-product/apply/:id')
@@ -106,6 +107,7 @@ export class UserController {
     @Req() req: Request,
   ): Promise<any> {
     let auth = req.headers.authorization.toString().substring(6);
+    console.log(constr);
     return await this.service.updateCart(
       constr.id_api,
       constr.id_item,
@@ -125,14 +127,19 @@ export class UserController {
     return await this.service.addToCart(constr.id_api, body, auth);
   }
 
-  @Post('cart/buy-product/:list_id')
+  @Post('cart/buy-product/:id_user/:list_id')
   private async buyProduct(
     @Param() list_id,
     @Body() body,
     @Req() req: Request,
   ) {
     let auth = req.headers.authorization.toString().substring(6);
-    return await this.service.buyProduct(list_id.list, body, auth);
+    return await this.service.buyProduct(
+      list_id.id_user,
+      list_id.list_id,
+      body,
+      auth,
+    );
   }
 
   @Get('voucher-list/:id_api')
@@ -141,16 +148,23 @@ export class UserController {
     let auth = req.headers.authorization.toString().substring(6);
     return await this.service.getVoucher(id.id_api, auth);
   }
-  @Get('notification-list/:id_api')
-  // @UseGuards()
-  private async getNotif(@Param() id, @Req() req: Request): Promise<any> {
-    let auth = req.headers.authorization.toString().substring(6);
-    return await this.service.getNotif(id.id_api, auth);
-  }
-  @Get('get-order/:id_api')
+
+  @Get('order-list/:id_api/:tab')
   // @UseGuards()
   private async getOrder(@Param() id, @Req() req: Request): Promise<any> {
     let auth = req.headers.authorization.toString().substring(6);
-    return await this.service.getOrder(id.id_api, auth);
+    return await this.service.getOrder(id.id_api, id.tab, auth);
+  }
+  @Get('del-order/:id_api/:id_order')
+  // @UseGuards()
+  private async removeOrder(@Param() id, @Req() req: Request): Promise<any> {
+    let auth = req.headers.authorization.toString().substring(6);
+    return await this.service.removeOrder(id.id_api, id.id_order, auth);
+  }
+  @Get('buy-again-order/:id_api/:id_order')
+  // @UseGuards()
+  private async BuyAgainOrder(@Param() id, @Req() req: Request): Promise<any> {
+    let auth = req.headers.authorization.toString().substring(6);
+    return await this.service.BuyAgainOrder(id.id_api, id.id_order, auth);
   }
 }

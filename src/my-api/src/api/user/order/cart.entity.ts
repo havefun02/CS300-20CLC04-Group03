@@ -13,12 +13,12 @@ import {
 
 @Entity()
 export class Cart extends BaseEntity {
-  @PrimaryGeneratedColumn({ type: 'int' })
-  public id_item: number;
-  @Column({ type: 'int' })
-  public id_api: number;
-  @Column({ type: 'int' })
-  public id_product: number;
+  @PrimaryColumn({ type: 'varchar' })
+  public id_item: string;
+  @Column({ type: 'varchar' })
+  public id_api: string;
+  @Column({ type: 'varchar' })
+  public id_product: string;
   @Column({ type: 'varchar' })
   public size: string;
   @Column({ type: 'varchar' })

@@ -30,7 +30,7 @@ export class HostController {
   @Inject(HostService)
   private readonly service: HostService;
   @Post('upload-new-product')
-  // @UseGuards(JwtAuthGuard)
+  @UseGuards(JwtAuthGuard)
   @UseInterceptors(FilesInterceptor('files', 10, { storage: memoryStorage() }))
   private async uploadProduct(
     @Req() req: Request,
@@ -41,22 +41,27 @@ export class HostController {
     return this.service.uploadDb(req.body, <User>req.user, files);
   }
 
-  @Delete('delete-product:code/:size/:color')
+  @Delete('delete-product/:id_product/:size/:color')
   // @UseGuards(JwtAuthGuard)
   private async deleteProduct(@Req() req: Request, @Param() param) {
     console.log(param);
     return this.service.deleteProduct(param);
   }
 
-  @Post('update-product:code/:size/:color')
-  // @UseGuards(JwtAuthGuard)
+  @Post('update-product/:id_product/:size/:color')
+  @UseGuards(JwtAuthGuard)
   private async updateProduct(
     @Req() req: Request,
     @Body() body,
     @Param() param,
   ) {
     console.log(req.body);
-    return this.service.updateProduct(param, body);
+    return await this.service.updateProduct(param, body);
+  }
+  @Post('confirm-order')
+  @UseGuards(JwtAuthGuard)
+  private async setConfirm(@Req() req: Request, @Body() body) {
+    return await this.service.setConfirm(body);
   }
 
   @Get('get-product/all')
@@ -65,14 +70,17 @@ export class HostController {
   }
 
   @Get('get-customer/all')
+  @UseGuards(JwtAuthGuard)
   private async getCustomer() {
     return this.service.getCustomer();
   }
   @Get('get-order/all')
+  @UseGuards(JwtAuthGuard)
   private async getOrder() {
     return this.service.getOrder();
   }
   @Get('get-revenue/:year')
+  @UseGuards(JwtAuthGuard)
   private async getRevenue(@Param() year: any) {
     return this.service.getRevenue(year);
   }

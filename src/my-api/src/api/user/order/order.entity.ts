@@ -12,16 +12,16 @@ import {
 } from 'typeorm';
 @Entity()
 export class Order extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  public id_order: number;
-  @Column({ type: 'int' })
-  public id_api: number;
+  @PrimaryColumn({ type: 'varchar' })
+  public id_order: string;
+  @Column({ type: 'varchar' })
+  public id_api: string;
   @Column({ type: 'timestamp', nullable: false })
   public set_at: Date | null;
   @Column({ type: 'varchar' })
-  public method: number;
+  public method: string;
   @Column({ type: 'varchar' })
   public state: string;
   @Column({ type: 'varchar', nullable: true })
-  public voucher: string;
+  public id_voucher: string;
 }

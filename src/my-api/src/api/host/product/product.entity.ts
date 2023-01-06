@@ -10,9 +10,9 @@ import {
 } from 'typeorm';
 @Entity()
 export class Product extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  public id_product!: number;
-  @PrimaryColumn({ type: 'varchar', nullable: false })
+  @PrimaryColumn({ type: 'varchar' })
+  public id_product!: string;
+  @Column({ type: 'varchar' })
   public code: string;
   @Column({ type: 'varchar', nullable: false })
   public brand: string;
@@ -55,16 +55,15 @@ export class Product extends BaseEntity {
 
 @Entity()
 export class ProductDetail extends BaseEntity {
-  @PrimaryColumn({ type: 'int', nullable: false })
-  public id_product!: number;
   @PrimaryColumn({ type: 'varchar', nullable: false })
-  public code: string;
+  public id_product: string;
   @PrimaryColumn({ type: 'varchar' })
   public size: string;
   @PrimaryColumn({ type: 'varchar' })
   public color: string;
   @Column({ type: 'int' })
   public quantity: number;
+
   // @ManyToOne(() => SizeTable, (size) => size.productsize, {
   //   cascade: true,
   //   onDelete: 'CASCADE',

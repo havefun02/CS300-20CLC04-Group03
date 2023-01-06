@@ -1,3 +1,4 @@
+import { type } from 'os';
 import {
   BaseEntity,
   Column,
@@ -11,12 +12,10 @@ import { Order } from './order.entity';
 
 @Entity()
 export class DetailOrder extends BaseEntity {
-  @PrimaryGeneratedColumn({ type: 'int' })
-  public id: number;
-  @PrimaryColumn()
-  public id_order: number;
-  @PrimaryColumn({ type: 'int' })
-  public id_product: number;
+  @PrimaryColumn({ type: 'varchar' })
+  public id_order: string;
+  @PrimaryColumn({ type: 'varchar' })
+  public id_product: string;
   @PrimaryColumn({ type: 'varchar' })
   public size: string;
   @PrimaryColumn({ type: 'varchar' })

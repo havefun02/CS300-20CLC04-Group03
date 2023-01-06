@@ -1,10 +1,16 @@
 import { Exclude } from 'class-transformer';
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  Entity,
+  PrimaryColumn,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity()
 export class User extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  public id_user!: number;
+  @PrimaryColumn({ type: 'varchar' })
+  public id_user!: string;
 
   @Column({ type: 'varchar' })
   public username!: string;

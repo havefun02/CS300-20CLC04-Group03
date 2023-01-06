@@ -12,10 +12,10 @@ import {
 
 @Entity()
 export class Voucher extends BaseEntity {
-  @PrimaryColumn({ type: 'int' })
-  public id_api: number;
-  @PrimaryGeneratedColumn({ type: 'int' })
-  public id_voucher: number;
+  @PrimaryColumn({ type: 'varchar' })
+  public id_api: string;
+  @PrimaryColumn({ type: 'varchar' })
+  public id_voucher: string;
   @Column({ type: 'int' })
   public num: number;
   @Column({ type: 'date', nullable: true })

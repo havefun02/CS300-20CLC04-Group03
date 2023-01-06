@@ -5,6 +5,7 @@ import { Repository } from 'typeorm';
 import { RegisterDto, LoginDto, ChangeDto } from './auth.dto';
 import { AuthHelper } from './auth.helper';
 import { UserFromApi } from '@/api/user/user.entity';
+import shortid = require('shortid');
 
 @Injectable()
 export class AuthService {
@@ -26,6 +27,7 @@ export class AuthService {
     }
     user = new User();
     // user.name = name;
+    user.id_user = shortid.generate();
     user.username = username;
     user.password = this.helper.encodePassword(password);
 
@@ -58,7 +60,7 @@ export class AuthService {
   ): Promise<string | never> {
     console.log(user_);
     const { pre, password }: ChangeDto = body;
-    const id_user: number = user_.id_user;
+    const id_user: string = user_.id_user;
     const user: User = await this.repository.findOne({ where: { id_user } });
     console.log(user);
 

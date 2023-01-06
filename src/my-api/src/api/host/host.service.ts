@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Any, Repository } from 'typeorm';
 import e, { Request } from 'express';
@@ -12,6 +12,7 @@ import { close } from 'fs';
 import { UserService } from '../user/user.service';
 import { forwardRef } from '@nestjs/common/utils';
 import { UserFromApi } from '../user/user.entity';
+import shortid = require('shortid');
 @Injectable()
 export class HostService {
   constructor(
@@ -35,21 +36,23 @@ export class HostService {
 
   public async uploadDb(body: any, own: User, data: any): Promise<any> {
     let Aproduct = new Product();
-    let code = body.code;
-    let check = await this.repositoryPro.findOne({ where: { code } });
+    let check = await this.repositoryPro.findOne({
+      where: { code: body.code },
+    });
+
+    Aproduct.id_product = shortid.generate();
     Aproduct.code = body.code;
+    Aproduct.kind = body.sex;
     Aproduct.name = body.name;
     Aproduct.price = body.price;
     Aproduct.new = body.new;
-    Aproduct.description = body.decript;
+    Aproduct.description = body.descript;
     Aproduct.avar = data[0].buffer;
-    data.splice(0, 1);
-
     let brand = new Brand();
     brand.name_brand = body.brand;
-    let name_brand: string = body.brand;
+    brand.id_brand = shortid.generate();
     const t = await this.repositoryBrand.findOne({
-      where: { name_brand: name_brand },
+      where: { name_brand: brand.name_brand },
     });
     if (!t) {
       await this.repositoryBrand.save(brand);
@@ -57,8 +60,31 @@ export class HostService {
 
     let cate = new Category();
     cate.name_cate = body.cate;
-    let name_cate: string = body.cate;
-    const t1 = await this.repositoryCate.findOne({ where: { name_cate } });
+    cate.id_cate = shortid.generate();
+
+    let color_1 = new Color();
+    color_1.name_color = body.color;
+    color_1.id_color = shortid.generate();
+    const t2 = await this.repositoryColor.findOne({
+      where: { name_color: color_1.name_color },
+    });
+    if (!t2) {
+      await this.repositoryColor.save(color_1);
+    }
+
+    let size_1 = new SizeTable();
+    size_1.name_size = body.size;
+    size_1.name_size = shortid.generate();
+    const t3 = await this.repositorySize.findOne({
+      where: { name_size: size_1.name_size },
+    });
+    if (!t3) {
+      await this.repositorySize.save(size_1);
+    }
+
+    const t1 = await this.repositoryCate.findOne({
+      where: { name_cate: cate.name_cate },
+    });
     if (!t1) {
       await this.repositoryCate.save(cate);
     }
@@ -67,16 +93,18 @@ export class HostService {
     Aproduct.cate = body.cate;
     if (check) {
       let id_product = check.id_product;
+      Aproduct.id_product = id_product;
       await this.repositoryPro.update(
-        { id_product, code },
+        { id_product: id_product },
         {
+          code: body.code,
           brand: body.brand,
           cate: body.cate,
           name: body.name,
           new: body.new,
           price: body.price,
           description: body.decript,
-          avar: body.avar,
+          avar: data[0].buffer,
         },
       );
     } else await this.repositoryPro.save(Aproduct);
@@ -92,21 +120,21 @@ export class HostService {
       let quantity = quantity_[ind];
 
       let check = await this.repositoryProDe.findOne({
-        where: { code, size, color },
+        where: { id_product: body.id_product, size: size, color: color },
       });
-      console.log(check);
+
       if (check) {
         await this.repositoryProDe.update(
-          { code, size, color },
+          { id_product: body.id_product, size: size, color: color },
           {
             quantity: Number(check.quantity) + Number(quantity),
           },
         );
       } else {
-        detail.code = code;
         detail.color = color;
         detail.size = size;
         detail.quantity = quantity;
+        detail.id_product = Aproduct.id_product;
         await this.repositoryProDe.save(detail);
       }
     }
@@ -115,12 +143,12 @@ export class HostService {
 
   public async getProduct(): Promise<any> {
     const product = await this.repositoryPro.query(
-      'select * from product join product_detail on product.code=product_detail.code ',
+      'select * from product join product_detail on product.id_product=product_detail.id_product ',
     );
-    console.log(product);
     let res = [];
     product.forEach((e, ind) => {
       let clone1 = [];
+      clone1.push(e.id_product);
       clone1.push(e.code);
       clone1.push(e.name);
       if (e.quantity > 0) clone1.push('OK');
@@ -135,13 +163,13 @@ export class HostService {
     });
     return res;
   }
-  public async getDetailProductById(id: number): Promise<any> {
+  public async getDetailProductById(id: string): Promise<any> {
     let product = await this.repositoryPro.query(
-      `select *  from product p  where p.id_product=${id}`,
+      `select *  from product p  where p.id_product='${id}'`,
     );
 
     let property = await this.repositoryProDe.query(
-      `select size,color,quantity from product_detail where product_detail.id_product=${id}`,
+      `select size,color,quantity from product_detail where product_detail.id_product='${id}'`,
     );
     let size = [];
     let color = [];
@@ -159,9 +187,13 @@ export class HostService {
 
   public async getCustomer(): Promise<any> {
     const data = await this.userService.getUser();
+    console.log(data);
     let res = [];
+
     data.forEach((e) => {
-      res.push(Object.values(e));
+      let data = Object.values(e);
+      data.pop();
+      res.push(data);
     });
     return res;
   }
@@ -195,32 +227,33 @@ export class HostService {
   }
 
   public async updateProduct(constrain: any, body: any) {
-    let code = constrain.code;
-    let size = constrain.size;
-    let color = constrain.color;
+    let id_product = constrain.id_product;
+
     let quantity = body.quantity;
+    console.log(quantity);
     let name_cate = body.cate;
     let name_brand = body.brand;
     let check_cate = await this.repositoryCate.findOne({
-      where: { name_cate },
+      where: { name_cate: name_cate },
     });
     let check_brand = await this.repositoryBrand.findOne({
-      where: { name_brand },
+      where: { name_brand: name_brand },
     });
     if (!check_cate) {
       let Cate = new Category();
       Cate.name_cate = name_cate;
+      Cate.id_cate = shortid.generate();
       this.repositoryCate.save(Cate);
     }
     if (!check_brand) {
       let Brand_ = new Brand();
       Brand_.name_brand = name_brand;
+      Brand_.id_brand = shortid.generate();
       this.repositoryBrand.save(Brand_);
     }
-    let product = await this.repositoryPro.findOne({ where: { code } });
-    let id_product = product.id_product;
+
     await this.repositoryPro.update(
-      { id_product, code },
+      { id_product: id_product },
       {
         name: body.name,
         price: body.price,
@@ -228,11 +261,20 @@ export class HostService {
         brand: body.brand,
       },
     );
-    return await this.repositoryProDe.update(constrain, {
-      size: size,
-      color: color,
-      quantity: quantity,
+    let checkDp = await this.repositoryProDe.findOne({
+      where: constrain,
     });
+    console.log(constrain);
+    if (checkDp)
+      return await this.repositoryProDe.update(constrain, {
+        quantity: quantity,
+      });
+    else
+      return await this.repositoryProDe.update(constrain, {
+        quantity: quantity,
+        size: constrain.size,
+        color: constrain.color,
+      });
   }
 
   public async getBrand() {
@@ -264,12 +306,21 @@ export class HostService {
         constrDetail.color = tmp[1];
       }
     });
-    const findProduct = await this.repositoryPro.find({ where: constrProduct });
-    console.log(findProduct);
-    const findDetail = await this.repositoryProDe.find({ where: constrDetail });
+    let findProduct;
+    let findDetail;
+    if (id_page === '') {
+      findProduct = await this.repositoryPro.find();
+    } else {
+      findProduct = await this.repositoryPro.find({
+        where: constrProduct,
+      });
+      findDetail = await this.repositoryProDe.find({
+        where: constrDetail,
+      });
+    }
     for (let e of findProduct)
       for (let i of findDetail) {
-        if (i.code === e.code) {
+        if (i.id_product === e.id_product) {
           res.push(e);
         }
       }
@@ -284,15 +335,40 @@ export class HostService {
       );
     else if (id_page === 'men')
       return await this.repositoryPro.query(
-        `select * from product where product.kind='men'`,
+        `select * from product where product.kind='Men'`,
       );
     else if (id_page === 'women')
       return await this.repositoryPro.query(
-        `select * from product where product.kind='women'`,
+        `select * from product where product.kind='Women'`,
       );
     else if (id_page === 'sale')
       return await this.repositoryPro.query(
         'select * from product where product.sale=true',
       );
+  }
+  public async handleOrder(
+    id_product: any,
+    color: any,
+    size: any,
+    quantity: any,
+  ) {
+    let dp = await this.repositoryProDe.findOne({
+      where: { id_product: id_product, size: size, color: color },
+    });
+
+    if (!dp || dp.quantity < quantity)
+      throw new HttpException('Invalid', HttpStatus.NOT_FOUND);
+
+    return await this.repositoryProDe.update(
+      { id_product: id_product, size: size, color: color },
+      { quantity: dp.quantity - quantity },
+    );
+  }
+
+  public async setConfirm(body: any) {
+    console.log(body);
+    let list_id_order = body.list_id_order;
+
+    return this.userService.setConfirm(list_id_order[0]);
   }
 }

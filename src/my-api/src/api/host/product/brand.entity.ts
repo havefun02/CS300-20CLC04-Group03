@@ -9,8 +9,8 @@ import { Product } from './product.entity';
 
 @Entity()
 export class Brand {
-  @PrimaryGeneratedColumn()
-  public id_brand: number;
+  @PrimaryColumn({ type: 'varchar' })
+  public id_brand: string;
   @PrimaryColumn({ type: 'varchar', nullable: false })
   public name_brand: string;
   // @OneToMany(() => Product, (product) => product.brand_)

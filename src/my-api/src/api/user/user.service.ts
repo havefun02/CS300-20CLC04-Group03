@@ -10,7 +10,7 @@ import { Brand } from '../host/product/brand.entity';
 import { HostService } from '../host/host.service';
 import { forwardRef } from '@nestjs/common/utils';
 import { Cart } from './order/cart.entity';
-import { Notif } from './order/notification.entiry';
+import shortid = require('shortid');
 @Injectable()
 export class UserService {
   @InjectRepository(UserFromApi)
@@ -21,8 +21,6 @@ export class UserService {
   private readonly repositoryOrderDetail: Repository<DetailOrder>;
   @InjectRepository(Cart)
   private readonly repositoryCart: Repository<Cart>;
-  @InjectRepository(Notif)
-  private readonly repositoryNotif: Repository<Notif>;
   @InjectRepository(Voucher)
   private readonly repositoryVoucher: Repository<Voucher>;
   @Inject(forwardRef(() => HostService))
@@ -33,23 +31,26 @@ export class UserService {
   }
   public async getOrderHost(): Promise<any[]> {
     let data = await this.repositoryOrder.query(
-      'select id_order,id_api,set_at,state,voucher from "order"',
+      'select id_order,id_api,set_at,state,id_voucher from "order"',
     );
 
     let res = [];
     for (let e of data) {
       let id_api = e.id_api;
       let id_order = e.id_order;
-
       let user = await this.repository.query(
-        `select email,address from user_from_api where user_from_api.id_api=${id_api}`,
+        `select*from user_from_api where id_api='${id_api}'`,
       );
+      console.log(user);
+      if (user === null) continue;
       let dataDetail = await this.repositoryOrderDetail.query(
-        `select id as id_product,quantity,size,color,price,quantity*price total from detail_order where detail_order.id_order=${id_order}`,
+        `select  id_product,quantity,size,color,price,quantity*price total from detail_order where detail_order.id_order='${id_order}'`,
       );
+      console.log(dataDetail);
       let detail: string = '';
       let total: number = 0;
       for (let i of dataDetail) {
+        console.log(i);
         let key = Object.keys(i);
         let value = Object.values(i);
         total += Number(value[key.length - 1]);
@@ -60,6 +61,7 @@ export class UserService {
       }
       res.push(Object.assign({}, user[0], e, { total: total, detail: detail }));
     }
+    console.log(res);
     return res;
   }
 
@@ -70,11 +72,11 @@ export class UserService {
       let orders;
       if (i === 12) {
         orders = await this.repositoryOrder.query(
-          `select id_order,set_at,state,voucher from "order" where "order".state='completed' and ("order".set_at between '${tmp}-${12}-01 12:00:00' and '${tmp}-${12}-30 12:00:00')`,
+          `select id_order,set_at,state,id_voucher from "order" where "order".state='completed' and ("order".set_at between '${tmp}-${12}-01 12:00:00' and '${tmp}-${12}-30 12:00:00')`,
         );
       } else {
         orders = await this.repositoryOrder.query(
-          `select id_order,set_at,state,voucher from "order" where "order".state='completed' and ("order".set_at between '${tmp}-${i}-01 12:00:00' and '${tmp}-${
+          `select id_order,set_at,state,id_voucher from "order" where "order".state='completed' and ("order".set_at between '${tmp}-${i}-01 12:00:00' and '${tmp}-${
             i + 1
           }-01 12:00:00')`,
         );
@@ -84,7 +86,7 @@ export class UserService {
       for (let e of orders) {
         let id_order = e.id_order;
         let dataDetail = await this.repositoryOrderDetail.query(
-          `select quantity*price total from detail_order where detail_order.id_order=${id_order}`,
+          `select quantity*price total from detail_order where detail_order.id_order='${id_order}'`,
         );
         for (let j of dataDetail) sum += j.total;
       }
@@ -111,7 +113,7 @@ export class UserService {
   public async getSize(): Promise<any> {
     return await this.hostService.getSize();
   }
-  public async getDetailProduct(id: number): Promise<any> {
+  public async getDetailProduct(id: string): Promise<any> {
     return await this.hostService.getDetailProductById(id);
   }
 
@@ -130,6 +132,7 @@ export class UserService {
     let newUser = new UserFromApi();
     let user = await this.repository.findOne({ where: { email: email } });
     if (!user) {
+      newUser.id_api = shortid.generate();
       newUser.email = email;
       newUser.name = name;
       newUser.token = body.token;
@@ -164,7 +167,7 @@ export class UserService {
     if (!verif) throw new HttpException('Invalid', HttpStatus.NOT_FOUND);
 
     let res = await this.repositoryCart.query(
-      `select p.id_product, p.name, p.price,c.size, c.color, c.quantity, c.id_item from product p, cart c where p.id_product = c.id_product and c.id_api = ${id}`,
+      `select p.id_product, p.name, p.price,c.size, c.color, c.quantity, c.id_item from product p, cart c where p.id_product = c.id_product and c.id_api = '${id}'`,
     );
     for (let i = 0; i < res.length; i++) {
       let property = await this.hostService.getDetailProductById(
@@ -185,13 +188,13 @@ export class UserService {
     if (!verif) throw new HttpException('Invalid', HttpStatus.NOT_FOUND);
 
     return await this.repositoryCart.query(
-      `delete from cart where id_item = ${constr.id_item} and id_api = ${constr.id_api}`,
+      `delete from cart where id_item = '${constr.id_item}' and id_api = '${constr.id_api}'`,
     );
   }
 
   public async updateCart(
-    id: number,
-    id_item: number,
+    id: any,
+    id_item: any,
     body: any,
     auth: any,
   ): Promise<any> {
@@ -203,22 +206,23 @@ export class UserService {
     if (!verif) throw new HttpException('Invalid', HttpStatus.NOT_FOUND);
 
     let { size, color, quantity } = body;
-
-    return await this.repositoryCart.update(
-      { id_api: id, id_item: id_item },
-      { size: size, color: color, quantity: quantity },
+    console.log(id_item);
+    console.log(body);
+    return await this.repositoryCart.query(
+      `update cart set size='${size}',color='${color}',quantity='${quantity}' where cart.id_api='${id}' and cart.id_item='${id_item}'`,
     );
   }
-  public async addToCart(id: number, body: any, auth: any): Promise<any> {
+  public async addToCart(id: any, body: any, auth: any): Promise<any> {
     if (auth === null) throw new HttpException('Invalid', HttpStatus.NOT_FOUND);
     let arr = auth.split(':');
     let verif = await this.repository.findOne({
       where: { token: arr[0], email: arr[1] },
     });
     if (!verif) throw new HttpException('Invalid', HttpStatus.NOT_FOUND);
-
+    console.log(body);
     let { size, color, quantity, id_product } = body;
     let item = new Cart();
+    item.id_item = shortid.generate();
     item.color = color;
     item.quantity = quantity;
     item.size = size;
@@ -237,10 +241,11 @@ export class UserService {
     if (!verif) throw new HttpException('Invalid', HttpStatus.NOT_FOUND);
 
     return await this.repositoryVoucher.query(
-      `select vd.title, vd.discount, v.num,v.date from voucher_default vd, voucher v where vd.id_voucher = v.id_voucher and v.id_api = ${id}`,
+      `select v.id_voucher,vd.title, vd.discount, v.num,v.date from voucher_default vd, voucher v where vd.id_voucher = v.id_voucher and v.id_api = '${id}'`,
     );
   }
-  public async getNotif(id: number, auth: any): Promise<any> {
+
+  public async getOrder(id: any, tab: any, auth: any): Promise<any> {
     if (auth === null) throw new HttpException('Invalid', HttpStatus.NOT_FOUND);
     let arr = auth.split(':');
     let verif = await this.repository.findOne({
@@ -248,44 +253,85 @@ export class UserService {
     });
     if (!verif) throw new HttpException('Invalid', HttpStatus.NOT_FOUND);
 
-    let order_ = await this.repositoryOrder.query(
-      `select*from "order" where "order".id_api=${id} and "order".state!='completed' `,
-    );
-    for (let e of order_) {
-      let newNote = new Notif();
-      newNote.id_order = e.id_order;
-      newNote.id_api = id;
-      if (e.state === 'prepare') {
-        newNote.title = 'Your order is on handle,..';
-      } else if (e.state === 'shipping') {
-        newNote.title = 'You will receive your order soon!';
-      }
-      await this.repositoryNotif.save(newNote);
-    }
-    return await this.repositoryNotif.find({ where: { id_api: id } });
-  }
-
-  public async getOrder(id: number, auth: any): Promise<any> {
-    if (auth === null) throw new HttpException('Invalid', HttpStatus.NOT_FOUND);
-    let arr = auth.split(':');
-    let verif = await this.repository.findOne({
-      where: { token: arr[0], email: arr[1] },
-    });
-    if (!verif) throw new HttpException('Invalid', HttpStatus.NOT_FOUND);
-
-    let order = await this.repositoryOrder.find({ where: { id_api: id } });
+    let state = '';
+    if (tab === '1') state = 'shipping';
+    else if (tab === '2') state = 'completed';
+    else if (tab === '3') state = 'cancel';
+    let order;
+    if (state === '')
+      order = await this.repositoryOrder.find({
+        where: { id_api: id },
+      });
+    else
+      order = await this.repositoryOrder.find({
+        where: { id_api: id, state: state },
+      });
+    console.log(order);
     let res = [];
     for (let e of order) {
+      let check = await this.repositoryOrderDetail.findOne({
+        where: { id_order: e.id_order },
+      });
+      console.log(e.id_order);
+      if (!check) continue;
       let subRes = await this.repositoryOrderDetail.query(
-        `select p.name,dp.quantity,dp.size,dp.color,dp.price from detail_order dp join product p on dp.id_product=p.id_product where dp.id_order=${e.id_order}`,
+        `select p.name,dp.quantity,dp.size,dp.color,dp.price from detail_order dp join product p on dp.id_product=p.id_product where dp.id_order='${e.id_order}'`,
       );
-      res.push(Object.assign({}, e, { detail: subRes }));
-      console.log(res);
+      console.log(subRes);
+      let sum = 0;
+      for (let e_ of subRes) {
+        sum += e_.price;
+      }
+      res.push(Object.assign({}, e, { detail: subRes }, { sum: sum }));
     }
     return res;
   }
+  public async removeOrder(
+    id_api: any,
+    id_order: any,
+    auth: any,
+  ): Promise<any> {
+    if (auth === null) throw new HttpException('Invalid', HttpStatus.NOT_FOUND);
+    let arr = auth.split(':');
+    let verif = await this.repository.findOne({
+      where: { token: arr[0], email: arr[1] },
+    });
+    if (!verif) throw new HttpException('Invalid', HttpStatus.NOT_FOUND);
 
-  public async buyProduct(list_id: any, body: any, auth: any): Promise<any> {
+    let res = await this.repositoryOrder.update(
+      { id_api: id_api, id_order: id_order.toString() },
+      { state: 'cancel' },
+    );
+
+    return res;
+  }
+
+  public async BuyAgainOrder(
+    id_api: any,
+    id_order: any,
+    auth: any,
+  ): Promise<any> {
+    if (auth === null) throw new HttpException('Invalid', HttpStatus.NOT_FOUND);
+    let arr = auth.split(':');
+    let verif = await this.repository.findOne({
+      where: { token: arr[0], email: arr[1] },
+    });
+    if (!verif) throw new HttpException('Invalid', HttpStatus.NOT_FOUND);
+
+    let res = await this.repositoryOrder.update(
+      { id_api: id_api, id_order: id_order.toString() },
+      { state: 'shipping' },
+    );
+
+    return res;
+  }
+
+  public async buyProduct(
+    id_user: any,
+    list_id: any,
+    body: any,
+    auth: any,
+  ): Promise<any> {
     if (auth === null) throw new HttpException('Invalid', HttpStatus.NOT_FOUND);
     let arr = auth.split(':');
     let verif = await this.repository.findOne({
@@ -295,6 +341,44 @@ export class UserService {
 
     let arr1 = list_id.split(',');
     let code = body.code;
-    return;
+    let newOrder = new Order();
+    newOrder.id_api = id_user;
+    newOrder.method = 'COD';
+    newOrder.set_at = new Date();
+    if (code) newOrder.id_voucher = code.id_voucher;
+    newOrder.state = 'shipping';
+    newOrder.id_order = shortid.generate();
+    let resOrder = await this.repositoryOrder.save(newOrder);
+    for (let e of arr1) {
+      let product = await this.repositoryCart.query(
+        `select*from cart join product on cart.id_product=product.id_product where cart.id_item='${e}'`,
+      );
+      let removeCart = await this.repositoryCart.delete({ id_item: e });
+      let detail_order = new DetailOrder();
+      detail_order.id_order = resOrder.id_order;
+      detail_order.color = product[0].color;
+      detail_order.id_product = product[0].id_product;
+      detail_order.size = product[0].size;
+      detail_order.price = product[0].price;
+      detail_order.quantity = product[0].quantity;
+      await this.repositoryOrderDetail.save(detail_order);
+      await this.hostService.handleOrder(
+        detail_order.id_product,
+        detail_order.color,
+        detail_order.size,
+        detail_order.quantity,
+      );
+    }
+    return 'ok';
+  }
+  public async setConfirm(id_orders: any) {
+    console.log(id_orders);
+
+    for (let e of id_orders) {
+      let tmp = await this.repositoryOrder.query(
+        `update "order" set state='completed' where id_order='${e}'`,
+      );
+    }
+    return 'ok';
   }
 }

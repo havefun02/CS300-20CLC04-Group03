@@ -15,8 +15,8 @@ import {
 
 @Entity()
 export class UserFromApi extends BaseEntity {
-  @PrimaryGeneratedColumn({ type: 'int' })
-  public id_api: number;
+  @PrimaryColumn({ type: 'varchar' })
+  public id_api: string;
   @Column({ type: 'varchar', nullable: false })
   public email!: string;
   @Column({ type: 'varchar', nullable: false })
@@ -44,9 +44,9 @@ export class UserFromApi extends BaseEntity {
 @Entity()
 export class Voucher extends BaseEntity {
   @PrimaryColumn()
-  public id_voucher: number;
-  @PrimaryColumn({ type: 'int' })
-  public id_api: number;
+  public id_voucher: string;
+  @PrimaryColumn({ type: 'varchar' })
+  public id_api: string;
   @Column({ type: 'int' })
   public num: number;
   // @ManyToMany(

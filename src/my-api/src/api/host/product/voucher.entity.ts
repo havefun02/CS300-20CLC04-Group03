@@ -5,13 +5,14 @@ import {
   Entity,
   ManyToMany,
   OneToMany,
+  PrimaryColumn,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
 @Entity()
 export class VoucherDefault extends BaseEntity {
-  @PrimaryGeneratedColumn()
-  public id_voucher: number;
+  @PrimaryColumn()
+  public id_voucher: string;
   @Column({ type: 'varchar' })
   public title: string;
   @Column({ type: 'int' })
