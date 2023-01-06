@@ -7,7 +7,7 @@ import './cart.css';
 export default function Cart() {
   const context = useContext(Context);
   const id_user = context.id;
-  const [list, setList] = useState([{}, {}]);
+  const [list, setList] = useState([]);
   const [check, setCheck] = useState(Array(list.length).fill(false));
   const [gift, setGift] = useState([]);
   const [giftSelect, setSelect] = useState(null);
@@ -41,12 +41,13 @@ export default function Cart() {
         // 'content-type': 'multipart/form-data'
       }
     };
-    const url = `http://localhost:3001/user/cart/buy-product/${ids}`;
-    const res = await axios
-      .post(url, { code: giftSelect }, options)
-      .then((data) => {
+    const url = `http://localhost:3001/user/cart/buy-product/${id_user}/${ids}`;
+    const res = await axios.post(url, { code: gift[giftSelect] }, options).then(
+      (data) => {
         setFetch((fetch) => !fetch);
-      });
+      },
+      (err) => alert('Your product is out')
+    );
   };
 
   const onUpdate = async (id_item, color, size, quan) => {
@@ -536,7 +537,7 @@ export default function Cart() {
                       onClick={() => {
                         let ids = [];
                         check.forEach((e, ind) => {
-                          if (e === true) ids.push(list[ind].id);
+                          if (e === true) ids.push(list[ind].id_item);
                         });
 
                         console.log(ids);
