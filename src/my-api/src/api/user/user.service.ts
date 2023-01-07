@@ -280,9 +280,8 @@ export class UserService {
       console.log(e.id_order);
       if (!check) continue;
       let subRes = await this.repositoryOrderDetail.query(
-        `select p.name,dp.quantity,dp.size,dp.color,dp.price from detail_order dp join product p on dp.id_product=p.id_product where dp.id_order='${e.id_order}'`,
+        `select p.avar,p.name,dp.quantity,dp.size,dp.color,dp.price from detail_order dp join product p on dp.id_product=p.id_product where dp.id_order='${e.id_order}'`,
       );
-      console.log(subRes);
       let sum = 0;
       for (let e_ of subRes) {
         sum += e_.price;
