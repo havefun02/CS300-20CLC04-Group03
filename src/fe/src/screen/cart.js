@@ -7,13 +7,23 @@ import './cart.css';
 export default function Cart() {
   const context = useContext(Context);
   const id_user = context.id;
+
+  const [token, name, email, sex, phone, address] = [
+    context.token,
+    context.name,
+    context.email,
+    context.sex,
+    context.phone,
+    context.address
+  ];
+
   const [list, setList] = useState([]);
   const [check, setCheck] = useState(Array(list.length).fill(false));
   const [gift, setGift] = useState([]);
   const [giftSelect, setSelect] = useState(null);
   const [sum, setSum] = useState(0);
   const [discount, setDiscount] = useState(0);
-
+  const [avar, setAvar] = useState('');
   const [expandGift, setExpandGift] = useState(false);
   const [fetch, setFetch] = [context.trigger, context.setTrigger];
   const onDelete = async (id) => {
@@ -28,8 +38,18 @@ export default function Cart() {
     };
     const url = `http://localhost:3001/user/delete-cart/${id_user}/${id}`;
     const res = await axios.get(url, options).then((data) => {
+      setCheck(Array(list.length).fill(false));
       setFetch((fetch) => !fetch);
     });
+  };
+  const toBase64 = (buffer) => {
+    let binary = '';
+    let bytes = new Uint8Array(buffer);
+    let len = bytes.byteLength;
+    for (var i = 0; i < len; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    return window.btoa(binary);
   };
   const handleBuy = async (ids) => {
     const token = sessionStorage.getItem('token');
@@ -44,6 +64,7 @@ export default function Cart() {
     const url = `http://localhost:3001/user/cart/buy-product/${id_user}/${ids}`;
     const res = await axios.post(url, { code: gift[giftSelect] }, options).then(
       (data) => {
+        setCheck(Array(list.length).fill(false));
         setFetch((fetch) => !fetch);
       },
       (err) => alert('Your product is out')
@@ -66,6 +87,7 @@ export default function Cart() {
     const res = await axios
       .post(url, { color: color, size: size, quantity: quan }, options)
       .then((data) => {
+        setCheck(Array(list.length).fill(false));
         setFetch((fetch) => !fetch);
       });
   };
@@ -75,7 +97,10 @@ export default function Cart() {
       let sum = 0;
       check.forEach((e, ind) => {
         if (e === true) {
-          sum += Number(list[ind].price) * Number(list[ind].quantity);
+          sum +=
+            (Number(list[ind].price) -
+              (Number(list[ind].price) * Number(list[ind].price1)) / 100) *
+            Number(list[ind].quantity);
         }
       });
       setSum(sum);
@@ -95,6 +120,8 @@ export default function Cart() {
     const fetch = async () => {
       const url = `http://localhost:3001/user/cart-list/${id_user}`;
       const res = await axios.get(url, options).then((data) => {
+        console.log(data);
+        // setAvar(data.data[0].avar.data);
         setList(data.data);
       });
     };
@@ -144,7 +171,7 @@ export default function Cart() {
           >
             <div style={{ flex: '0 0 100px', height: '100%' }}>
               <img
-                // src={require('../assets/overlay.jpg')}
+                src={`data:image/png;base64,${toBase64(props.e.avar.data)}`}
                 style={{ width: '80px', height: '80px' }}
               ></img>
             </div>
@@ -323,7 +350,10 @@ export default function Cart() {
         </div>
         <div style={{ fontSize: '15px' }}>
           <div className="cart-price">
-            <span>{props.e.price}</span>
+            <span>
+              {Number(props.e.price) -
+                (Number(props.e.price) * Number(props.e.price1)) / 100}
+            </span>
           </div>
           <div className="cart-quantity">
             <div>
@@ -357,7 +387,9 @@ export default function Cart() {
           </div>
           <div className="cart-price-total">
             <span>
-              {(Number(props.e.price) * Number(props.e.quantity)).toString()}
+              {(Number(props.e.price) -
+                (Number(props.e.price) * Number(props.e.price1)) / 100) *
+                Number(props.e.quantity).toString()}
             </span>
           </div>
           <div className="cart-delete">
@@ -540,9 +572,10 @@ export default function Cart() {
                         check.forEach((e, ind) => {
                           if (e === true) ids.push(list[ind].id_item);
                         });
-
-                        console.log(ids);
-                        handleBuy(ids);
+                        if (ids.length > 0)
+                          if (address.length > 0 && phone.length > 0)
+                            handleBuy(ids);
+                          else alert('Please authenticate your profile');
                       }}
                     >
                       Buy

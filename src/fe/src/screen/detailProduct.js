@@ -35,7 +35,6 @@ export default function DetailProduct({ props }) {
       }`;
       const res = await axios.get(url).then(
         (data) => {
-          console.log(data);
           setAvar(data.data.avar.data);
           setProduct(data.data);
         },
@@ -163,7 +162,17 @@ export default function DetailProduct({ props }) {
                   </div>
                   <div className="info-product-price">
                     <span style={{ fontWeight: '700' }}>
-                      <b>Price:</b> {product.price}$
+                      <b>Price:</b>{' '}
+                      <span style={{ color: 'red' }}>
+                        {Number(product.price) -
+                          (Number(product.price) * Number(product.price1)) /
+                            100}
+                        $
+                      </span>
+                      {'   '}
+                      <span style={{ textDecoration: 'line-through' }}>
+                        {Number(product.price)}$
+                      </span>
                     </span>
                   </div>
                   <div className="info-product-color">
@@ -228,7 +237,7 @@ export default function DetailProduct({ props }) {
 
                             const url = `http://localhost:3001/user/add-cart/${id_user}`;
 
-                            if (color && size && quantity) {
+                            if (color && size && quantity > 0) {
                               const res = await axios
                                 .post(
                                   url,

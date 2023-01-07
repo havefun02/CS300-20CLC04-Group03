@@ -188,8 +188,14 @@ export default function Page({ props }) {
                 padding: '3px 0'
               }}
             >
-              {Number(props.price) -
-                (Number(props.price) * Number(props.priceSale)) / 100}
+              <span style={{ color: 'red' }}>
+                {Number(props.price) -
+                  (Number(props.price) * Number(props.price1)) / 100}
+                $
+              </span>{' '}
+              <span style={{ textDecoration: 'line-through' }}>
+                {Number(props.price)}$
+              </span>
             </span>
             {viewType === '1' && <span>Description</span>}
           </div>
