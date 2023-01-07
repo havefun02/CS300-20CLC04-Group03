@@ -2,19 +2,32 @@ import { useEffect, useState } from 'react';
 import shortid from 'shortid';
 import axios from 'axios';
 import './overlay.css';
+import { Context } from '../context/context';
+import { useContext } from 'react';
 export default function Overlay({ props }) {
-  const [overlay, setOverlay] = props[0];
-  const [listCode, setListCode] = useState([])
-  const [gift, setGift] = useState([{}, {}, {}, {}, {}, {}, {}, {}, {}]);
+  const context = useContext(Context);
+  const [overlay, setOverlay] = props;
+  const [listCode, setListCode] = useState(context.Notify);
+  const [gift, setGift] = useState([]);
   const [isSelect, setSelect] = useState(Array(gift.length).fill(false));
+  console.log(listCode);
+  useEffect(() => {
+    const token = localStorage.getItem('token');
 
-    useEffect(()=>{
-      const fetch=async()=>{
-        const url = 'http://localhost:3001/host/emit-gift';
-        const token=localStorage.getItem('token')
-        const res=await axios.get(url)  
+    const options = {
+      headers: {
+        Authorization: 'Bearer ' + token
+        // 'content-type': 'multipart/form-data'
       }
-    },[])
+    };
+    const fetch = async () => {
+      const url = 'http://localhost:3001/host/get-default-gift';
+      const res = await axios.get(url, options).then((data) => {
+        console.log(data);
+        setGift(data.data);
+      });
+    };
+  });
   return (
     <div className="overlay">
       <div className="overlay-flex-box">
@@ -99,7 +112,7 @@ export default function Overlay({ props }) {
             Cancel All
           </button>
           <button
-            onClick={async() => {
+            onClick={async () => {
               let clone = [];
               isSelect.forEach((e, ind) => {
                 if (e === true) {
@@ -109,10 +122,8 @@ export default function Overlay({ props }) {
               setListCode(clone);
 
               const url = 'http://localhost:3001/host/emit-gift';
-              const res=await axios.post(url,{listCode})
+              const res = await axios.post(url, { listCode });
               setOverlay((overlay) => !overlay);
-  
-
             }}
             style={{
               width: '140px',

@@ -41,6 +41,21 @@ export default function ManageTable({ props }) {
     fetchData();
   }, [fetch]);
 
+  const handleSale = async (id_product, discount) => {
+    const url = `http://localhost:3001/host/set-sale/${id_product}`;
+    const token = localStorage.getItem('token');
+    const options = {
+      headers: {
+        Authorization: 'Bearer ' + token
+        // 'content-type': 'multipart/form-data'
+      }
+    };
+    const res = await axios
+      .post(url, { discount: discount }, options)
+      .then((res) => {
+        setFetch((fetch) => !fetch);
+      });
+  };
   const HeaderTable = ({ props }) => {
     return (
       <div className="header-table">
@@ -59,9 +74,9 @@ export default function ManageTable({ props }) {
   };
 
   const RowData = ({ props }) => {
+    console.log(props);
     const [expand, setExpand] = useState(false);
     const [update, setUpdate] = useState(false);
-
     return (
       <>
         <div className="row-data">
@@ -133,11 +148,18 @@ export default function ManageTable({ props }) {
                 })}
               </div>
               <div className="manage-table-bt-group">
-                {/* <select style={{ width: '60px' }}></select> */}
+                <input
+                  id="on-sale"
+                  placeholder="0%"
+                  style={{ width: '40px', textIndent: '5px' }}
+                ></input>
                 <button
                   style={{ width: '80px' }}
                   onClick={() => {
-                    setUpdate(false);
+                    handleSale(
+                      props.ele[0],
+                      document.getElementById('on-sale').value
+                    );
                     setExpand((expand) => !expand);
                   }}
                 >

@@ -19,7 +19,7 @@ const ContextProvider = ({ children }) => {
           // 'content-type': 'multipart/form-data'
         }
       };
-      const url = 'http://localhost:3001/host/get-notify';
+      const url = 'http://localhost:3001/host/get-default-gift';
       const res = await axios.get(url, options).then((data) => {
         setNotify(data.data);
         console.log(data);

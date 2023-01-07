@@ -152,7 +152,7 @@ export default function Customer() {
               >
                 <button
                   onClick={() => {
-                    if (check.filter((e, ind) => e === true).length !== 0) {
+                    if (check.filter((e, ind) => e === true).length > 0) {
                       setOverlay((overlay) => !overlay);
                     }
                   }}
@@ -171,7 +171,7 @@ export default function Customer() {
             </div>
           </div>
         </div>
-        {overlay && <Overlay props={[[overlay, setOverlay]]} />}
+        {overlay && <Overlay key={overlay} props={[overlay, setOverlay]} />}
       </div>
     </div>
   );
