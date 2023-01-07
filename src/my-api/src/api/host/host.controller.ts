@@ -58,10 +58,30 @@ export class HostController {
     console.log(req.body);
     return await this.service.updateProduct(param, body);
   }
+
+  @Post('set-sale/:id_product')
+  @UseGuards(JwtAuthGuard)
+  private async setSale(@Req() req: Request, @Body() body, @Param() param) {
+    console.log(req.body);
+    return await this.service.setSale(param.id_product, body);
+  }
   @Post('confirm-order')
   @UseGuards(JwtAuthGuard)
   private async setConfirm(@Req() req: Request, @Body() body) {
     return await this.service.setConfirm(body);
+  }
+
+  @Post('send-voucher')
+  @UseGuards(JwtAuthGuard)
+  private async sendVoucher(@Req() req: Request, @Body() body) {
+    return await this.service.sendVoucher(body);
+  }
+
+  @Get('get-default-gift')
+  @UseGuards(JwtAuthGuard)
+  private async getVoucher() {
+    console.log(1);
+    return await this.service.getVoucher();
   }
 
   @Get('get-product/all')

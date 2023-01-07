@@ -12,6 +12,7 @@ import { Product, ProductDetail } from './product/product.entity';
 import { Brand } from './product/brand.entity';
 import { UserService } from '../user/user.service';
 import { UserModule } from '../user/user.module';
+import { VoucherDefault } from './product/voucher.entity';
 @Module({
   imports: [
     TypeOrmModule.forFeature([
@@ -22,6 +23,7 @@ import { UserModule } from '../user/user.module';
       Color,
       Product,
       ProductDetail,
+      VoucherDefault,
     ]),
     MulterModule.register({
       dest: './uploads',

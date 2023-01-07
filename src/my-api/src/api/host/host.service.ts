@@ -13,6 +13,7 @@ import { UserService } from '../user/user.service';
 import { forwardRef } from '@nestjs/common/utils';
 import { UserFromApi } from '../user/user.entity';
 import shortid = require('shortid');
+import { VoucherDefault } from './product/voucher.entity';
 @Injectable()
 export class HostService {
   constructor(
@@ -28,6 +29,8 @@ export class HostService {
     private readonly repositoryBrand: Repository<Brand>,
     @InjectRepository(Product)
     private readonly repositoryPro: Repository<Product>,
+    @InjectRepository(VoucherDefault)
+    private readonly repositoryDv: Repository<VoucherDefault>,
     @InjectRepository(ProductDetail)
     private readonly repositoryProDe: Repository<ProductDetail>,
     @Inject(forwardRef(() => UserService))
@@ -74,7 +77,7 @@ export class HostService {
 
     let size_1 = new SizeTable();
     size_1.name_size = body.size;
-    size_1.name_size = shortid.generate();
+    size_1.id_size = shortid.generate();
     const t3 = await this.repositorySize.findOne({
       where: { name_size: size_1.name_size },
     });
@@ -355,20 +358,41 @@ export class HostService {
     let dp = await this.repositoryProDe.findOne({
       where: { id_product: id_product, size: size, color: color },
     });
-
+    console.log(dp, '3');
     if (!dp || dp.quantity < quantity)
       throw new HttpException('Invalid', HttpStatus.NOT_FOUND);
+    let prod = await this.repositoryPro.findOne({
+      where: { id_product: id_product },
+    });
+    await this.repositoryPro.query(
+      `update product set rate=${prod.rate + quantity}`,
+    );
 
     return await this.repositoryProDe.update(
       { id_product: id_product, size: size, color: color },
       { quantity: dp.quantity - quantity },
     );
   }
-
+  public async setSale(id_product, body: any) {
+    return await this.repositoryPro.query(
+      `update product set sale=true,price1='${body.discount}' where id_product='${id_product}'`,
+    );
+  }
   public async setConfirm(body: any) {
     console.log(body);
     let list_id_order = body.list_id_order;
 
     return this.userService.setConfirm(list_id_order[0]);
+  }
+  public async sendVoucher(body: any) {
+    console.log(body);
+    let list_id_user = body.id_users;
+
+    return;
+  }
+  public async getVoucher() {
+    let res = await this.repositoryDv.query(`select*from voucher_default`);
+    console.log(res);
+    return res;
   }
 }

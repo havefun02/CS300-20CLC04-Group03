@@ -137,6 +137,11 @@ export class UserService {
       newUser.name = name;
       newUser.token = body.token;
       await this.repository.save(newUser);
+      let newVoucher = new Voucher();
+      newVoucher.id_api = newUser.id_api;
+      newVoucher.id_voucher = '1';
+      newVoucher.num = 2;
+      await this.repositoryVoucher.save(newVoucher);
     } else {
       let res = await this.repository.update(
         { email: email },
@@ -167,7 +172,7 @@ export class UserService {
     if (!verif) throw new HttpException('Invalid', HttpStatus.NOT_FOUND);
 
     let res = await this.repositoryCart.query(
-      `select p.id_product, p.name, p.price,c.size, c.color, c.quantity, c.id_item from product p, cart c where p.id_product = c.id_product and c.id_api = '${id}'`,
+      `select p.avar,p.id_product, p.name, p.price,p.price1,c.size, c.color, c.quantity, c.id_item from product p, cart c where p.id_product = c.id_product and c.id_api = '${id}'`,
     );
     for (let i = 0; i < res.length; i++) {
       let property = await this.hostService.getDetailProductById(
@@ -340,6 +345,7 @@ export class UserService {
     if (!verif) throw new HttpException('Invalid', HttpStatus.NOT_FOUND);
 
     let arr1 = list_id.split(',');
+    console.log(arr1);
     let code = body.code;
     let newOrder = new Order();
     newOrder.id_api = id_user;
@@ -348,26 +354,29 @@ export class UserService {
     if (code) newOrder.id_voucher = code.id_voucher;
     newOrder.state = 'shipping';
     newOrder.id_order = shortid.generate();
-    let resOrder = await this.repositoryOrder.save(newOrder);
     for (let e of arr1) {
       let product = await this.repositoryCart.query(
         `select*from cart join product on cart.id_product=product.id_product where cart.id_item='${e}'`,
       );
-      let removeCart = await this.repositoryCart.delete({ id_item: e });
+      console.log(product, 'ok');
+      console.log(e);
       let detail_order = new DetailOrder();
-      detail_order.id_order = resOrder.id_order;
+      detail_order.id_order = newOrder.id_order;
       detail_order.color = product[0].color;
       detail_order.id_product = product[0].id_product;
       detail_order.size = product[0].size;
       detail_order.price = product[0].price;
       detail_order.quantity = product[0].quantity;
-      await this.repositoryOrderDetail.save(detail_order);
+      console.log(detail_order, 'ol');
       await this.hostService.handleOrder(
         detail_order.id_product,
         detail_order.color,
         detail_order.size,
         detail_order.quantity,
       );
+      let resOrder = await this.repositoryOrder.save(newOrder);
+      await this.repositoryOrderDetail.save(detail_order);
+      let removeCart = await this.repositoryCart.delete({ id_item: e });
     }
     return 'ok';
   }
