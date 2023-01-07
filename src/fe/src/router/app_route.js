@@ -24,15 +24,24 @@ export default function AppRoute() {
         <div className="route-grid">
           {off && <ImgOverlay props={[off, setOff]} />}
           <div className="route-flex-box">
-            <Header></Header>
+            <Header props={[trigger, setTrigger]}></Header>
             <Routes>
               <Route
                 path="/"
                 element={
-                  <Page props={{ title: 'All product', id_page: 'all' }} />
+                  <Page
+                    props={{
+                      state: [trigger, setTrigger],
+                      title: 'All product',
+                      id_page: 'all'
+                    }}
+                  />
                 }
               ></Route>
-              <Route path={'/product/:id'} element={<DetailProduct />}></Route>
+              <Route
+                path={'/product/:id'}
+                element={<DetailProduct props={[trigger, setTrigger]} />}
+              ></Route>
 
               <Route
                 path="*"
@@ -54,23 +63,49 @@ export default function AppRoute() {
               <Route
                 path="/newin"
                 element={
-                  <Page props={{ title: 'New Product', id_page: 'new' }} />
+                  <Page
+                    props={{
+                      state: [trigger, setTrigger],
+                      title: 'New in',
+                      id_page: 'new'
+                    }}
+                  />
                 }
               ></Route>
               <Route
                 path="/sale"
                 element={
-                  <Page props={{ title: 'On big sale', id_page: 'sale' }} />
+                  <Page
+                    props={{
+                      state: [trigger, setTrigger],
+                      title: 'On big Sale',
+                      id_page: 'sale'
+                    }}
+                  />
                 }
               ></Route>
               <Route
                 path="/men"
-                element={<Page props={{ title: 'For men', id_page: 'men' }} />}
+                element={
+                  <Page
+                    props={{
+                      state: [trigger, setTrigger],
+                      title: 'Men',
+                      id_page: 'men'
+                    }}
+                  />
+                }
               ></Route>
               <Route
                 path="/women"
                 element={
-                  <Page props={{ title: 'For women', id_page: 'women' }} />
+                  <Page
+                    props={{
+                      state: [trigger, setTrigger],
+                      title: 'Women',
+                      id_page: 'women'
+                    }}
+                  />
                 }
               ></Route>
 
@@ -92,7 +127,6 @@ export default function AppRoute() {
                 element={id_user !== null ? <Page /> : <></>}
               ></Route>
               <Route
-                key={trigger}
                 path="/profile"
                 element={id_user !== null ? <Profile /> : <></>}
               ></Route>

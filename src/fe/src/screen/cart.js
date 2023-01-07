@@ -573,7 +573,7 @@ export default function Cart() {
                           if (e === true) ids.push(list[ind].id_item);
                         });
                         if (ids.length > 0)
-                          if (address.length > 0 && phone.length > 0)
+                          if (address !== null && phone.length !== null)
                             handleBuy(ids);
                           else alert('Please authenticate your profile');
                       }}

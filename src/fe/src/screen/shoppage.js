@@ -7,11 +7,12 @@ import { useContext } from 'react';
 import axios from 'axios';
 import LoginOverlay from '../component/loginOverlay';
 export default function Page({ props }) {
+  console.log(props);
   const navigate = useNavigate();
   const context = useContext(Context);
   const id_user = context.id;
   const [fetchdata, setFetch] = useState(false);
-  const [trigger, setTrigger] = [context.trigger, context.setTrigger];
+  const [trigger, setTrigger] = props.state;
 
   const [overlay, setOverlay] = useState(false);
   const [liked, setLike] = useState([]);
@@ -188,14 +189,21 @@ export default function Page({ props }) {
                 padding: '3px 0'
               }}
             >
-              <span style={{ color: 'red' }}>
-                {Number(props.price) -
-                  (Number(props.price) * Number(props.price1)) / 100}
-                $
-              </span>{' '}
-              <span style={{ textDecoration: 'line-through' }}>
-                {Number(props.price)}$
-              </span>
+              {props.sale === true ? (
+                <>
+                  <span style={{ color: 'red' }}>
+                    {Number(props.price) -
+                      (Number(props.price) * Number(props.price1)) / 100}
+                    $
+                  </span>
+                  {'  '}
+                  <span style={{ textDecoration: 'line-through' }}>
+                    {Number(props.price)}$
+                  </span>
+                </>
+              ) : (
+                <span style={{}}>{Number(props.price)}$</span>
+              )}
             </span>
             {viewType === '1' && <span>Description</span>}
           </div>

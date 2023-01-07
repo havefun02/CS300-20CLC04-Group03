@@ -10,7 +10,10 @@ export default function Footer() {
           <h2>Contact us </h2>
           <ul className="social-icon">
             <li>
-              <a href="#" target="_blank">
+              <a
+                href="https://www.facebook.com/profile.php?id=100015468727591"
+                target="_blank"
+              >
                 <img
                   src="https://upload.wikimedia.org/wikipedia/en/thumb/0/04/Facebook_f_logo_%282021%29.svg/800px-Facebook_f_logo_%282021%29.svg.png"
                   alt=""
@@ -18,7 +21,10 @@ export default function Footer() {
               </a>
             </li>
             <li>
-              <a href="#" target="_blank">
+              <a
+                href="https://www.facebook.com/profile.php?id=100015468727591"
+                target="_blank"
+              >
                 <img
                   src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Instagram_icon.png/2048px-Instagram_icon.png"
                   alt=""
@@ -26,7 +32,10 @@ export default function Footer() {
               </a>
             </li>
             <li>
-              <a href="#" target="_blank">
+              <a
+                href="https://www.facebook.com/profile.php?id=100015468727591"
+                target="_blank"
+              >
                 <img
                   src="https://cdn-icons-png.flaticon.com/512/124/124021.png"
                   alt=""
@@ -34,7 +43,10 @@ export default function Footer() {
               </a>
             </li>
             <li>
-              <a href="#" target="_blank">
+              <a
+                href="https://www.facebook.com/profile.php?id=100015468727591"
+                target="_blank"
+              >
                 <img
                   src="https://cdn-icons-png.flaticon.com/512/1384/1384060.png"
                   alt=""

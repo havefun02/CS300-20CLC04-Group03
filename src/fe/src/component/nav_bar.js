@@ -11,11 +11,13 @@ export default function Navbar({ props }) {
   const context = useContext(Context);
   const id_user = context.id;
   const navigate = useNavigate();
-  const [trigger, setTrigger] = [context.trigger, context.setTrigger];
+  const [trigger, setTrigger] = props;
   const [listCart, setListCart] = useState([]);
   const [search, setSearch] = useState(false);
   const [searchContent, setSearchContent] = useState('');
   const [overlay, setOverlay] = useState(false);
+  const [listen, setListen] = useState(false);
+
   const [name, setName] = [context.name, context.setName];
   const toBase64 = (buffer) => {
     let binary = '';
@@ -25,6 +27,9 @@ export default function Navbar({ props }) {
       binary += String.fromCharCode(bytes[i]);
     }
     return window.btoa(binary);
+  };
+  window.onbeforeunload = () => {
+    return setListen((listen) => !listen);
   };
   useEffect(() => {
     const token = sessionStorage.getItem('token');
@@ -49,7 +54,7 @@ export default function Navbar({ props }) {
       );
     };
     if (id_user !== null) fetch();
-  }, [trigger]);
+  }, [trigger, listen]);
   return (
     <div className="nav">
       <div className="nav-flex-box">
@@ -195,10 +200,9 @@ export default function Navbar({ props }) {
                             }}
                           >
                             <img
-                              src={`data:image/png;base64,${
-                                toBase64()
-                                // props.avar
-                              }`}
+                              src={`data:image/png;base64,${toBase64(
+                                e.avar.data
+                              )}`}
                             ></img>
                           </div>
                           <div style={{ flex: '3', padding: '3px 0' }}>

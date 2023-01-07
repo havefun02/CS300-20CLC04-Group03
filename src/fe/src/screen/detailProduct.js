@@ -163,16 +163,22 @@ export default function DetailProduct({ props }) {
                   <div className="info-product-price">
                     <span style={{ fontWeight: '700' }}>
                       <b>Price:</b>{' '}
-                      <span style={{ color: 'red' }}>
-                        {Number(product.price) -
-                          (Number(product.price) * Number(product.price1)) /
-                            100}
-                        $
-                      </span>
-                      {'   '}
-                      <span style={{ textDecoration: 'line-through' }}>
-                        {Number(product.price)}$
-                      </span>
+                      {product.sale === true ? (
+                        <>
+                          <span style={{ color: 'red' }}>
+                            {Number(product.price) -
+                              (Number(product.price) * Number(product.price1)) /
+                                100}
+                            $
+                          </span>
+                          {'  '}
+                          <span style={{ textDecoration: 'line-through' }}>
+                            {Number(product.price)}$
+                          </span>
+                        </>
+                      ) : (
+                        <span style={{}}>{Number(product.price)}$</span>
+                      )}
                     </span>
                   </div>
                   <div className="info-product-color">
@@ -210,9 +216,21 @@ export default function DetailProduct({ props }) {
                   <div className="info-product-color">
                     <span>Quantity</span>
                     <input id="select-quantity" placeholder=""></input>
-                    <span style={{ position: 'absolute', right: '-100%' }}>
-                      In stock: {product.quantity}
-                    </span>
+                    {Number(product.quantity) > 0 ? (
+                      <span style={{ position: 'absolute', right: '-100%' }}>
+                        In stock: {product.quantity}
+                      </span>
+                    ) : (
+                      <span
+                        style={{
+                          position: 'absolute',
+                          right: '-100%',
+                          color: 'red'
+                        }}
+                      >
+                        Out of stock
+                      </span>
+                    )}
                   </div>
                   <div className="info-product-cart">
                     <div>

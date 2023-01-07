@@ -59,7 +59,9 @@ const ContextProvider = ({ children }) => {
         sex,
         phone,
         address,
-        setAdress
+        setAdress,
+        currentRoute,
+        setCurrentRoute
       }}
     >
       {children}

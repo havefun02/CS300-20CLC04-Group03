@@ -43,6 +43,15 @@ export default function Order() {
       setFetch((fetch) => !fetch);
     });
   };
+  const toBase64 = (buffer) => {
+    let binary = '';
+    let bytes = new Uint8Array(buffer);
+    let len = bytes.byteLength;
+    for (var i = 0; i < len; i++) {
+      binary += String.fromCharCode(bytes[i]);
+    }
+    return window.btoa(binary);
+  };
   useEffect(() => {
     const token = sessionStorage.getItem('token');
     const email = sessionStorage.getItem('email');
@@ -59,6 +68,7 @@ export default function Order() {
         1
       )}`;
       const res = await axios.get(url, options).then((data) => {
+        console.log(data.data);
         setList(data.data);
       });
     };
@@ -111,7 +121,7 @@ export default function Order() {
                 <div className="order-product-img">
                   <img
                     onClick={() => navigate('/product:id')}
-                    src={require('../assets/th.jpg')}
+                    src={`data:image/png;base64,${toBase64(e.avar.data)}`}
                   ></img>
                 </div>
                 <div>
@@ -257,14 +267,12 @@ export default function Order() {
             </div>
           </div>
           {list.map((e, ind) => {
-            console.log(e, 'ok');
             const tab_ind = tab.indexOf(1);
             let filer_state = '';
             if (tab_ind === 0) filer_state = '';
             else if (tab_ind === 1) filer_state = 'shipping';
             else if (tab_ind === 2) filer_state = 'completed';
             else if (tab_ind === 3) filer_state = 'cancel';
-            console.log(filer_state);
             if (filer_state === '') {
               return <AOrder key={shortid.generate()} props={{ ind, e }} />;
             } else if (e.state === filer_state) {
